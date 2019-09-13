@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<bwFrame xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" default_layout="pxabnsnfns00001100101" textdirection="ltr" device="false" fontscale="100" kbshortcuts="false" skip_nav_enabled="true" chromeless="false" outputtype="undefined" theme="unified">
+<bwFrame xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" default_layout="pxabnsnfns01001100101" textdirection="ltr" device="false" fontscale="100" kbshortcuts="false" skip_nav_enabled="true" chromeless="false" outputtype="undefined" theme="unified">
   <layouts>
-    <layout name="npnxnanbsnfns00001100101" font="Lato" controllayout="npnxnanbsnfns00001100101" colorscheme="pxabnsnfns00001100101" string_table="pxabnsnfns00001100101" />
-    <layout name="pxabnsnfns00001100101" font="Lato" controllayout="pxabnsnfns00001100101" colorscheme="pxabnsnfns00001100101" string_table="pxabnsnfns00001100101" />
-    <layout name="npxnabnsnfns00001100101" font="Lato" controllayout="npxnabnsnfns00001100101" colorscheme="pxabnsnfns00001100101" string_table="pxabnsnfns00001100101" />
-    <layout name="npnxnanbnsnfns00001100101" font="Lato" controllayout="npnxnanbnsnfns00001100101" colorscheme="pxabnsnfns00001100101" string_table="pxabnsnfns00001100101" />
-    <layout name="pxabnsnfns00001100100" font="Lato" controllayout="pxabnsnfns00001100100" colorscheme="pxabnsnfns00001100101" string_table="pxabnsnfns00001100101" />
-    <layout name="pxnanbnsnfns00001100101" font="Lato" controllayout="pxnanbnsnfns00001100101" colorscheme="pxabnsnfns00001100101" string_table="pxabnsnfns00001100101" />
+    <layout name="npnxnanbsnfns01001100101" font="Lato" controllayout="npnxnanbsnfns01001100101" colorscheme="pxabnsnfns01001100101" string_table="pxabnsnfns01001100101" />
+    <layout name="pxabnsnfns01001100101" font="Lato" controllayout="pxabnsnfns01001100101" colorscheme="pxabnsnfns01001100101" string_table="pxabnsnfns01001100101" />
+    <layout name="npxnabnsnfns01001100101" font="Lato" controllayout="npxnabnsnfns01001100101" colorscheme="pxabnsnfns01001100101" string_table="pxabnsnfns01001100101" />
+    <layout name="npnxnanbnsnfns01001100101" font="Lato" controllayout="npnxnanbnsnfns01001100101" colorscheme="pxabnsnfns01001100101" string_table="pxabnsnfns01001100101" />
+    <layout name="pxabnsnfns01001100100" font="Lato" controllayout="pxabnsnfns01001100100" colorscheme="pxabnsnfns01001100101" string_table="pxabnsnfns01001100101" />
   </layouts>
   <control_options>
     <optiongroups>
@@ -14,7 +13,7 @@
         <options>
           <option name="title_enabled" value="true">
             <options>
-              <option name="title_text" value="Find Data exp" />
+              <option name="title_text" value="Find Data" />
             </options>
           </option>
           <option name="logo_enabled" value="false">
@@ -59,7 +58,12 @@
       <optiongroup name="controls">
         <options>
           <option name="volume" value="true" />
-          <option name="seekbar" value="false" />
+          <option name="seekbar" value="false">
+            <options>
+              <option name="readonly" value="false" />
+              <option name="readonlyOnce" value="false" />
+            </options>
+          </option>
           <option name="pauseplay" value="false" />
           <option name="replay" value="false" />
           <option name="search" value="false" />
@@ -85,12 +89,12 @@
     </optiongroups>
   </control_options>
   <control_layouts>
-    <control_layout name="npnxnanbsnfns00001100101">
+    <control_layout name="npnxnanbsnfns01001100101">
       <control name="volume" enabled="true" />
       <control name="seekbar" enabled="false" />
       <control name="replay" enabled="false" />
       <control name="pauseplay" enabled="false" />
-      <control name="logo" enabled="false" />
+      <control name="logo" enabled="true" />
       <control name="previous" enabled="false" />
       <control name="next" enabled="false" />
       <control name="swipeleft" enabled="false" />
@@ -108,12 +112,12 @@
       </control>
       <control name="close_btn" enabled="true" />
     </control_layout>
-    <control_layout name="pxabnsnfns00001100101">
+    <control_layout name="pxabnsnfns01001100101">
       <control name="volume" enabled="true" />
       <control name="seekbar" enabled="false" />
       <control name="replay" enabled="false" />
       <control name="pauseplay" enabled="false" />
-      <control name="logo" enabled="false" />
+      <control name="logo" enabled="true" />
       <control name="previous" enabled="true" />
       <control name="next" enabled="true" />
       <control name="swipeleft" enabled="true" />
@@ -131,12 +135,12 @@
       </control>
       <control name="close_btn" enabled="true" />
     </control_layout>
-    <control_layout name="npxnabnsnfns00001100101">
+    <control_layout name="npxnabnsnfns01001100101">
       <control name="volume" enabled="true" />
       <control name="seekbar" enabled="false" />
       <control name="replay" enabled="false" />
       <control name="pauseplay" enabled="false" />
-      <control name="logo" enabled="false" />
+      <control name="logo" enabled="true" />
       <control name="previous" enabled="false" />
       <control name="next" enabled="true" />
       <control name="swipeleft" enabled="false" />
@@ -154,12 +158,12 @@
       </control>
       <control name="close_btn" enabled="true" />
     </control_layout>
-    <control_layout name="npnxnanbnsnfns00001100101">
+    <control_layout name="npnxnanbnsnfns01001100101">
       <control name="volume" enabled="true" />
       <control name="seekbar" enabled="false" />
       <control name="replay" enabled="false" />
       <control name="pauseplay" enabled="false" />
-      <control name="logo" enabled="false" />
+      <control name="logo" enabled="true" />
       <control name="previous" enabled="false" />
       <control name="next" enabled="false" />
       <control name="swipeleft" enabled="false" />
@@ -177,12 +181,12 @@
       </control>
       <control name="close_btn" enabled="true" />
     </control_layout>
-    <control_layout name="pxabnsnfns00001100100">
+    <control_layout name="pxabnsnfns01001100100">
       <control name="volume" enabled="true" />
       <control name="seekbar" enabled="false" />
       <control name="replay" enabled="false" />
       <control name="pauseplay" enabled="false" />
-      <control name="logo" enabled="false" />
+      <control name="logo" enabled="true" />
       <control name="previous" enabled="true" />
       <control name="next" enabled="true" />
       <control name="swipeleft" enabled="true" />
@@ -200,32 +204,9 @@
       </control>
       <control name="close_btn" enabled="false" />
     </control_layout>
-    <control_layout name="pxnanbnsnfns00001100101">
-      <control name="volume" enabled="true" />
-      <control name="seekbar" enabled="false" />
-      <control name="replay" enabled="false" />
-      <control name="pauseplay" enabled="false" />
-      <control name="logo" enabled="false" />
-      <control name="previous" enabled="true" />
-      <control name="next" enabled="true" />
-      <control name="swipeleft" enabled="false" />
-      <control name="swiperight" enabled="false" />
-      <control name="submit" enabled="false" />
-      <control name="finish" enabled="false" />
-      <control name="submitall" enabled="false" />
-      <control name="resources" enabled="true" />
-      <control name="glossary" enabled="false" />
-      <control name="transcript" enabled="false" />
-      <control name="outline" enabled="true">
-        <controls>
-          <control name="search" enabled="false" />
-        </controls>
-      </control>
-      <control name="close_btn" enabled="true" />
-    </control_layout>
   </control_layouts>
   <colorschemes>
-    <colorscheme name="pxabnsnfns00001100101">
+    <colorscheme name="pxabnsnfns01001100101">
       <color_group name="HTML">
         <group_colors>
           <color name="htmlpage_bg_color">
@@ -1092,7 +1073,7 @@
           <color name="brandhighlight">
             <fill type="linear" rotation="90">
               <colors>
-                <color rgb="0x2F9E47" alpha="100" stop="0" />
+                <color rgb="0xEEECE1" alpha="100" stop="0" />
               </colors>
             </fill>
           </color>
@@ -1224,7 +1205,7 @@
     </colorscheme>
   </colorschemes>
   <string_tables>
-    <string_table name="pxabnsnfns00001100101">
+    <string_table name="pxabnsnfns01001100101">
       <string id="acc_active">active</string>
       <string id="check_include">Check to include</string>
       <string id="clear">Clear and return to menu</string>
@@ -1285,47 +1266,57 @@
   <nav_data>
     <outline>
       <links>
-        <slidelink slideid="_player.5bCCtCFkFWK" displaytext="Untitled Scene" expand="true" type="slide">
+        <slidelink slideid="_player.5bCCtCFkFWK" displaytext="Introduction" expand="true" type="slide">
           <links>
-            <slidelink slideid="_player.5bCCtCFkFWK.6mrKwPWrgO4" displaytext="Welcome Layout" expand="false" type="slide" />
-            <slidelink slideid="_player.5bCCtCFkFWK.6bOWKKohybM" displaytext="INSTRUCTIONS LAYOUT" expand="false" type="slide" />
-            <slidelink slideid="_player.5bCCtCFkFWK.5s24mC1XNVH" displaytext="SCENARIO STARTER" expand="false" type="slide" />
-            <slidelink slideid="_player.5xansOMOwJu.6gaeRAaY8Dp" displaytext="Help Naomi find this data" expand="false" type="slide" />
-            <slidelink slideid="_player.5xansOMOwJu.5ekP3l4oSCE" displaytext="Naomi needs to create an infographic" expand="false" type="slide" />
-          </links>
-        </slidelink>
-        <slidelink slideid="_player.6pIl9f50xU5" displaytext="Task 1" expand="true" type="slide">
-          <links>
-            <slidelink slideid="_player.6pIl9f50xU5.6EiMUkptBgU" displaytext="Untitled Slide" expand="false" type="slide" />
-            <slidelink slideid="_player.6pIl9f50xU5.6l56SVQueqY" displaytext="Task 1" expand="false" type="slide" />
-          </links>
-        </slidelink>
-        <slidelink slideid="_player.63SMiDqYqKu" displaytext="Style Guide" expand="true" type="slide">
-          <links>
-            <slidelink slideid="_player.63SMiDqYqKu.6i517NMLSdm" displaytext="Theme Colors &amp; Fonts" expand="false" type="slide" />
+            <slidelink slideid="_player.5bCCtCFkFWK.6mrKwPWrgO4" displaytext="Welcome" expand="false" type="slide" />
+            <slidelink slideid="_player.5bCCtCFkFWK.5XQp29m3Tpr" displaytext="Tutorial Instructions" expand="false" type="slide" />
+            <slidelink slideid="_player.5bCCtCFkFWK.5s24mC1XNVH" displaytext="Main Menu" expand="false" type="slide" />
           </links>
         </slidelink>
         <slidelink slideid="_player.5oVy5zhIaK9" displaytext="Data Sources" expand="true" type="slide">
           <links>
-            <slidelink slideid="_player.5oVy5zhIaK9.6DIknkcOpE8" displaytext="Untitled Slide" expand="false" type="slide" />
-            <slidelink slideid="_player.5oVy5zhIaK9.5c7Qk00gIeU" displaytext="PROCESS INTERACTION" expand="false" type="slide" />
-            <slidelink slideid="_player.5oVy5zhIaK9.6G9c5ZTEpTM" displaytext="Process Interaction" expand="false" type="slide" />
+            <slidelink slideid="_player.5oVy5zhIaK9.6bWPKBhbL32" displaytext="Why Data?" expand="false" type="slide" />
+            <slidelink slideid="_player.5oVy5zhIaK9.6h1TZHarLCe" displaytext="Example" expand="false" type="slide" />
+            <slidelink slideid="_player.5oVy5zhIaK9.6ZNmEEWaoDh" displaytext="Data Defined" expand="false" type="slide" />
+            <slidelink slideid="_player.5oVy5zhIaK9.6PkbybqGN9e" displaytext="Questions to Guide Your Data Search" expand="false" type="slide" />
+            <slidelink slideid="_player.5oVy5zhIaK9.5iu3zh42B9e" displaytext="Data Honeycomb" expand="false" type="slide" />
+            <slidelink slideid="_player.5oVy5zhIaK9.5bJMzoK0nUT" displaytext="WHAT DATA DO YOU NEED?" expand="false" type="slide" />
+            <slidelink slideid="_player.5oVy5zhIaK9.5caVKFCL4dX" displaytext="Existing Visualizations" expand="false" type="slide" />
+            <slidelink slideid="_player.5oVy5zhIaK9.5bVI1J0qbEs" displaytext="Summary Data" expand="false" type="slide" />
+            <slidelink slideid="_player.5oVy5zhIaK9.673gml5xIyR" displaytext="Published Datasets" expand="false" type="slide" />
+            <slidelink slideid="_player.5oVy5zhIaK9.6MCqulTeoAw" displaytext="Peer Reviewed Information" expand="false" type="slide" />
+            <slidelink slideid="_player.5oVy5zhIaK9.6VBt0nAvxGR" displaytext="WHERE DO YOU SEARCH?" expand="false" type="slide" />
+            <slidelink slideid="_player.5oVy5zhIaK9.5xpfOwjQxfq" displaytext="Library Databases" expand="false" type="slide" />
+            <slidelink slideid="_player.5oVy5zhIaK9.5UggUaEtx2n" displaytext="Web Search" expand="false" type="slide" />
+            <slidelink slideid="_player.5oVy5zhIaK9.6RhLtnYNe8W" displaytext="Data in the News" expand="false" type="slide" />
+            <slidelink slideid="_player.5oVy5zhIaK9.62Ju7w1qAFo" displaytext="Secondary Data Portals" expand="false" type="slide" />
+            <slidelink slideid="_player.5oVy5zhIaK9.5XMnf7jqzeb" displaytext="Research Data Portals" expand="false" type="slide" />
+            <slidelink slideid="_player.5oVy5zhIaK9.5sA0aVYnRUq" displaytext="Government Data Sources" expand="false" type="slide" />
+            <slidelink slideid="_player.5oVy5zhIaK9.6dKvIHCXJuW" displaytext="MATCH DATA NEED AND SEARCH" expand="false" type="slide" />
           </links>
         </slidelink>
-        <slidelink slideid="_player.5xansOMOwJu" displaytext="Scenario Introduction" expand="true" type="slide">
+        <slidelink slideid="_player.6mcv4FkBkpt" displaytext="Guided Worksheet" expand="true" type="slide">
           <links>
-            <slidelink slideid="_player.5xansOMOwJu.65B2rq7Llqc" displaytext="Untitled Slide" expand="false" type="slide" />
+            <slidelink slideid="_player.6mcv4FkBkpt.6bUyR1DhKYz" displaytext="Notebook Instructions" expand="false" type="slide" />
+            <slidelink slideid="_player.6mcv4FkBkpt.6dEUWYQfI44" displaytext="Data &amp; GIS Help Desk" expand="false" type="slide" />
+            <slidelink slideid="_player.6mcv4FkBkpt.5uS8MWsiHxD" displaytext="THANK YOU" expand="false" type="slide" />
           </links>
         </slidelink>
-        <slidelink slideid="_player.67OhiSRZlgP" displaytext="Untitled Scene" expand="true" type="slide">
+        <slidelink slideid="_player.5bkv6DdyieK" displaytext="Scenario Questions" expand="true" type="slide">
           <links>
-            <slidelink slideid="_player.67OhiSRZlgP.6X7JCjcg9mV" displaytext="Untitled Slide" expand="false" type="slide" />
+            <slidelink slideid="_player.5bkv6DdyieK.5cTaWzB4UZ1" displaytext="Scenario One" expand="false" type="slide" />
           </links>
         </slidelink>
       </links>
     </outline>
   </nav_data>
-  <resource_data description="&lt;p align='left'&gt;&lt;font face='Lato' style='font-size: 11px;' size='11' color='#B4B4B4'&gt;Here are some useful links and documents:&lt;/font&gt;&lt;/p&gt;" />
+  <resource_data description="&lt;p align='left'&gt;&lt;font face='Lato' style='font-size: 11px;' size='11' color='#B4B4B4'&gt;Here are some useful links and documents:&lt;/font&gt;&lt;/p&gt;">
+    <resources>
+      <resource url="https://cpslo-primo.hosted.exlibrisgroup.com/permalink/f/39e239/01CALS_ALMA71390668050002901" image="story_content/url.png" title="Storytelling with Data by Cole Nussbaumer Knaflic" />
+      <resource url="https://guides.lib.calpoly.edu/datasources" image="story_content/url.png" title="Data Sources &amp; Repositories (Kennedy LIbrary Research Guide)" />
+      <resource url="https://material.io/design/communication/data-visualization.html?source=post_page---------------------------" image="story_content/url.png" title="Data Visualization (Material Design)" />
+    </resources>
+  </resource_data>
   <transcript_data />
   <glossary_data />
 </bwFrame>
