@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<bwFrame xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" default_layout="pxabnsnfns10111101111" textdirection="ltr" device="false" fontscale="100" kbshortcuts="false" skip_nav_enabled="true" chromeless="false" outputtype="undefined" theme="unified">
+<bwFrame xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" default_layout="pxabnsnfns00001100111" textdirection="ltr" device="false" fontscale="100" kbshortcuts="false" skip_nav_enabled="true" chromeless="false" outputtype="undefined" theme="unified">
   <layouts>
-    <layout name="npnxnanbsnfns10111101111" font="Lato" controllayout="npnxnanbsnfns10111101111" colorscheme="pxabnsnfns10111101111" string_table="pxabnsnfns10111101111" />
-    <layout name="pxabnsnfns10111101111" font="Lato" controllayout="pxabnsnfns10111101111" colorscheme="pxabnsnfns10111101111" string_table="pxabnsnfns10111101111" />
-    <layout name="npxnabnsnfns10111101111" font="Lato" controllayout="npxnabnsnfns10111101111" colorscheme="pxabnsnfns10111101111" string_table="pxabnsnfns10111101111" />
-    <layout name="npnxnanbnsnfns10111101111" font="Lato" controllayout="npnxnanbnsnfns10111101111" colorscheme="pxabnsnfns10111101111" string_table="pxabnsnfns10111101111" />
-    <layout name="pxabnsnfns10111101110" font="Lato" controllayout="pxabnsnfns10111101110" colorscheme="pxabnsnfns10111101111" string_table="pxabnsnfns10111101111" />
+    <layout name="npnxnanbsnfns10111101111" font="Lato" controllayout="npnxnanbsnfns10111101111" colorscheme="pxabnsnfns00001100111" string_table="pxabnsnfns00001100111" />
+    <layout name="pxabnsnfns10111101111" font="Lato" controllayout="pxabnsnfns10111101111" colorscheme="pxabnsnfns00001100111" string_table="pxabnsnfns00001100111" />
+    <layout name="npxnabnsnfns10111101111" font="Lato" controllayout="npxnabnsnfns10111101111" colorscheme="pxabnsnfns00001100111" string_table="pxabnsnfns00001100111" />
+    <layout name="npnxnanbnsnfns10111101111" font="Lato" controllayout="npnxnanbnsnfns10111101111" colorscheme="pxabnsnfns00001100111" string_table="pxabnsnfns00001100111" />
+    <layout name="pxabnsnfns10111101110" font="Lato" controllayout="pxabnsnfns10111101110" colorscheme="pxabnsnfns00001100111" string_table="pxabnsnfns00001100111" />
+    <layout name="npnxnanbsnfns00001100111" font="Lato" controllayout="npnxnanbsnfns00001100111" colorscheme="pxabnsnfns00001100111" string_table="pxabnsnfns00001100111" />
+    <layout name="pxabnsnfns00001100111" font="Lato" controllayout="pxabnsnfns00001100111" colorscheme="pxabnsnfns00001100111" string_table="pxabnsnfns00001100111" />
   </layouts>
   <control_options>
     <optiongroups>
@@ -204,9 +206,55 @@
       </control>
       <control name="close_btn" enabled="false" />
     </control_layout>
+    <control_layout name="npnxnanbsnfns00001100111">
+      <control name="volume" enabled="true" />
+      <control name="seekbar" enabled="false" />
+      <control name="replay" enabled="false" />
+      <control name="pauseplay" enabled="false" />
+      <control name="logo" enabled="false" />
+      <control name="previous" enabled="false" />
+      <control name="next" enabled="false" />
+      <control name="swipeleft" enabled="false" />
+      <control name="swiperight" enabled="false" />
+      <control name="submit" enabled="true" />
+      <control name="finish" enabled="false" />
+      <control name="submitall" enabled="false" />
+      <control name="resources" enabled="true" />
+      <control name="glossary" enabled="false" />
+      <control name="transcript" enabled="false" />
+      <control name="outline" enabled="true">
+        <controls>
+          <control name="search" enabled="true" />
+        </controls>
+      </control>
+      <control name="close_btn" enabled="true" />
+    </control_layout>
+    <control_layout name="pxabnsnfns00001100111">
+      <control name="volume" enabled="true" />
+      <control name="seekbar" enabled="false" />
+      <control name="replay" enabled="false" />
+      <control name="pauseplay" enabled="false" />
+      <control name="logo" enabled="false" />
+      <control name="previous" enabled="true" />
+      <control name="next" enabled="true" />
+      <control name="swipeleft" enabled="true" />
+      <control name="swiperight" enabled="true" />
+      <control name="submit" enabled="false" />
+      <control name="finish" enabled="false" />
+      <control name="submitall" enabled="false" />
+      <control name="resources" enabled="true" />
+      <control name="glossary" enabled="false" />
+      <control name="transcript" enabled="false" />
+      <control name="outline" enabled="true">
+        <controls>
+          <control name="search" enabled="true" />
+        </controls>
+      </control>
+      <control name="close_btn" enabled="true" />
+    </control_layout>
   </control_layouts>
   <colorschemes>
-    <colorscheme name="pxabnsnfns10111101111">
+    <colorscheme name="pxabnsnfns00001100111">
       <color_group name="HTML">
         <group_colors>
           <color name="htmlpage_bg_color">
@@ -1205,7 +1253,7 @@
     </colorscheme>
   </colorschemes>
   <string_tables>
-    <string_table name="pxabnsnfns10111101111">
+    <string_table name="pxabnsnfns00001100111">
       <string id="acc_active">active</string>
       <string id="check_include">Check to include</string>
       <string id="clear">Clear and return to menu</string>
@@ -1327,11 +1375,11 @@
       <slidetext slideid="5oVy5zhIaK9.6VBt0nAvxGR" slidebank="false" type="slide">library  databases library  databases library  databases library  databases library  databases government data sources government data sources government data sources government data sources government data sources web search web search web search web search web search secondary data portals secondary data portals secondary data portals secondary data portals secondary data portals data in the news data in the news data in the news data in the news data in the news where do you search?   data search strategies research data portals research data portals research data portals research data portals research data portals select and explore each hexagon before proceeding</slidetext>
       <slidetext slideid="5oVy5zhIaK9.5xpfOwjQxfq" slidebank="false" type="slide"> peer reviewed literature in library databases library or academic databases are a gateway to peer reviewed literature. as you look for research studies on a topic, remember that these articles can be a great source of summary data, images, and visualizations beyond the text. while you’re not likely to find datasets themselves within traditional library databases, it is through the research articles that you can find links to the authoritative data used by researchers.       kennedy library databases           google scholar  lib.calpoly.edu       library  website databases research articles data   get started onesearch</slidetext>
       <slidetext slideid="5oVy5zhIaK9.5UggUaEtx2n" slidebank="false" type="slide"> web search looking for data on a new topic, start broadly with a general web search. become familiar with the landscape of existing  information about this topic. rather than seeking datasets themselves, general web search can be most effective for finding the resources that lead to the specific datasets you’re looking for.  keep in mind!  who collects data on this topic? how is this reported in the news? how is this topic being studied by researchers?   [topic] statistics  [topic] open data [topic] datasets [topic] research data search tips refine by [timeframe] and [geography]</slidetext>
-      <slidetext slideid="5oVy5zhIaK9.62Ju7w1qAFo" slidebank="false" type="slide"> data usa combines multiple government data sources into a single well-designed resource for data on places, industries, jobs, or universities. data can be downloaded as existing visualizations or as summary data tables.  social explorer provides a convenient interface to visualize and access detailed demographic data such as median income, unemployment, and race or ethnicity. this data can be explored as a web map or exported for further analysis.  statista provides small summary datasets in the form of data tables or visuals (e.g., bar charts or line charts). these can be easily downloaded, adapted and cited for use in reports or presentations.                   secondary data portals   see data sources list  see data sources list  see data sources list social explorer data usa secondary data portals are sites that gather and provide access to data from a variety of original sources. they give a more consistent and user-friendly experience when searching for data across multiple sources.     statista    select the examples</slidetext>
-      <slidetext slideid="5oVy5zhIaK9.5XMnf7jqzeb" slidebank="false" type="slide"> re3data.org is a repository of research data repositories.  it provides a guide (from acustics to zoology) for finding a repository for a specific discipline.  the harvard dataverse is a data repository of over 100,000 datasets that spans thousands of academic institutions. researchers from many disciplines can publish research data for others to utilize.   inter-university consortium for political and social research (icpsr) contains datasets used primarily in academic research in political and social sciences. this is an example of data organized by discipline.                   research data portals see data sources list see data sources list see data sources list harvard dataverse re3data.org as researchers conduct new and original research, the data collected in these studies is published and available for re-use by other researchers and the public. find specific datasets associated with a particular study or gain more familiarity with the types of data collected within a given discipline.     icpsr     select the examples</slidetext>
+      <slidetext slideid="5oVy5zhIaK9.62Ju7w1qAFo" slidebank="false" type="slide"> data usa combines multiple government data sources into a single well-designed resource for data on places, industries, jobs, or universities. data can be downloaded as existing visualizations or as summary data tables.  social explorer provides a convenient interface to visualize and access detailed demographic data such as median income, unemployment, and race or ethnicity. this data can be explored as a web map or exported for further analysis.  statista provides small summary datasets in the form of data tables or visuals (e.g., bar charts or line charts). these can be easily downloaded, adapted and cited for use in reports or presentations.                   secondary data portals     social explorer data usa secondary data portals are sites that gather and provide access to data from a variety of original sources. they give a more consistent and user-friendly experience when searching for data across multiple sources.     statista    select the examples see data sources list</slidetext>
+      <slidetext slideid="5oVy5zhIaK9.5XMnf7jqzeb" slidebank="false" type="slide"> re3data.org is a repository of research data repositories.  it provides a guide (from acustics to zoology) for finding a repository for a specific discipline.  the harvard dataverse is a data repository of over 100,000 datasets that spans thousands of academic institutions. researchers from many disciplines can publish research data for others to utilize.   inter-university consortium for political and social research (icpsr) contains datasets used primarily in academic research in political and social sciences. this is an example of data organized by discipline.                   research data portals    harvard dataverse re3data.org as researchers conduct new and original research, the data collected in these studies is published and available for re-use by other researchers and the public. find specific datasets associated with a particular study or gain more familiarity with the types of data collected within a given discipline.     icpsr     select the examples see data sources list</slidetext>
       <slidetext slideid="5oVy5zhIaK9.6RhLtnYNe8W" slidebank="false" type="slide">dea database: where the pain pills went. washington post. july 16, 2019. “americans make up about 4.4 percent of the global population but own 42 percent of the world’s guns. from 1966 to 2012, 31 percent of the gunmen in mass shootings worldwide were american, according to a 2015 study by adam lankford, a professor at the university of alabama.” what explains u.s. mass shootings? international comparisons suggest an answer. new york times. nov. 7, 2017.   data source:  small arms survey what explains u.s. mass shootings? international comparisons suggest an answer. new york times. nov. 7, 2017.             data in the news a useful strategy for finding datasets is to track down the data used in news reporting on a topic. look at the captions for attribution. sometimes, these are linked to the data source, but not always. 1 look for references to researchers or government agencies, and other clues about the underlying published data that is being used.  2 select the strategies for examples       3 look for links to datasets made available by the news organization itself.        </slidetext>
       <slidetext slideid="5oVy5zhIaK9.5wh4HcBIm9g" slidebank="false" type="slide"> government data sources represent a huge proportion of available data. when you consider your research question, identify which agency and which level of government is most likely to provide data on your topic. two components to keep in mind are the level of government (international to local) and the discipline area (e.g., demographics, economics, environment, crime). government data sources       international open data index un data eu data  world bank get started       national  epa nasa us census state county city datasf la county  open data ca open data portal ca dept. public health data.gov global open data index</slidetext>
-      <slidetext slideid="5oVy5zhIaK9.6dKvIHCXJuW" slidebank="false" type="slide">the best places to find non-summarized published datasets are in research data portals and government sources.   the best places to find summarized data is secondary data portals and government data sources.   the best places to find ready-made visualizations are web searches and, specifically, news sources.   the best places to find peer reviewed information is in library databases. web searches too will lead you back to access via library subscriptions.    summary datasets summary datasets summary datasets summary datasets library  databases library  databases library  databases library  databases government data sources government data sources government data sources government data sources match your data need with  the best places to search web search web search web search web search secondary data portals secondary data portals secondary data portals secondary data portals data in the news data in the news data in the news data in the news existing visualizations existing visualizations existing visualizations existing visualizations published datasets published datasets published datasets published datasets peer reviewed information peer reviewed information peer reviewed information peer reviewed information    what do you need? where do you search?   data search strategies research data portals research data portals research data portals research data portals data presentation types hover over the data types hexagons to see the matching search strategies.</slidetext>
+      <slidetext slideid="5oVy5zhIaK9.6dKvIHCXJuW" slidebank="false" type="slide">the best places to find non-summarized published datasets are in research data portals and government sources.   the best places to find summarized data are secondary data portals and government data sources.   the best places to find ready-made visualizations are web searches and, specifically, news sources.   the best places to find peer reviewed information is in library databases. web searches too will lead you back to access via library subscriptions.    summary datasets summary datasets summary datasets summary datasets library  databases library  databases library  databases library  databases government data sources government data sources government data sources government data sources match your data need with  the best places to search web search web search web search web search secondary data portals secondary data portals secondary data portals secondary data portals data in the news data in the news data in the news data in the news existing visualizations existing visualizations existing visualizations existing visualizations published datasets published datasets published datasets published datasets peer reviewed information peer reviewed information peer reviewed information peer reviewed information    what do you need? where do you search?   data search strategies research data portals research data portals research data portals research data portals data presentation types hover over the data types hexagons to see the matching search strategies.</slidetext>
       <slidetext slideid="5oVy5zhIaK9.5nzhVgZb8XX" slidebank="false" type="slide"> “finding data: general web searching,” kennedy library, oct. 1, 2019. watch this video to see an example of how a dataset was located by starting with a general web search.  </slidetext>
       <slidetext slideid="6mcv4FkBkpt.6bUyR1DhKYz" slidebank="false" type="slide">the notebook is a worksheet that guides your search for data sources on your topic. fill out the online form and hit submit at the bottom. you will receive a copy of your submission that you can share with your instructor. purpose instructions  finding data notebook  bit.ly/data-notebook now that you’ve completed the tutorial, you are ready to search for data sources on your topic! </slidetext>
       <slidetext slideid="6mcv4FkBkpt.6dEUWYQfI44" slidebank="false" type="slide"> meet with the data &amp; gis specialist, russ white, or meet with our skilled student peer assistants located on the 1st floor of kennedy library, at the data &amp; gis desk in rm 111 in hub24. see staff hours &amp; availability for hours to drop-in or to make an appointment. staff hours &amp; availability    we provide help for finding datasets and using software tools, building skills, applying gis and data visualization, and more. data &amp; gis help desk – kennedy library, rm. 111, hub 24</slidetext>
