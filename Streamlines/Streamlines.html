@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>
+      AnimatedFlowRenderer | Sample | ArcGIS API for JavaScript 4.22
+    </title>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.22/esri/themes/dark/main.css"
+    />
+    <script src="https://js.arcgis.com/4.22/"></script>
+    <script
+      type="module"
+      src="https://js.arcgis.com/calcite-components/1.0.0-beta.69/calcite.esm.js"
+    ></script>
+    <script
+      nomodule=""
+      src="https://js.arcgis.com/calcite-components/1.0.0-beta.69/calcite.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://js.arcgis.com/calcite-components/1.0.0-beta.69/calcite.css"
+    />
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      #controls {
+        width: 300px;
+        max-height: 90vh;
+        overflow: auto;
+      }
+    </style>
+
+    <script>
+      require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/ImageryTileLayer"
+      ], function (Map, MapView, ImageryTileLayer) {
+        const layer = new ImageryTileLayer({
+          url: "https://tiledimageservices1.arcgis.com/0j6vZbECadDEXdAS/arcgis/rest/services/Terrain_MD_pro/ImageServer",
+          title: "Winds",
+          renderer: {
+            type: "animated-flow", // autocasts to new AnimatedFlowRenderer
+            lineWidth: "2px",
+            lineColor: [50, 120, 240],
+            density: 1
+          },
+          effect: "bloom(2, 0.5px, 0)"
+        });
+
+        const map = new Map({
+          basemap: "arcgis-topographic",
+          layers: [layer]
+        });
+
+        const view = new MapView({
+          container: "viewDiv",
+          map: map,
+          zoom: 5,
+          center: [-98, 39]
+        });
+        view.ui.add("controls", "top-right");
+
+        document
+          .getElementById("lineWidth")
+          .addEventListener("calciteSliderChange", updateRenderer);
+        document
+          .getElementById("lineColor")
+          .addEventListener("calciteInputInput", updateRenderer);
+        document
+          .getElementById("density")
+          .addEventListener("calciteSliderChange", updateRenderer);
+        document
+          .getElementById("lineLength")
+          .addEventListener("calciteSliderChange", updateRenderer);
+        document
+          .getElementById("lineSpeed")
+          .addEventListener("calciteSliderChange", updateRenderer);
+        document
+          .getElementById("fadeDuration")
+          .addEventListener("calciteSliderChange", updateRenderer);
+        document
+          .getElementById("effectsEnabled")
+          .addEventListener("calciteCheckboxChange", updateEffect);
+
+        function updateEffect(event) {
+          let checkbox = event.target.checked ? "bloom(2, 0.5px, 0)" : null;
+          layer.effect = checkbox;
+        }
+
+        function updateRenderer(event) {
+          let propName = event.target.id;
+          let propValue = event.target.value;
+
+          if (propName && propValue != null) {
+            let tempRenderer = layer.renderer.clone();
+
+            tempRenderer[propName] = propValue;
+            layer.renderer = tempRenderer;
+          }
+        }
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+    <calcite-card id="controls" class="calcite-theme-dark">
+      <div slot="title">Controls</div>
+      <calcite-label
+        >Line width
+        <calcite-slider
+          id="lineWidth"
+          min="0"
+          max="10"
+          value="2"
+          label-handles
+        ></calcite-slider>
+      </calcite-label>
+      <calcite-label
+        >Line color
+        <calcite-input
+          id="lineColor"
+          type="color"
+          value="#3278f0"
+        ></calcite-input>
+      </calcite-label>
+      <calcite-label
+        >Density
+        <calcite-slider
+          id="density"
+          min="0"
+          max="1"
+          value="1"
+          label-handles
+        ></calcite-slider>
+      </calcite-label>
+      <calcite-label
+        >Line length
+        <calcite-slider
+          id="lineLength"
+          min="0"
+          max="500"
+          value="200"
+          label-handles
+        ></calcite-slider>
+      </calcite-label>
+      <calcite-label
+        >Line speed
+        <calcite-slider
+          id="lineSpeed"
+          min="0"
+          max="100"
+          value="10"
+          label-handles
+        ></calcite-slider>
+      </calcite-label>
+      <calcite-label
+        >Fade duration
+        <calcite-slider
+          id="fadeDuration"
+          min="0"
+          max="500"
+          value="100"
+          label-handles
+        ></calcite-slider>
+      </calcite-label>
+      <calcite-label
+        >Effects enabled
+        <calcite-checkbox id="effectsEnabled" checked></calcite-checkbox>
+      </calcite-label>
+    </calcite-card>
+  </body>
+</html>
