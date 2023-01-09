@@ -7,15 +7,18 @@
     "build:production": "npm run build:dev && npm run pack-gltf",
     "serve": "vite preview",
     "copy-files": "copy-files-from-to",
-    "pack-gltf": "npm run pack-gltf --prefix node_modules/@needle-tools/engine"
+    "pack-gltf": "npm run pack-gltf --prefix node_modules/@needle-tools/engine",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@needle-tools/engine": "^2.53.0-pre",
+    "gh-pages": "^4.0.0",
+    "prod": "^1.0.0",
     "three": "npm:@needle-tools/three@^0.146.2"
   },
   "devDependencies": {
-    "@needle-tools/helper": "latest",
     "@needle-tools/gltf-transform-extensions": "latest",
+    "@needle-tools/helper": "latest",
     "@types/three": "^0.134.0",
     "@vitejs/plugin-basic-ssl": "^0.1.2",
     "copy-files-from-to": "^3.2.2",
