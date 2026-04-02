@@ -1,0 +1,188 @@
+<!DOCTYPE html><html class="default" lang="en"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>API (v1.0.0) - Giro3D</title><meta name="description" content="Documentation for API (v1.0.0) - Giro3D"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><link rel="stylesheet" href="assets/custom.css"/><script defer src="assets/main.js"></script><script async src="assets/icons.js" id="tsd-icons-script"></script><script async src="assets/search.js" id="tsd-search-script"></script><script async src="assets/navigation.js" id="tsd-nav-script"></script>
+<link rel="icon" href="/images/favicon.svg" />
+<link rel="stylesheet" href="/assets/bootstrap-custom.css" />
+</head><body><script>document.documentElement.dataset.theme = "light";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script>
+
+<header class="header bg-light" data-bs-theme="">
+    <div class="container-fluid">
+        <a href="/" class="navbar-brand mx-0">
+            <img
+                src="/images/favicon.svg"
+                class="brand"
+                width="32"
+                height="32"
+            />
+        </a>
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav navbar-nav-left">
+                
+                <li class="nav-item">
+    <a
+        class="nav-link  "
+        href="/"
+    >
+        Home
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary "
+        href="/giro3d.html"
+    >
+        Giro3D framework
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-success "
+        href="/piero.html"
+    >
+        Piero application
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary "
+        href="/latest/tutorials/getting-started.html"
+    >
+        Getting started with Giro3D
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary "
+        href="/latest/examples/index.html"
+    >
+        Giro3D examples
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary active"
+        href="/latest/apidoc/index.html"
+    >
+        API documentation
+    </a>
+</li>
+
+
+                <li class="nav-item">
+                    <span
+                        class="navbar-text badge text-bg-info"
+                        >Version
+                        v1.0.0</span
+                    >
+                </li>
+            </ul>
+
+            
+
+            
+            <form class="form-inline" id="tsd-search" role="search" data-base=".">
+    <input
+        name="q"
+        type="text"
+        id="tsd-search-field"
+        aria-label="Search"
+        class="form-control search-query"
+        placeholder="Search"
+        autocomplete="off"
+        autofocus
+    />
+    <div class="results"></div>
+</form>
+
+            
+
+            <ul class="navbar-nav ms-2">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://gitlab.com/giro3d/giro3D" target="_blank"
+                        >GitLab <i class="bi bi-box-arrow-up-right"></i
+                    ></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+<div class="container-fluid container-main"><div class="col-content"><div class="tsd-page-title"><h1>API (v1.0.0) - Giro3D</h1></div><div class="tsd-panel tsd-typography"><div align="center">
+  <a href="https://giro3d.org">
+    <img alt="Giro3D logo" src="/images/giro3d_logo.svg">
+  </a>
+</div>
+<a id="md:introduction" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Introduction<a href="#md:introduction" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Welcome to the API documentation of Giro3D.</p>
+<p>➡️ If you are looking for an interactive tutorial, please look at the <a href="../tutorials/getting-started.html">getting started</a> page instead.</p>
+<p>Here is a brief overview of the main concepts behind Giro3D.</p>
+<a id="md:about-this-documentation" class="tsd-anchor"></a><h2 class="tsd-anchor-link">About this documentation<a href="#md:about-this-documentation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>This documentation is licensed under the <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" class="external">Creative Commons BY SA</a>.</p>
+<a id="md:instance" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Instance<a href="#md:instance" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The <a href="./classes/core.Instance.html"><code>Instance</code></a> is the entry point of a Giro3D context. It contains <a href="./modules/entities.html"><strong>entities</strong></a> that represent dynamically updated objects and make the most of a Giro3D scene. Each instance is hosted by a DOM element (a <code>&lt;div&gt;</code>) that will contain the <code>&lt;canvas&gt;</code> used to render the scene.</p>
+<pre><code class="js"><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">instance</span><span class="hl-1"> = </span><span class="hl-0">new</span><span class="hl-1"> </span><span class="hl-3">Instance</span><span class="hl-1">({</span><br/><span class="hl-1">    </span><span class="hl-4">target:</span><span class="hl-1"> </span><span class="hl-5">&#39;giro3d-view&#39;</span><span class="hl-1">, </span><span class="hl-6">// The id of the &lt;div&gt; that will contain the Giro3D instance</span><br/><span class="hl-1">});</span>
+</code><button type="button">Copy</button></pre>
+
+<p>Under the hood, Giro3D uses three.js to render the scene. To directly access the three.js scene, you can use the <a href="./classes/core.Instance.html#scene"><code>scene</code></a> property.</p>
+<p>To add an entity to the instance, use the <a href="./classes/core.Instance.html#add"><code>Instance.add()</code></a> method. Note that this method should also be used to add a regular three.js <a href="https://threejs.org/docs/?q=obje#api/en/core/Object3D" target="_blank" class="external"><code>Object3D</code></a>s as well.</p>
+<p>💡 You can have multiple instances in the same web page, as long as each of them has its own canvas.</p>
+<a id="md:the-main-loop" class="tsd-anchor"></a><h3 class="tsd-anchor-link">The main loop<a href="#md:the-main-loop" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Contrary to many video games or other interactive applications, Giro3D updates its state and renders the scene to the canvas <strong>only when notified</strong>, instead of periodically (for example 60 times per second). Many classes in Giro3D notify the instance when something has changed (mainly entities), but not all changes can be detected by Giro3D. The rationale is to save CPU and GPU cycles, as well as power on mobile devices.</p>
+<p>💡 To manually trigger an Instance update, you can use the <a href="./classes/core.Instance.html#notifyChange"><code>Instance.notifyChange()</code></a> method. This is useful when the state of the scene has changed in a way that Giro3D cannot detect:</p>
+<pre><code class="js"><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">instance</span><span class="hl-1"> = </span><span class="hl-0">new</span><span class="hl-1"> </span><span class="hl-3">Instance</span><span class="hl-1">(...);</span><br/><br/><span class="hl-6">// Do something that Giro3D cannot detect, such as changing a CSS style.</span><br/><br/><span class="hl-6">// Make sure that Giro3D is notified.</span><br/><span class="hl-4">instance</span><span class="hl-1">.</span><span class="hl-3">notifyChange</span><span class="hl-1">();</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="md:entities" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Entities<a href="#md:entities" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p><a href="./modules/entities.html">Entities</a> are the first-class citizens in Giro3D. Each entity manages a collection of renderable objects, and is responsible for their life cycle. The root 3D object of the entity can be accessed through the <a href="./classes/entities.Entity3D.html#object3d">object3d</a> accessor.</p>
+<p>For example, the <a href="./classes/entities.Map.html"><code>Map</code></a> entity represents a 2D or 2.5D surface split into hierarchical tiles.</p>
+<p>💡 To implement your own renderable entity, create a subclass of the <a href="./classes/entities.Entity3D.html"><code>Entity3D</code></a> class:</p>
+<pre><code class="js"><span class="hl-0">class</span><span class="hl-1"> </span><span class="hl-7">MyCustomEntity</span><span class="hl-1"> </span><span class="hl-0">extends</span><span class="hl-1"> </span><span class="hl-7">Entity3D</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-0">constructor</span><span class="hl-1">() {</span><br/><span class="hl-1">        </span><span class="hl-0">super</span><span class="hl-1">(</span><span class="hl-0">new</span><span class="hl-1"> </span><span class="hl-2">THREE</span><span class="hl-1">.</span><span class="hl-3">Group</span><span class="hl-1">());</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="md:the-progress-and-loading-properties" class="tsd-anchor"></a><h2 class="tsd-anchor-link">The <code>progress</code> and <code>loading</code> properties<a href="#md:the-progress-and-loading-properties" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Various classes in Giro3D provide the <code>progress</code> and <code>loading</code> API. This API can be used to determine if the object is currently performing asynchronous operations.</p>
+<ul>
+<li><code>loading</code> is a boolean that indicates whether the object is currently performing an asynchronous task.</li>
+<li><code>progress</code> is a number (between zero and one) that indicates the percentage of progress of the tasks this object is performing.</li>
+</ul>
+<p>💡 To implement this interface on your own classes, you can use the <a href="./classes/core.OperationCounter.html"><code>OperationCounter</code></a> class.</p>
+<a id="md:memory-management" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Memory management<a href="#md:memory-management" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Most objects in Giro3D are automatically managed by the garbage collector, ensuring that no memory leak happens.</p>
+<p>However, some objects, such as three.js <a href="https://threejs.org/docs/?q=texture#api/en/textures/Texture" target="_blank" class="external">textures</a>, must be manually disposed. In this case, refer to the relevant documentation to determine if the object is manually managed.</p>
+<p>💡 three.js's <a href="https://threejs.org/docs/index.html?q=webglrenderer#api/en/renderers/WebGLRenderer.info" target="_blank" class="external"><code>WebGLRenderer</code></a> has an <code>info</code> property that returns the number of unmanaged resources in GPU memory. You can access this renderer from the <code>Instance</code> using the <a href="./classes/core.Instance.html#renderer"><code>renderer</code></a> property.</p>
+<a id="md:coordinate-systems" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Coordinate systems<a href="#md:coordinate-systems" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Giro3D can combine many different coordinate systems (CRS):</p>
+<ul>
+<li>
+<p>The <code>Instance</code> has its own coordinate system, accessible from the <a href="./classes/core.Instance.html#coordinateSystem"><code>coordinateSystem</code></a> property. Once specified in the <code>Instance</code> constructor, this cannot be changed.</p>
+</li>
+<li>
+<p>Some entities supports various CRS transformations, while others only supports a single CRS (of their data source). In the latter case, this CRS must be compatible with referenceCRS to be displayed correctly.</p>
+</li>
+</ul>
+<a id="md:register-a-custom-crs" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Register a custom CRS<a href="#md:register-a-custom-crs" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>To display a Giro3D scene in a specific coordinate system, you must first register its definition with the <a href="./classes/core.geographic.CoordinateSystem.html#register"><code>CoordinateSystem.register()</code></a> static method.</p>
+<p>For example, to display the scene in the <a href="https://epsg.io/29902" target="_blank" class="external"><code>TM65 / Irish Grid -- Ireland</code></a> CRS (EPSG:29902), we must register it with the following parameters:</p>
+<pre><code class="ts"><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">crs</span><span class="hl-1"> = </span><span class="hl-4">CoordinateSystem</span><span class="hl-1">.</span><span class="hl-3">register</span><span class="hl-1">(</span><br/><span class="hl-1">    </span><span class="hl-5">&#39;EPSG:29902&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-5">&#39;+proj=tmerc +lat_0=53.5 +lon_0=-8 +k=1.000035 +x_0=200000 +y_0=250000 +a=6377340.189 +rf=299.3249646 +towgs84=482.5,-130.6,564.6,-1.042,-0.214,-0.631,8.15 +units=m +no_defs +type=crs&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">);</span>
+</code><button type="button">Copy</button></pre>
+
+<p>💡 Some CRS definitions do not need to be registered as they are already built-in: <code>EPSG:4326</code>, <code>EPSG:3857</code>, <code>EPSG:4978</code> and <code>EPSG:4979</code>.</p>
+<p>💡 CRS registration must be performed before any entity is added to the instance.</p>
+<p>❗ In some (rare) cases, the CRS in the proj format is incomplete. In this case, you can try using the WKT format instead:</p>
+<pre><code class="ts"><span class="hl-4">CoordinateSystem</span><span class="hl-1">.</span><span class="hl-3">register</span><span class="hl-1">(</span><br/><span class="hl-1">    </span><span class="hl-5">&#39;EPSG:29902&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-5">`PROJCS[&quot;TM65 / Irish Grid&quot;,</span><br/><span class="hl-5">        GEOGCS[&quot;TM65&quot;,</span><br/><span class="hl-5">            DATUM[&quot;TM65&quot;,</span><br/><span class="hl-5">                SPHEROID[&quot;Airy Modified 1849&quot;,6377340.189,299.3249646],</span><br/><span class="hl-5">                TOWGS84[482.5,-130.6,564.6,-1.042,-0.214,-0.631,8.15]],</span><br/><span class="hl-5">            PRIMEM[&quot;Greenwich&quot;,0,</span><br/><span class="hl-5">                AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]],</span><br/><span class="hl-5">            UNIT[&quot;degree&quot;,0.0174532925199433,</span><br/><span class="hl-5">                AUTHORITY[&quot;EPSG&quot;,&quot;9122&quot;]],</span><br/><span class="hl-5">            AUTHORITY[&quot;EPSG&quot;,&quot;4299&quot;]],</span><br/><span class="hl-5">        PROJECTION[&quot;Transverse_Mercator&quot;],</span><br/><span class="hl-5">        PARAMETER[&quot;latitude_of_origin&quot;,53.5],</span><br/><span class="hl-5">        PARAMETER[&quot;central_meridian&quot;,-8],</span><br/><span class="hl-5">        PARAMETER[&quot;scale_factor&quot;,1.000035],</span><br/><span class="hl-5">        PARAMETER[&quot;false_easting&quot;,200000],</span><br/><span class="hl-5">        PARAMETER[&quot;false_northing&quot;,250000],</span><br/><span class="hl-5">        UNIT[&quot;metre&quot;,1,</span><br/><span class="hl-5">            AUTHORITY[&quot;EPSG&quot;,&quot;9001&quot;]],</span><br/><span class="hl-5">        AXIS[&quot;Easting&quot;,EAST],</span><br/><span class="hl-5">        AXIS[&quot;Northing&quot;,NORTH],</span><br/><span class="hl-5">        AUTHORITY[&quot;EPSG&quot;,&quot;29902&quot;]]`</span><span class="hl-1">,</span><br/><span class="hl-1">);</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="md:maps-and-layers" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Maps and layers<a href="#md:maps-and-layers" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The <a href="./classes/core.layer.Layer.html"><code>Layer</code></a> class supports transformation of data from their source CRS (the one in the <a href="./classes/sources.ImageSource.html"><code>ImageSource</code></a>) to the Instance CRS.</p>
+<p>💡 All CRSes used by layers must be registered with <a href="./classes/core.geographic.CoordinateSystem.html#register"><code>CoordinateSystem.register()</code></a> as well.</p>
+<a id="md:other-entities" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Other entities<a href="#md:other-entities" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Except otherwise specified, entities do not support transformation of data from their source into the Instance CRS. This means that it is not possible to display a point cloud that is in a different CRS than the instance's.</p>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#md:introduction"><span>Introduction</span></a><a href="#md:about-this-documentation"><span>About this documentation</span></a><a href="#md:instance"><span>Instance</span></a><ul><li><a href="#md:the-main-loop"><span>The main loop</span></a></li></ul><a href="#md:entities"><span>Entities</span></a><a href="#md:the-progress-and-loading-properties"><span>The progress and loading properties</span></a><a href="#md:memory-management"><span>Memory management</span></a><a href="#md:coordinate-systems"><span>Coordinate systems</span></a><ul><li><a href="#md:register-a-custom-crs"><span>Register a custom CRS</span></a></li><li><a href="#md:maps-and-layers"><span>Maps and layers</span></a></li><li><a href="#md:other-entities"><span>Other entities</span></a></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="modules.html" class="current"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="assets/icons.svg#icon-1"></use></svg><span>API (v1.0.0) - Giro3D</span></a><ul class="tsd-small-nested-navigation" id="tsd-nav-container" data-base="."><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p><p>Copyright <strong>Giro3D</strong> 2018-2026, licensed under <a target="blank" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</href></p></footer><div class="overlay"></div><script>
+if (document.location.pathname === "/apidoc/" || document.location.pathname === "/" || document.location.pathname.endsWith("/apidoc/index.html") || document.location.pathname.endsWith("/apidoc/")) {
+    document.querySelector(".col-content .tsd-page-title").style.display = "none";
+}
+</script></body></html>

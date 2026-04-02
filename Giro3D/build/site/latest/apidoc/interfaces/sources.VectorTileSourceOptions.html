@@ -1,0 +1,161 @@
+<!DOCTYPE html><html class="default" lang="en"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>VectorTileSourceOptions | API (v1.0.0) - Giro3D</title><meta name="description" content="Documentation for API (v1.0.0) - Giro3D"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><link rel="stylesheet" href="../assets/custom.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script>
+<link rel="icon" href="/images/favicon.svg" />
+<link rel="stylesheet" href="/assets/bootstrap-custom.css" />
+</head><body><script>document.documentElement.dataset.theme = "light";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script>
+
+<header class="header bg-light" data-bs-theme="">
+    <div class="container-fluid">
+        <a href="/" class="navbar-brand mx-0">
+            <img
+                src="/images/favicon.svg"
+                class="brand"
+                width="32"
+                height="32"
+            />
+        </a>
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav navbar-nav-left">
+                
+                <li class="nav-item">
+    <a
+        class="nav-link  "
+        href="/"
+    >
+        Home
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary "
+        href="/giro3d.html"
+    >
+        Giro3D framework
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-success "
+        href="/piero.html"
+    >
+        Piero application
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary "
+        href="/latest/tutorials/getting-started.html"
+    >
+        Getting started with Giro3D
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary "
+        href="/latest/examples/index.html"
+    >
+        Giro3D examples
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary active"
+        href="/latest/apidoc/index.html"
+    >
+        API documentation
+    </a>
+</li>
+
+
+                <li class="nav-item">
+                    <span
+                        class="navbar-text badge text-bg-info"
+                        >Version
+                        v1.0.0</span
+                    >
+                </li>
+            </ul>
+
+            
+
+            
+            <form class="form-inline" id="tsd-search" role="search" data-base="..">
+    <input
+        name="q"
+        type="text"
+        id="tsd-search-field"
+        aria-label="Search"
+        class="form-control search-query"
+        placeholder="Search"
+        autocomplete="off"
+        autofocus
+    />
+    <div class="results"></div>
+</form>
+
+            
+
+            <ul class="navbar-nav ms-2">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://gitlab.com/giro3d/giro3D" target="_blank"
+                        >GitLab <i class="bi bi-box-arrow-up-right"></i
+                    ></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+<div class="container-fluid container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"><li><a href="../modules.html">API (v1.0.0) - Giro3D</a></li><li><a href="../modules/sources.html">sources</a></li><li><a href="sources.VectorTileSourceOptions.html">VectorTileSourceOptions</a></li></ul><h1>Interface VectorTileSourceOptions</h1></div><div class="tsd-signature"><span class="tsd-signature-keyword">interface </span><span class="tsd-kind-interface">VectorTileSourceOptions</span> <span class="tsd-signature-symbol">{ </span><br/><span>    </span><a class="tsd-kind-property" href="sources.VectorTileSourceOptions.html#backgroundColor">backgroundColor</a><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><a class="tsd-kind-property" href="sources.VectorTileSourceOptions.html#colorSpace">colorSpace</a><span class="tsd-signature-symbol">?: </span><a href="../types/external.three.ColorSpace.html" class="tsd-signature-type tsd-kind-type-alias">ColorSpace</a><span class="tsd-signature-symbol">; </span><br/><span>    </span><a class="tsd-kind-property" href="sources.VectorTileSourceOptions.html#containsFn">containsFn</a><span class="tsd-signature-symbol">?: </span><a href="../types/sources.CustomContainsFn.html" class="tsd-signature-type tsd-kind-type-alias">CustomContainsFn</a><span class="tsd-signature-symbol">; </span><br/><span>    </span><a class="tsd-kind-property" href="sources.VectorTileSourceOptions.html#flipY">flipY</a><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><a class="tsd-kind-property" href="sources.VectorTileSourceOptions.html#format">format</a><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">FeatureFormat</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">RenderFeature</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><a class="tsd-kind-property" href="sources.VectorTileSourceOptions.html#is8bit">is8bit</a><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><a class="tsd-kind-property" href="sources.VectorTileSourceOptions.html#requestPriority">requestPriority</a><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">RequestPriority</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><a class="tsd-kind-property" href="sources.VectorTileSourceOptions.html#style">style</a><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Style</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">StyleFunction</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><a class="tsd-kind-property" href="sources.VectorTileSourceOptions.html#synchronous">synchronous</a><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><a class="tsd-kind-property" href="sources.VectorTileSourceOptions.html#transparent">transparent</a><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><a class="tsd-kind-property" href="sources.VectorTileSourceOptions.html#url">url</a><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span></div><section class="tsd-panel tsd-hierarchy"><h4>Hierarchy (<a href="../hierarchy.html#sources.VectorTileSourceOptions">view full</a>)</h4><ul class="tsd-hierarchy"><li><a href="sources.ImageSourceOptions.html" class="tsd-signature-type tsd-kind-interface">ImageSourceOptions</a><ul class="tsd-hierarchy"><li><span class="target">VectorTileSourceOptions</span></li></ul></li></ul></section><aside class="tsd-sources"><ul><li>Defined in sources/VectorTileSource.ts:141</li></ul></aside><section class="tsd-panel-group tsd-index-group"><section class="tsd-panel tsd-index-panel"><details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><h5 class="tsd-index-heading uppercase" role="button" aria-expanded="false" tabIndex="0"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><use href="../assets/icons.svg#icon-chevronSmall"></use></svg> Index</h5></summary><div class="tsd-accordion-details"><section class="tsd-index-section"><h3 class="tsd-index-heading">Properties</h3><div class="tsd-index-list"><a href="sources.VectorTileSourceOptions.html#backgroundColor" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>background<wbr/>Color?</span></a>
+<a href="sources.VectorTileSourceOptions.html#colorSpace" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>color<wbr/>Space?</span></a>
+<a href="sources.VectorTileSourceOptions.html#containsFn" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>contains<wbr/>Fn?</span></a>
+<a href="sources.VectorTileSourceOptions.html#flipY" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>flipY?</span></a>
+<a href="sources.VectorTileSourceOptions.html#format" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>format?</span></a>
+<a href="sources.VectorTileSourceOptions.html#is8bit" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>is8bit?</span></a>
+<a href="sources.VectorTileSourceOptions.html#requestPriority" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>request<wbr/>Priority?</span></a>
+<a href="sources.VectorTileSourceOptions.html#style" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>style</span></a>
+<a href="sources.VectorTileSourceOptions.html#synchronous" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>synchronous?</span></a>
+<a href="sources.VectorTileSourceOptions.html#transparent" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>transparent?</span></a>
+<a href="sources.VectorTileSourceOptions.html#url" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>url</span></a>
+</div></section></div></details></section></section><details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Properties"><h2><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="../assets/icons.svg#icon-chevronDown"></use></svg> Properties</h2></summary><section><section class="tsd-panel tsd-member"><a id="backgroundColor" class="tsd-anchor"></a><h3 class="tsd-anchor-link"><code class="tsd-tag">Optional</code><span>background<wbr/>Color</span><a href="#backgroundColor" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><div class="tsd-signature"><span class="tsd-kind-property">background<wbr/>Color</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div><div class="tsd-comment tsd-typography"><p>The background color of the tiles.</p>
+</div><div class="tsd-comment tsd-typography"></div><aside class="tsd-sources"><ul><li>Defined in sources/VectorTileSource.ts:150</li></ul></aside></section><section class="tsd-panel tsd-member tsd-is-inherited"><a id="colorSpace" class="tsd-anchor"></a><h3 class="tsd-anchor-link"><code class="tsd-tag">Optional</code><span>color<wbr/>Space</span><a href="#colorSpace" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><div class="tsd-signature"><span class="tsd-kind-property">color<wbr/>Space</span><span class="tsd-signature-symbol">?:</span> <a href="../types/external.three.ColorSpace.html" class="tsd-signature-type tsd-kind-type-alias">ColorSpace</a></div><div class="tsd-comment tsd-typography"><p>The custom color space of the generated textures.
+See <a href="https://threejs.org/docs/#manual/en/introduction/Color-management" target="_blank" class="external">https://threejs.org/docs/#manual/en/introduction/Color-management</a> for
+more information. If unspecified, the source considers that 8-bit images are in the sRGB
+color space, otherwise <code>NoColorSpace</code>.</p>
+</div><div class="tsd-comment tsd-typography"></div><aside class="tsd-sources"><p>Inherited from <a href="sources.ImageSourceOptions.html">ImageSourceOptions</a>.<a href="sources.ImageSourceOptions.html#colorSpace">colorSpace</a></p><ul><li>Defined in sources/ImageSource.ts:117</li></ul></aside></section><section class="tsd-panel tsd-member tsd-is-inherited"><a id="containsFn" class="tsd-anchor"></a><h3 class="tsd-anchor-link"><code class="tsd-tag">Optional</code><span>contains<wbr/>Fn</span><a href="#containsFn" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><div class="tsd-signature"><span class="tsd-kind-property">contains<wbr/>Fn</span><span class="tsd-signature-symbol">?:</span> <a href="../types/sources.CustomContainsFn.html" class="tsd-signature-type tsd-kind-type-alias">CustomContainsFn</a></div><div class="tsd-comment tsd-typography"><p>The custom function to test if a given extent is contained in this
+source. Note: we assume this function accepts extents in this source's CRS.</p>
+</div><div class="tsd-comment tsd-typography"></div><aside class="tsd-sources"><p>Inherited from <a href="sources.ImageSourceOptions.html">ImageSourceOptions</a>.<a href="sources.ImageSourceOptions.html#containsFn">containsFn</a></p><ul><li>Defined in sources/ImageSource.ts:110</li></ul></aside></section><section class="tsd-panel tsd-member tsd-is-inherited"><a id="flipY" class="tsd-anchor"></a><h3 class="tsd-anchor-link"><code class="tsd-tag">Optional</code><span>flipY</span><a href="#flipY" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><div class="tsd-signature"><span class="tsd-kind-property">flipY</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span></div><div class="tsd-comment tsd-typography"><p>Should images be flipped vertically during composition ?</p>
+</div><div class="tsd-comment tsd-typography"></div><aside class="tsd-sources"><p>Inherited from <a href="sources.ImageSourceOptions.html">ImageSourceOptions</a>.<a href="sources.ImageSourceOptions.html#flipY">flipY</a></p><ul><li>Defined in sources/ImageSource.ts:99</li></ul></aside></section><section class="tsd-panel tsd-member"><a id="format" class="tsd-anchor"></a><h3 class="tsd-anchor-link"><code class="tsd-tag">Optional</code><span>format</span><a href="#format" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><div class="tsd-signature"><span class="tsd-kind-property">format</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">FeatureFormat</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">RenderFeature</span><span class="tsd-signature-symbol">&gt;</span></div><div class="tsd-comment tsd-typography"><p>The format of the vector tile. Default is MVT.</p>
+</div><div class="tsd-comment tsd-typography"></div><aside class="tsd-sources"><ul><li>Defined in sources/VectorTileSource.ts:155</li></ul></aside></section><section class="tsd-panel tsd-member tsd-is-inherited"><a id="is8bit" class="tsd-anchor"></a><h3 class="tsd-anchor-link"><code class="tsd-tag">Optional</code><span>is8bit</span><a href="#is8bit" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><div class="tsd-signature"><span class="tsd-kind-property">is8bit</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span></div><div class="tsd-comment tsd-typography"><p>The data type of images generated.
+For regular color images, this should be <code>true</code>. For images with a high dynamic range,
+or images that requires additional processing, this should be <code>false</code>.</p>
+</div><div class="tsd-comment tsd-typography"></div><aside class="tsd-sources"><p>Inherited from <a href="sources.ImageSourceOptions.html">ImageSourceOptions</a>.<a href="sources.ImageSourceOptions.html#is8bit">is8bit</a></p><ul><li>Defined in sources/ImageSource.ts:105</li></ul></aside></section><section class="tsd-panel tsd-member tsd-is-inherited"><a id="requestPriority" class="tsd-anchor"></a><h3 class="tsd-anchor-link"><code class="tsd-tag">Optional</code><span>request<wbr/>Priority</span><a href="#requestPriority" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><div class="tsd-signature"><span class="tsd-kind-property">request<wbr/>Priority</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">RequestPriority</span></div><div class="tsd-comment tsd-typography"><p>The relative <a href="https://developer.mozilla.org/en-US/docs/Web/API/RequestInit#priority" target="_blank" class="external">priority</a> of HTTP requests emitted by this source.</p>
+</div><div class="tsd-comment tsd-typography"><div class="tsd-tag-Default Value"><h4 class="tsd-anchor-link"><a id="Default Value" class="tsd-anchor"></a>Default Value<a href="#Default Value" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p><code>'auto'</code></p>
+</div></div><aside class="tsd-sources"><p>Inherited from <a href="sources.ImageSourceOptions.html">ImageSourceOptions</a>.<a href="sources.ImageSourceOptions.html#requestPriority">requestPriority</a></p><ul><li>Defined in sources/ImageSource.ts:126</li></ul></aside></section><section class="tsd-panel tsd-member"><a id="style" class="tsd-anchor"></a><h3 class="tsd-anchor-link"><span>style</span><a href="#style" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><div class="tsd-signature"><span class="tsd-kind-property">style</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Style</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">StyleFunction</span></div><div class="tsd-comment tsd-typography"><p>The style or style function.</p>
+</div><div class="tsd-comment tsd-typography"></div><aside class="tsd-sources"><ul><li>Defined in sources/VectorTileSource.ts:160</li></ul></aside></section><section class="tsd-panel tsd-member tsd-is-inherited"><a id="synchronous" class="tsd-anchor"></a><h3 class="tsd-anchor-link"><code class="tsd-tag">Optional</code><span>synchronous</span><a href="#synchronous" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><div class="tsd-signature"><span class="tsd-kind-property">synchronous</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span></div><div class="tsd-comment tsd-typography"><p>Is this source able to generate images synchronously ?</p>
+</div><div class="tsd-comment tsd-typography"></div><aside class="tsd-sources"><p>Inherited from <a href="sources.ImageSourceOptions.html">ImageSourceOptions</a>.<a href="sources.ImageSourceOptions.html#synchronous">synchronous</a></p><ul><li>Defined in sources/ImageSource.ts:121</li></ul></aside></section><section class="tsd-panel tsd-member tsd-is-inherited"><a id="transparent" class="tsd-anchor"></a><h3 class="tsd-anchor-link"><code class="tsd-tag">Optional</code><span>transparent</span><a href="#transparent" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><div class="tsd-signature"><span class="tsd-kind-property">transparent</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span></div><div class="tsd-comment tsd-typography"><p>Should the generated images be considered transparent ?</p>
+</div><div class="tsd-comment tsd-typography"><div class="tsd-tag-Default Value"><h4 class="tsd-anchor-link"><a id="Default Value-1" class="tsd-anchor"></a>Default Value<a href="#Default Value-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-0">false</span>
+</code><button type="button">Copy</button></pre>
+
+</div></div><aside class="tsd-sources"><p>Inherited from <a href="sources.ImageSourceOptions.html">ImageSourceOptions</a>.<a href="sources.ImageSourceOptions.html#transparent">transparent</a></p><ul><li>Defined in sources/ImageSource.ts:131</li></ul></aside></section><section class="tsd-panel tsd-member"><a id="url" class="tsd-anchor"></a><h3 class="tsd-anchor-link"><span>url</span><a href="#url" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><div class="tsd-signature"><span class="tsd-kind-property">url</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div><div class="tsd-comment tsd-typography"><p>The URL to the vector tile layer.</p>
+</div><div class="tsd-comment tsd-typography"></div><aside class="tsd-sources"><ul><li>Defined in sources/VectorTileSource.ts:145</li></ul></aside></section></section></details></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="tsd-otp-Properties"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Properties</summary><div><a href="#backgroundColor" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>background<wbr/>Color</span></a><a href="#colorSpace" class="tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>color<wbr/>Space</span></a><a href="#containsFn" class="tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>contains<wbr/>Fn</span></a><a href="#flipY" class="tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>flipY</span></a><a href="#format" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>format</span></a><a href="#is8bit" class="tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>is8bit</span></a><a href="#requestPriority" class="tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>request<wbr/>Priority</span></a><a href="#style" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>style</span></a><a href="#synchronous" class="tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>synchronous</span></a><a href="#transparent" class="tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>transparent</span></a><a href="#url" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>url</span></a></div></details></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="../modules.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1"></use></svg><span>API (v1.0.0) - Giro3D</span></a><ul class="tsd-small-nested-navigation" id="tsd-nav-container" data-base=".."><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p><p>Copyright <strong>Giro3D</strong> 2018-2026, licensed under <a target="blank" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</href></p></footer><div class="overlay"></div><script>
+if (document.location.pathname === "/apidoc/" || document.location.pathname === "/" || document.location.pathname.endsWith("/apidoc/index.html") || document.location.pathname.endsWith("/apidoc/")) {
+    document.querySelector(".col-content .tsd-page-title").style.display = "none";
+}
+</script></body></html>

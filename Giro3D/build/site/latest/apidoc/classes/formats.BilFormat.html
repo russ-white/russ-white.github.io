@@ -1,0 +1,158 @@
+<!DOCTYPE html><html class="default" lang="en"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>BilFormat | API (v1.0.0) - Giro3D</title><meta name="description" content="Documentation for API (v1.0.0) - Giro3D"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><link rel="stylesheet" href="../assets/custom.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script>
+<link rel="icon" href="/images/favicon.svg" />
+<link rel="stylesheet" href="/assets/bootstrap-custom.css" />
+</head><body><script>document.documentElement.dataset.theme = "light";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script>
+
+<header class="header bg-light" data-bs-theme="">
+    <div class="container-fluid">
+        <a href="/" class="navbar-brand mx-0">
+            <img
+                src="/images/favicon.svg"
+                class="brand"
+                width="32"
+                height="32"
+            />
+        </a>
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav navbar-nav-left">
+                
+                <li class="nav-item">
+    <a
+        class="nav-link  "
+        href="/"
+    >
+        Home
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary "
+        href="/giro3d.html"
+    >
+        Giro3D framework
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-success "
+        href="/piero.html"
+    >
+        Piero application
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary "
+        href="/latest/tutorials/getting-started.html"
+    >
+        Getting started with Giro3D
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary "
+        href="/latest/examples/index.html"
+    >
+        Giro3D examples
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary active"
+        href="/latest/apidoc/index.html"
+    >
+        API documentation
+    </a>
+</li>
+
+
+                <li class="nav-item">
+                    <span
+                        class="navbar-text badge text-bg-info"
+                        >Version
+                        v1.0.0</span
+                    >
+                </li>
+            </ul>
+
+            
+
+            
+            <form class="form-inline" id="tsd-search" role="search" data-base="..">
+    <input
+        name="q"
+        type="text"
+        id="tsd-search-field"
+        aria-label="Search"
+        class="form-control search-query"
+        placeholder="Search"
+        autocomplete="off"
+        autofocus
+    />
+    <div class="results"></div>
+</form>
+
+            
+
+            <ul class="navbar-nav ms-2">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://gitlab.com/giro3d/giro3D" target="_blank"
+                        >GitLab <i class="bi bi-box-arrow-up-right"></i
+                    ></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+<div class="container-fluid container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"><li><a href="../modules.html">API (v1.0.0) - Giro3D</a></li><li><a href="../modules/formats.html">formats</a></li><li><a href="formats.BilFormat.html">BilFormat</a></li></ul><h1>Class BilFormat</h1></div><section class="tsd-panel tsd-comment"><div class="tsd-comment tsd-typography"><p>Decoder for <a href="https://desktop.arcgis.com/en/arcmap/10.3/manage-data/raster-and-images/bil-bip-and-bsq-raster-files.htm" target="_blank" class="external">BIL</a> images.</p>
+<p>At the moment, only single band BIL files are supported and it is tested only on IGN elevation
+WMS and WMTS layers.</p>
+<pre><code class="js"><span class="hl-1"> </span><span class="hl-6">// Create an elevation source</span><br/><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">source</span><span class="hl-1"> = </span><span class="hl-0">new</span><span class="hl-1"> </span><span class="hl-3">WmsSource</span><span class="hl-1">({</span><br/><span class="hl-1">    </span><span class="hl-4">url:</span><span class="hl-1"> </span><span class="hl-5">&#39;https://data.geopf.fr/wms-r&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">projection:</span><span class="hl-1"> </span><span class="hl-5">&#39;EPSG:2154&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">layer:</span><span class="hl-1"> </span><span class="hl-5">&#39;ELEVATION.ELEVATIONGRIDCOVERAGE.HIGHRES&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">imageFormat:</span><span class="hl-1"> </span><span class="hl-5">&#39;image/x-bil;bits=32&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">format:</span><span class="hl-1"> </span><span class="hl-0">new</span><span class="hl-1"> </span><span class="hl-3">BilFormat</span><span class="hl-1">(),</span><br/><span class="hl-1">});</span><br/><br/><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">elevationLayer</span><span class="hl-1"> = </span><span class="hl-0">new</span><span class="hl-1"> </span><span class="hl-3">ElevationLayer</span><span class="hl-1">({ </span><span class="hl-4">source</span><span class="hl-1"> });</span><br/><br/><span class="hl-4">map</span><span class="hl-1">.</span><span class="hl-3">addLayer</span><span class="hl-1">(</span><span class="hl-4">elevationLayer</span><span class="hl-1">);</span><br/>
+</code><button type="button">Copy</button></pre>
+
+<p><a href="/examples/ign-data.html">See it in action</a>.</p>
+</div><div class="tsd-comment tsd-typography"></div></section><section class="tsd-panel tsd-hierarchy"><h4>Hierarchy (<a href="../hierarchy.html#formats.BilFormat">view full</a>)</h4><ul class="tsd-hierarchy"><li><a href="formats.ImageFormat.html" class="tsd-signature-type tsd-kind-class">ImageFormat</a><ul class="tsd-hierarchy"><li><span class="target">BilFormat</span></li></ul></li></ul></section><aside class="tsd-sources"><ul><li>Defined in formats/BilFormat.ts:49</li></ul></aside><section class="tsd-panel-group tsd-index-group"><section class="tsd-panel tsd-index-panel"><details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><h5 class="tsd-index-heading uppercase" role="button" aria-expanded="false" tabIndex="0"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><use href="../assets/icons.svg#icon-chevronSmall"></use></svg> Index</h5></summary><div class="tsd-accordion-details"><section class="tsd-index-section"><h3 class="tsd-index-heading">Constructors</h3><div class="tsd-index-list"><a href="formats.BilFormat.html#constructor" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-512"></use></svg><span>constructor</span></a>
+</div></section><section class="tsd-index-section"><h3 class="tsd-index-heading">Properties</h3><div class="tsd-index-list"><a href="formats.BilFormat.html#dataType" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>data<wbr/>Type</span></a>
+<a href="formats.BilFormat.html#flipY" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>flipY</span></a>
+<a href="formats.BilFormat.html#isBilFormat" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>is<wbr/>Bil<wbr/>Format</span></a>
+<a href="formats.BilFormat.html#isImageFormat" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>is<wbr/>Image<wbr/>Format</span></a>
+<a href="formats.BilFormat.html#type" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>type</span></a>
+</div></section><section class="tsd-index-section"><h3 class="tsd-index-heading">Methods</h3><div class="tsd-index-list"><a href="formats.BilFormat.html#decode" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-2048"></use></svg><span>decode</span></a>
+</div></section></div></details></section></section><details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Constructors"><h2><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="../assets/icons.svg#icon-chevronDown"></use></svg> Constructors</h2></summary><section><section class="tsd-panel tsd-member"><a id="constructor" class="tsd-anchor"></a><h3 class="tsd-anchor-link"><span>constructor</span><a href="#constructor" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ul class="tsd-signatures"><li class="tsd-signature tsd-anchor-link"><a id="constructor.new_BilFormat" class="tsd-anchor"></a><span class="tsd-kind-constructor-signature">new <wbr/>Bil<wbr/>Format</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">options</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="formats.BilFormat.html" class="tsd-signature-type tsd-kind-class">BilFormat</a><a href="#constructor.new_BilFormat" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></li><li class="tsd-description"><div class="tsd-parameters"><h4 class="tsd-parameters-title">Parameters</h4><ul class="tsd-parameter-list"><li><span><code class="tsd-tag">Optional</code><span class="tsd-kind-parameter">options</span>: <span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">enableWorkers</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">workerConcurrency</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span></span><div class="tsd-comment tsd-typography"><p>Decoder options.</p>
+</div><div class="tsd-comment tsd-typography"></div><ul class="tsd-parameters"><li class="tsd-parameter"><h5><code class="tsd-tag">Optional</code><span class="tsd-kind-property">enable<wbr/>Workers</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span></h5><div class="tsd-comment tsd-typography"><p>Enables processing raster data in web workers.</p>
+</div><div class="tsd-comment tsd-typography"><div class="tsd-tag-Default Value"><h4 class="tsd-anchor-link"><a id="Default Value" class="tsd-anchor"></a>Default Value<a href="#Default Value" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-0">true</span>
+</code><button type="button">Copy</button></pre>
+
+</div></div></li><li class="tsd-parameter"><h5><code class="tsd-tag">Optional</code><span class="tsd-kind-property">worker<wbr/>Concurrency</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span></h5><div class="tsd-comment tsd-typography"><p>The maximum number of workers created by the worker pool.
+If <code>undefined</code>, the maximum number of workers will be allowed.</p>
+</div><div class="tsd-comment tsd-typography"><div class="tsd-tag-Default Value"><h4 class="tsd-anchor-link"><a id="Default Value-1" class="tsd-anchor"></a>Default Value<a href="#Default Value-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-0">undefined</span>
+</code><button type="button">Copy</button></pre>
+
+</div></div></li></ul></li></ul></div><h4 class="tsd-returns-title">Returns <a href="formats.BilFormat.html" class="tsd-signature-type tsd-kind-class">BilFormat</a></h4><div class="tsd-comment tsd-typography"></div><aside class="tsd-sources"><p>Overrides <a href="formats.ImageFormat.html">ImageFormat</a>.<a href="formats.ImageFormat.html#constructor">constructor</a></p><ul><li>Defined in formats/BilFormat.ts:59</li></ul></aside></li></ul></section></section></details><details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Properties"><h2><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="../assets/icons.svg#icon-chevronDown"></use></svg> Properties</h2></summary><section><section class="tsd-panel tsd-member tsd-is-inherited"><a id="dataType" class="tsd-anchor"></a><h3 class="tsd-anchor-link"><code class="tsd-tag">Readonly</code><span>data<wbr/>Type</span><a href="#dataType" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><div class="tsd-signature"><span class="tsd-kind-property">data<wbr/>Type</span><span class="tsd-signature-symbol">:</span> <a href="../types/external.three.TextureDataType.html" class="tsd-signature-type tsd-kind-type-alias">TextureDataType</a></div><aside class="tsd-sources"><p>Inherited from <a href="formats.ImageFormat.html">ImageFormat</a>.<a href="formats.ImageFormat.html#dataType">dataType</a></p><ul><li>Defined in formats/ImageFormat.ts:33</li></ul></aside></section><section class="tsd-panel tsd-member tsd-is-inherited"><a id="flipY" class="tsd-anchor"></a><h3 class="tsd-anchor-link"><code class="tsd-tag">Readonly</code><span>flipY</span><a href="#flipY" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><div class="tsd-signature"><span class="tsd-kind-property">flipY</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div><aside class="tsd-sources"><p>Inherited from <a href="formats.ImageFormat.html">ImageFormat</a>.<a href="formats.ImageFormat.html#flipY">flipY</a></p><ul><li>Defined in formats/ImageFormat.ts:32</li></ul></aside></section><section class="tsd-panel tsd-member"><a id="isBilFormat" class="tsd-anchor"></a><h3 class="tsd-anchor-link"><code class="tsd-tag">Readonly</code><span>is<wbr/>Bil<wbr/>Format</span><a href="#isBilFormat" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><div class="tsd-signature"><span class="tsd-kind-property">is<wbr/>Bil<wbr/>Format</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = ...</span></div><aside class="tsd-sources"><ul><li>Defined in formats/BilFormat.ts:50</li></ul></aside></section><section class="tsd-panel tsd-member tsd-is-inherited"><a id="isImageFormat" class="tsd-anchor"></a><h3 class="tsd-anchor-link"><code class="tsd-tag">Readonly</code><span>is<wbr/>Image<wbr/>Format</span><a href="#isImageFormat" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><div class="tsd-signature"><span class="tsd-kind-property">is<wbr/>Image<wbr/>Format</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">true</span><span class="tsd-signature-symbol"> = ...</span></div><aside class="tsd-sources"><p>Inherited from <a href="formats.ImageFormat.html">ImageFormat</a>.<a href="formats.ImageFormat.html#isImageFormat">isImageFormat</a></p><ul><li>Defined in formats/ImageFormat.ts:29</li></ul></aside></section><section class="tsd-panel tsd-member"><a id="type" class="tsd-anchor"></a><h3 class="tsd-anchor-link"><code class="tsd-tag">Readonly</code><span>type</span><a href="#type" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><div class="tsd-signature"><span class="tsd-kind-property">type</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;BilFormat&quot;</span><span class="tsd-signature-symbol"> = ...</span></div><aside class="tsd-sources"><p>Overrides <a href="formats.ImageFormat.html">ImageFormat</a>.<a href="formats.ImageFormat.html#type">type</a></p><ul><li>Defined in formats/BilFormat.ts:51</li></ul></aside></section></section></details><details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Methods"><h2><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="../assets/icons.svg#icon-chevronDown"></use></svg> Methods</h2></summary><section><section class="tsd-panel tsd-member"><a id="decode" class="tsd-anchor"></a><h3 class="tsd-anchor-link"><span>decode</span><a href="#decode" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ul class="tsd-signatures"><li class="tsd-signature tsd-anchor-link"><a id="decode.decode-1" class="tsd-anchor"></a><span class="tsd-kind-call-signature">decode</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">blob</span>, <span class="tsd-kind-parameter">options</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">DecodeResult</span><span class="tsd-signature-symbol">&gt;</span><a href="#decode.decode-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></li><li class="tsd-description"><div class="tsd-comment tsd-typography"><p>Decode a Bil blob into a
+<a href="https://threejs.org/docs/?q=texture#api/en/textures/DataTexture" target="_blank" class="external">DataTexture</a> containing
+the elevation data. At the moment only one band BIL is supported.</p>
+</div><div class="tsd-parameters"><h4 class="tsd-parameters-title">Parameters</h4><ul class="tsd-parameter-list"><li><span><span class="tsd-kind-parameter">blob</span>: <span class="tsd-signature-type">Blob</span></span><div class="tsd-comment tsd-typography"><p>the data to decode</p>
+</div><div class="tsd-comment tsd-typography"></div></li><li><span><span class="tsd-kind-parameter">options</span>: <a href="../interfaces/formats.DecodeOptions.html" class="tsd-signature-type tsd-kind-interface">DecodeOptions</a></span><div class="tsd-comment tsd-typography"><p>the decoding options</p>
+</div><div class="tsd-comment tsd-typography"></div></li></ul></div><h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">DecodeResult</span><span class="tsd-signature-symbol">&gt;</span></h4><div class="tsd-comment tsd-typography"></div><aside class="tsd-sources"><p>Overrides <a href="formats.ImageFormat.html">ImageFormat</a>.<a href="formats.ImageFormat.html#decode">decode</a></p><ul><li>Defined in formats/BilFormat.ts:87</li></ul></aside></li></ul></section></section></details></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="tsd-otp-Constructors"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Constructors</summary><div><a href="#constructor" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-512"></use></svg><span>constructor</span></a></div></details><details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="tsd-otp-Properties"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Properties</summary><div><a href="#dataType" class="tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>data<wbr/>Type</span></a><a href="#flipY" class="tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>flipY</span></a><a href="#isBilFormat" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>is<wbr/>Bil<wbr/>Format</span></a><a href="#isImageFormat" class="tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>is<wbr/>Image<wbr/>Format</span></a><a href="#type" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1024"></use></svg><span>type</span></a></div></details><details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="tsd-otp-Methods"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Methods</summary><div><a href="#decode" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-2048"></use></svg><span>decode</span></a></div></details></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="../modules.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1"></use></svg><span>API (v1.0.0) - Giro3D</span></a><ul class="tsd-small-nested-navigation" id="tsd-nav-container" data-base=".."><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p><p>Copyright <strong>Giro3D</strong> 2018-2026, licensed under <a target="blank" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</href></p></footer><div class="overlay"></div><script>
+if (document.location.pathname === "/apidoc/" || document.location.pathname === "/" || document.location.pathname.endsWith("/apidoc/index.html") || document.location.pathname.endsWith("/apidoc/")) {
+    document.querySelector(".col-content .tsd-page-title").style.display = "none";
+}
+</script></body></html>

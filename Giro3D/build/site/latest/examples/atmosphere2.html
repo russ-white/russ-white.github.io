@@ -1,0 +1,1295 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Atmosphere - Giro3D</title>
+<meta charset="UTF-8" />
+<meta name="name" content="Atmosphere - Giro3D" />
+<meta name="description" content="Create a realistic atmosphere and sky dome." />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<link rel="icon" href="/images/favicon.svg" />
+<link href="/assets/bootstrap-custom.css" rel="stylesheet" />
+<script src="/assets/bootstrap.bundle.min.js"></script>
+
+<!-- OpenGraph -->
+<meta
+    property="og:description"
+    content="A versatile framework to visualize geospatial data in the browser."
+/>
+<meta
+    property="og:image"
+    content="https://giro3d.org/latest/examples/screenshots/atmosphere2.jpg"
+/>
+<meta property="og:locale" content="en_US" />
+<meta property="og:title" content="Atmosphere - Giro3D" />
+<meta property="og:site_name" content="Giro3D" />
+<meta property="og:type" content="object" />
+<meta property="og:url" content="https://giro3d.org/latest/examples/atmosphere2.html" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta
+    name="twitter:description"
+    content="A versatile framework to visualize geospatial data in the browser."
+/>
+<meta name="twitter:dnt" content="on" />
+<meta
+    name="twitter:image"
+    content="https://giro3d.org/latest/examples/screenshots/atmosphere2.jpg"
+/>
+<meta name="twitter:title" content="Atmosphere - Giro3D" />
+<meta name="twitter:widgets:align" content="center" />
+
+
+        <link rel="stylesheet" type="text/css" href="css/example.css" />
+        
+    </head>
+    <body class="bg-light">
+        
+
+<header class="header bg-light" data-bs-theme="">
+    <div class="container-fluid">
+        <a href="/" class="navbar-brand mx-0">
+            <img
+                src="/images/favicon.svg"
+                class="brand"
+                width="32"
+                height="32"
+            />
+        </a>
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav navbar-nav-left">
+                
+                <li class="nav-item">
+    <a
+        class="nav-link  "
+        href="/"
+    >
+        Home
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary "
+        href="/giro3d.html"
+    >
+        Giro3D framework
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-success "
+        href="/piero.html"
+    >
+        Piero application
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary "
+        href="/latest/tutorials/getting-started.html"
+    >
+        Getting started with Giro3D
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary active"
+        href="/latest/examples/index.html"
+    >
+        Giro3D examples
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary "
+        href="/latest/apidoc/index.html"
+    >
+        API documentation
+    </a>
+</li>
+
+
+                <li class="nav-item">
+                    <span
+                        class="navbar-text badge text-bg-info"
+                        >Version
+                        v1.0.0</span
+                    >
+                </li>
+            </ul>
+
+            
+
+            
+
+            <ul class="navbar-nav ms-2">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://gitlab.com/giro3d/giro3D" target="_blank"
+                        >GitLab <i class="bi bi-box-arrow-up-right"></i
+                    ></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+
+        <div class="m-3">
+            <!-- Short description (same as in the example card) -->
+            <div>
+                <p class="text-muted">Create a realistic atmosphere and sky dome.</p>
+            </div>
+
+            <!-- 3D view -->
+            <div id="main-view" class="border position-relative" style="height: 65vh">
+                <!-- Viewer -->
+<!-- Note that we don't go to the bottom of the screen, we stop at the status bar -->
+<div id="view" class="m-0 p-0 w-100" style="height: calc(100% - 1.3rem)"></div>
+<!-- Inspector -->
+<div id="inspector" class="position-absolute top-0 start-0 mh-100 overflow-auto d-none"></div>
+<!-- Optional additional content from the example (custom buttons, etc.) -->
+<div id="gui" class="gui-init"><div class="side-pane-with-status-bar" style="width: 15rem">
+    <!--Parameters -->
+    <div class="card">
+        <div class="card-header">
+            Parameters
+            <button type="button" id="reset" class="btn btn-sm btn-primary rounded float-end">
+                reset
+            </button>
+        </div>
+
+        <div class="card-body">
+            <button
+                type="button"
+                class="btn btn-primary w-100"
+                id="set-ground-position"
+                title="Sets the camera position on the ground"
+            >
+                <i class="bi bi-crosshair"></i>
+                Set ground position
+            </button>
+
+            <hr />
+
+            <!-- Toggle outer atmosphere -->
+            <div class="form-check form-switch">
+                <input
+                    class="form-check-input"
+                    checked
+                    type="checkbox"
+                    role="switch"
+                    id="outer"
+                    autocomplete="off"
+                />
+                <label class="form-check-label" for="outer">Outer atmosphere</label>
+            </div>
+
+            <!-- Toggle inner atmosphere -->
+            <div class="form-check form-switch">
+                <input
+                    class="form-check-input"
+                    checked
+                    type="checkbox"
+                    role="switch"
+                    id="inner"
+                    autocomplete="off"
+                />
+                <label class="form-check-label" for="inner">Inner atmosphere</label>
+            </div>
+
+            <!-- Toggle sun position marker  -->
+            <div
+                class="form-check form-switch"
+                title="The sun position marker must match the apparent sun position in the sky dome. Any discrepancy indicates an error in the sky dome shader."
+            >
+                <input
+                    class="form-check-input"
+                    type="checkbox"
+                    role="switch"
+                    id="sun-marker"
+                    autocomplete="off"
+                />
+                <label class="form-check-label" for="sun-marker">Sun position marker</label>
+            </div>
+
+            <!-- Toggle automatic sun rotation -->
+            <div class="form-check form-switch">
+                <input
+                    class="form-check-input"
+                    checked
+                    type="checkbox"
+                    role="switch"
+                    id="automatic-sun-rotation"
+                    autocomplete="off"
+                />
+                <label class="form-check-label" for="automatic-sun-rotation"
+                    >Automatic sun rotation</label
+                >
+            </div>
+
+            <!-- Toggle ellipsoid helper -->
+            <div class="form-check form-switch">
+                <input
+                    class="form-check-input"
+                    checked
+                    type="checkbox"
+                    role="switch"
+                    id="show-ellipsoid"
+                    autocomplete="off"
+                />
+                <label class="form-check-label" for="show-ellipsoid">Show ellipsoid</label>
+            </div>
+
+            <!-- Toggle look at sun -->
+            <div class="form-check form-switch">
+                <input
+                    class="form-check-input"
+                    checked
+                    type="checkbox"
+                    role="switch"
+                    id="look-at-sun"
+                    autocomplete="off"
+                />
+                <label class="form-check-label" for="look-at-sun">Look at sun</label>
+            </div>
+
+            <!-- Globe color -->
+            <label class="form-check-label w-100 mt-3" for="globe-color">
+                <div class="row">
+                    <div class="col">Globe color</div>
+                    <div class="col">
+                        <input
+                            type="color"
+                            class="form-control form-control-color float-end h-100 w-100"
+                            id="globe-color"
+                            value="#2978b4"
+                            title="Globe color"
+                            autocomplete="off"
+                        />
+                    </div>
+                </div>
+            </label>
+
+            <!-- Thickness -->
+            <div class="row mt-2">
+                <div class="col-5">
+                    <label for="thickness" class="form-label">Thickness</label>
+                </div>
+                <div class="col">
+                    <input
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.0001"
+                        value="0"
+                        class="form-range"
+                        id="thickness"
+                        autocomplete="off"
+                    />
+                </div>
+            </div>
+
+            <h6 class="mt-3">Wavelengths ([0, 1])</h6>
+
+            <!-- Red -->
+            <div class="row">
+                <div class="col-3">
+                    <label for="red" class="form-label">Red</label>
+                </div>
+                <div class="col">
+                    <input
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.0001"
+                        value="0"
+                        class="form-range"
+                        id="red"
+                        autocomplete="off"
+                    />
+                </div>
+            </div>
+
+            <!-- Green -->
+            <div class="row">
+                <div class="col-3">
+                    <label for="green" class="form-label">Green</label>
+                </div>
+                <div class="col">
+                    <input
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.0001"
+                        value="0"
+                        class="form-range"
+                        id="green"
+                        autocomplete="off"
+                    />
+                </div>
+            </div>
+
+            <!-- Blue -->
+            <div class="row">
+                <div class="col-3">
+                    <label for="blue" class="form-label">Blue</label>
+                </div>
+                <div class="col">
+                    <input
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.0001"
+                        value="0"
+                        class="form-range"
+                        id="blue"
+                        autocomplete="off"
+                    />
+                </div>
+            </div>
+        </div>
+    </div>
+</div></div>
+<!-- Status bar -->
+<div id="status-bar" class="bg-light w-100 position-absolute bottom-0 start-0 status-bar">
+    <div
+        class="progress m-2 status-progress-bar"
+        role="progressbar"
+        style="height: 5px"
+        aria-label="Loading progress"
+        aria-valuenow="100"
+        aria-valuemin="0"
+        aria-valuemax="100"
+    >
+        <div id="progress-bar" class="progress-bar" style="width: 100%"></div>
+    </div>
+    <span id="loading-percent" class="status-progress-value">100%</span>
+    
+    <span class="text-center status-attribution" id="attributions"></span>
+    <!-- Coordinates -->
+    <div class="px-1 position-absolute end-0 d-inline-flex">
+        <div id="coordinates" class="mx-2 text-secondary" style="width: 18rem"></div>
+        <button type="button" id="crs" class="badge rounded-pill text-bg-secondary">WGS84</button>
+    </div>
+</div>
+<!-- Button area -->
+<div id="buttons" class="position-absolute top-0 start-0 mx-2 my-2 overflow-auto">
+    <!-- Full-screen button -->
+    <button
+        id="btnFullscreen"
+        type="button"
+        class="btn btn-light btn-sm mb-2"
+        title="toggle full screen"
+        style="align-items: center; justify-content: center"
+    >
+        <!-- Origin: https://icons.getbootstrap.com/icons/arrows-fullscreen/ -->
+        <i id="icon-fullscreen" class="bi bi-arrows-fullscreen"></i>
+    </button>
+
+    <!-- Toggle GUI button -->
+    <button
+        id="btnToggleGUI"
+        type="button"
+        class="btn btn-light btn-sm"
+        title="toggle GUI"
+        style="display: flex; align-items: center; justify-content: center"
+    >
+        <!-- Origin: https://icons.getbootstrap.com/icons/sliders/ -->
+        <i class="bi bi-sliders"></i>
+    </button>
+</div>
+
+<script type="module" src="__vendor.js"></script>
+<script type="module" src="__three.js"></script>
+<script type="module" src="__ol.js"></script>
+<script type="module" src="atmosphere2.js"></script>
+<script>
+    /* activate popovers */
+    const popoverTriggerList = [].slice.call(
+        document.querySelectorAll('[data-bs-toggle="popover"]'),
+    );
+    popoverTriggerList.map(
+        // bootstrap is used as script in the template, disable warning about undef
+        // eslint-disable-next-line no-undef
+        popoverTriggerEl =>
+            new bootstrap.Popover(popoverTriggerEl, {
+                trigger: 'hover',
+                placement: 'left',
+                content: document.getElementById(popoverTriggerEl.getAttribute('data-bs-content'))
+                    .innerHTML,
+                html: true,
+            }),
+    );
+
+    const toggleGUIButton = document.getElementById('btnToggleGUI');
+    const guiRoot = document.getElementById('gui');
+
+    if (guiRoot.childElementCount === 0) {
+        toggleGUIButton.remove();
+    } else {
+        var showGUI = window.getComputedStyle(guiRoot, null).display !== 'none';
+
+        function updateGUI(show) {
+            guiRoot.classList.remove('gui-init');
+            if (show) {
+                guiRoot.classList.remove('d-none');
+                toggleGUIButton.classList.remove('btn-light');
+                toggleGUIButton.classList.add('btn-primary');
+            } else {
+                guiRoot.classList.add('d-none');
+                toggleGUIButton.classList.remove('btn-primary');
+                toggleGUIButton.classList.add('btn-light');
+            }
+        }
+
+        if (toggleGUIButton) {
+            toggleGUIButton.onclick = function onclick() {
+                showGUI = !showGUI;
+                updateGUI(showGUI);
+            };
+        }
+
+        updateGUI(showGUI);
+    }
+
+    var fullScreen = false;
+
+    const fullScreenButton = document.getElementById('btnFullscreen');
+
+    function updateFullScreenIcon() {
+        const target = document.getElementById('icon-fullscreen');
+        if (document.fullscreen) {
+            target.className = 'bi bi-fullscreen-exit';
+        } else {
+            target.className = 'bi bi-arrows-fullscreen';
+        }
+    }
+
+    document.addEventListener('fullscreenchange', () => {
+        updateFullScreenIcon();
+    });
+
+    function toggleFullScreen() {
+        if (!fullScreen) {
+            document
+                .getElementById('view')
+                .parentElement.requestFullscreen()
+                .then(() => {
+                    fullScreen = true;
+                });
+        } else {
+            document.exitFullscreen().then(() => {
+                fullScreen = false;
+            });
+        }
+    }
+
+    if (fullScreenButton) fullScreenButton.onclick = toggleFullScreen;
+
+    function copyContentByID(id) {
+        const source = document.getElementById(id);
+        const text = source.textContent;
+        const btn = source.querySelector('.btn');
+        navigator.clipboard
+            .writeText(text.trim())
+            .then(() => {
+                btn.classList.add('pulse-once');
+                setTimeout(() => btn.classList.remove('pulse-once'), 1000);
+            })
+            .catch(e => {
+                console.log('failed', e);
+            });
+    }
+</script>
+
+            </div>
+
+            <!-- Long description (optional) -->
+            
+            <div class="my-3">
+                <p>Use the <a href="../apidoc/classes/entities.Atmosphere.html" target="_blank"><code>Atmosphere</code></a> entity to display a realistic atmosphere for a specific <a href="../apidoc/classes/core.geographic.Ellipsoid.html" target="_blank"><code>ellipsoid</code></a>. The external side of the sphere displays the atmospheric halo, and the internal side displays a sky dome with realistic atmospheric scattering.</p>
+            </div>
+            
+
+            <!-- Source code -->
+            
+            <span class="badge text-bg-primary mt-3 mb-1">index.js</span>
+            <div
+                class="border rounded p-3 position-relative mb-3"
+                id="source"
+                style="background-color: #ffffff"
+            >
+                <span class="position-absolute top-0 end-0 p-2">
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        onclick="copyContentByID('source')"
+                    >
+                        <i class="bi bi-copy"></i>
+                    </button>
+                </span>
+                <pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#24292E">  Clock,</span></span>
+<span class="line"><span style="color:#24292E">  Color,</span></span>
+<span class="line"><span style="color:#24292E">  DirectionalLight,</span></span>
+<span class="line"><span style="color:#24292E">  Mesh,</span></span>
+<span class="line"><span style="color:#24292E">  MeshBasicMaterial,</span></span>
+<span class="line"><span style="color:#24292E">  MeshStandardMaterial,</span></span>
+<span class="line"><span style="color:#24292E">  SphereGeometry,</span></span>
+<span class="line"><span style="color:#24292E">  Vector3,</span></span>
+<span class="line"><span style="color:#24292E">} </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "three"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> { OrbitControls } </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "three/examples/jsm/controls/OrbitControls.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> { CSS2DObject } </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "three/examples/jsm/renderers/CSS2DRenderer.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> Coordinates </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/core/geographic/Coordinates"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> CoordinateSystem </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/core/geographic/CoordinateSystem"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> Ellipsoid </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/core/geographic/Ellipsoid"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> Instance </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/core/Instance.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> Atmosphere </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/entities/Atmosphere"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> SkyDome </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/entities/SkyDome"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> Inspector </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/gui/Inspector"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> EllipsoidHelper </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/helpers/EllipsoidHelper"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> DrawTool </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/interactions/DrawTool"</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> { bindButton } </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "./widgets/bindButton"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> { bindColorPicker } </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "./widgets/bindColorPicker"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> { bindSlider } </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "./widgets/bindSlider"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> { bindToggle } </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "./widgets/bindToggle"</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> Z_UP</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Vector3</span><span style="color:#24292E">(</span><span style="color:#005CC5">0</span><span style="color:#24292E">, </span><span style="color:#005CC5">0</span><span style="color:#24292E">, </span><span style="color:#005CC5">1</span><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> instance</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Instance</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">  target: </span><span style="color:#032F62">"view"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  crs: CoordinateSystem.epsg4978,</span></span>
+<span class="line"><span style="color:#24292E">  backgroundColor: </span><span style="color:#032F62">"black"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> ellipsoid</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> Ellipsoid.</span><span style="color:#005CC5">WGS84</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> DEFAULT_PARAMS</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#24292E">  automaticSunRotation: </span><span style="color:#005CC5">true</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  fov: </span><span style="color:#005CC5">30</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  redWavelength: </span><span style="color:#005CC5">0.65</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  greenWavelength: </span><span style="color:#005CC5">0.57</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  blueWavelength: </span><span style="color:#005CC5">0.475</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  thickness: </span><span style="color:#005CC5">300_000</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  globeColor: </span><span style="color:#032F62">"#1e4485"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  showSunObject: </span><span style="color:#005CC5">true</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  sunPosition: </span><span style="color:#D73A49">new</span><span style="color:#6F42C1"> Vector3</span><span style="color:#24292E">(</span><span style="color:#005CC5">0.2</span><span style="color:#24292E">, </span><span style="color:#005CC5">1</span><span style="color:#24292E">, </span><span style="color:#005CC5">0</span><span style="color:#24292E">),</span></span>
+<span class="line"><span style="color:#24292E">  inner: </span><span style="color:#005CC5">true</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  lookAtSun: </span><span style="color:#005CC5">false</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  outer: </span><span style="color:#005CC5">true</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  showSunMarker: </span><span style="color:#005CC5">false</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  showEllipsoidHelper: </span><span style="color:#005CC5">false</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  observer: </span><span style="color:#D73A49">new</span><span style="color:#6F42C1"> Coordinates</span><span style="color:#24292E">(CoordinateSystem.epsg4326, </span><span style="color:#005CC5">40</span><span style="color:#24292E">, </span><span style="color:#005CC5">25</span><span style="color:#24292E">, </span><span style="color:#005CC5">36_000_000</span><span style="color:#24292E">),</span></span>
+<span class="line"><span style="color:#24292E">  target: </span><span style="color:#D73A49">new</span><span style="color:#6F42C1"> Coordinates</span><span style="color:#24292E">(CoordinateSystem.epsg4326, </span><span style="color:#005CC5">0</span><span style="color:#24292E">, </span><span style="color:#005CC5">0</span><span style="color:#24292E">, </span><span style="color:#005CC5">0</span><span style="color:#24292E">),</span></span>
+<span class="line"><span style="color:#24292E">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">let</span><span style="color:#24292E"> params </span><span style="color:#D73A49">=</span><span style="color:#24292E"> { </span><span style="color:#D73A49">...</span><span style="color:#005CC5">DEFAULT_PARAMS</span><span style="color:#24292E"> };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// For this example, we create a simple sphere Mesh. For a full-featured globe with map/GIS support, create a Globe object (see the "globe" example)</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> globe</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Mesh</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#D73A49">  new</span><span style="color:#6F42C1"> SphereGeometry</span><span style="color:#24292E">(ellipsoid.semiMajorAxis, </span><span style="color:#005CC5">256</span><span style="color:#24292E">, </span><span style="color:#005CC5">128</span><span style="color:#24292E">),</span></span>
+<span class="line"><span style="color:#D73A49">  new</span><span style="color:#6F42C1"> MeshStandardMaterial</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">    color: params.globeColor,</span></span>
+<span class="line"><span style="color:#24292E">    emissive: params.globeColor,</span></span>
+<span class="line"><span style="color:#24292E">    emissiveIntensity: </span><span style="color:#005CC5">0.1</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  }),</span></span>
+<span class="line"><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">globe.name </span><span style="color:#D73A49">=</span><span style="color:#032F62"> "Globe"</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Scale it to match the ellipsoid compression factor.</span></span>
+<span class="line"><span style="color:#24292E">globe.scale.</span><span style="color:#6F42C1">set</span><span style="color:#24292E">(</span><span style="color:#005CC5">1</span><span style="color:#24292E">, </span><span style="color:#005CC5">1</span><span style="color:#24292E">, ellipsoid.compressionFactor);</span></span>
+<span class="line"><span style="color:#24292E">globe.</span><span style="color:#6F42C1">updateMatrixWorld</span><span style="color:#24292E">(</span><span style="color:#005CC5">true</span><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">instance.threeObjects.</span><span style="color:#6F42C1">add</span><span style="color:#24292E">(globe);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">let</span><span style="color:#24292E"> atmosphere;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// The skydome will be visible when the camera is near the ground.</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> skyDome</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> SkyDome</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">instance.</span><span style="color:#6F42C1">add</span><span style="color:#24292E">(skyDome);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Create simple orbit controls to move around globe.</span></span>
+<span class="line"><span style="color:#6A737D">// Those controls will be disabled when we are on the ground.</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> controls</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> OrbitControls</span><span style="color:#24292E">(instance.view.camera, instance.domElement);</span></span>
+<span class="line"><span style="color:#24292E">controls.target.</span><span style="color:#6F42C1">set</span><span style="color:#24292E">(</span><span style="color:#005CC5">0</span><span style="color:#24292E">, </span><span style="color:#005CC5">0</span><span style="color:#24292E">, </span><span style="color:#005CC5">0</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#24292E">instance.view.</span><span style="color:#6F42C1">setControls</span><span style="color:#24292E">(controls);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">function</span><span style="color:#6F42C1"> createAtmosphere</span><span style="color:#24292E">() {</span></span>
+<span class="line"><span style="color:#D73A49">  if</span><span style="color:#24292E"> (atmosphere) {</span></span>
+<span class="line"><span style="color:#24292E">    instance.</span><span style="color:#6F42C1">remove</span><span style="color:#24292E">(atmosphere);</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  atmosphere </span><span style="color:#D73A49">=</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Atmosphere</span><span style="color:#24292E">({ ellipsoid, thickness: params.thickness });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  instance.</span><span style="color:#6F42C1">add</span><span style="color:#24292E">(atmosphere);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  if</span><span style="color:#24292E"> (params.redWavelength) {</span></span>
+<span class="line"><span style="color:#24292E">    atmosphere.redWavelength </span><span style="color:#D73A49">=</span><span style="color:#24292E"> params.redWavelength;</span></span>
+<span class="line"><span style="color:#24292E">    atmosphere.greenWavelength </span><span style="color:#D73A49">=</span><span style="color:#24292E"> params.greenWavelength;</span></span>
+<span class="line"><span style="color:#24292E">    atmosphere.blueWavelength </span><span style="color:#D73A49">=</span><span style="color:#24292E"> params.blueWavelength;</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  atmosphere.inner.visible </span><span style="color:#D73A49">=</span><span style="color:#24292E"> params.inner;</span></span>
+<span class="line"><span style="color:#24292E">  atmosphere.outer.visible </span><span style="color:#D73A49">=</span><span style="color:#24292E"> params.outer;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  atmosphere.</span><span style="color:#6F42C1">setSunPosition</span><span style="color:#24292E">(params.sunPosition);</span></span>
+<span class="line"><span style="color:#24292E">  skyDome.</span><span style="color:#6F42C1">setSunPosition</span><span style="color:#24292E">(params.sunPosition);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  instance.</span><span style="color:#6F42C1">notifyChange</span><span style="color:#24292E">(atmosphere);</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1">createAtmosphere</span><span style="color:#24292E">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> camera</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> instance.view.camera;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">function</span><span style="color:#6F42C1"> updateCamera</span><span style="color:#24292E">() {</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#24292E"> { </span><span style="color:#005CC5">observer</span><span style="color:#24292E">, </span><span style="color:#005CC5">target</span><span style="color:#24292E"> } </span><span style="color:#D73A49">=</span><span style="color:#24292E"> params;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> position</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> ellipsoid.</span><span style="color:#6F42C1">toCartesian</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#24292E">    observer.latitude,</span></span>
+<span class="line"><span style="color:#24292E">    observer.longitude,</span></span>
+<span class="line"><span style="color:#24292E">    observer.altitude,</span></span>
+<span class="line"><span style="color:#24292E">  );</span></span>
+<span class="line"><span style="color:#24292E">  camera.position.</span><span style="color:#6F42C1">set</span><span style="color:#24292E">(position.x, position.y, position.z);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  if</span><span style="color:#24292E"> (observer.altitude </span><span style="color:#D73A49">&#x3C;</span><span style="color:#005CC5"> 1_000_000</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#D73A49">    const</span><span style="color:#005CC5"> up</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> ellipsoid.</span><span style="color:#6F42C1">getNormal</span><span style="color:#24292E">(observer.latitude, observer.longitude);</span></span>
+<span class="line"><span style="color:#24292E">    camera.up </span><span style="color:#D73A49">=</span><span style="color:#24292E"> up;</span></span>
+<span class="line"><span style="color:#24292E">  } </span><span style="color:#D73A49">else</span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#24292E">    camera.up </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> Z_UP</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> lookAt</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> ellipsoid.</span><span style="color:#6F42C1">toCartesian</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#24292E">    target.latitude,</span></span>
+<span class="line"><span style="color:#24292E">    target.longitude,</span></span>
+<span class="line"><span style="color:#24292E">    target.altitude,</span></span>
+<span class="line"><span style="color:#24292E">  );</span></span>
+<span class="line"><span style="color:#24292E">  camera.</span><span style="color:#6F42C1">lookAt</span><span style="color:#24292E">(lookAt);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  camera.fov </span><span style="color:#D73A49">=</span><span style="color:#24292E"> params.fov;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  camera.</span><span style="color:#6F42C1">updateMatrixWorld</span><span style="color:#24292E">(</span><span style="color:#005CC5">true</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1">updateCamera</span><span style="color:#24292E">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> sun</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Mesh</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#D73A49">  new</span><span style="color:#6F42C1"> SphereGeometry</span><span style="color:#24292E">(ellipsoid.semiMajorAxis </span><span style="color:#D73A49">*</span><span style="color:#005CC5"> 0.02</span><span style="color:#24292E">),</span></span>
+<span class="line"><span style="color:#D73A49">  new</span><span style="color:#6F42C1"> MeshBasicMaterial</span><span style="color:#24292E">({ color: </span><span style="color:#032F62">"yellow"</span><span style="color:#24292E"> }),</span></span>
+<span class="line"><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> elt</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> document.</span><span style="color:#6F42C1">createElement</span><span style="color:#24292E">(</span><span style="color:#032F62">"span"</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#24292E">elt.style.width </span><span style="color:#D73A49">=</span><span style="color:#032F62"> "15px"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">elt.style.height </span><span style="color:#D73A49">=</span><span style="color:#032F62"> "15px"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">elt.style.backgroundColor </span><span style="color:#D73A49">=</span><span style="color:#032F62"> "cyan"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">elt.style.display </span><span style="color:#D73A49">=</span><span style="color:#032F62"> "inline-block"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">elt.style.borderRadius </span><span style="color:#D73A49">=</span><span style="color:#032F62"> "50%"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">elt.style.borderWidth </span><span style="color:#D73A49">=</span><span style="color:#032F62"> "2px"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">elt.style.borderStyle </span><span style="color:#D73A49">=</span><span style="color:#032F62"> "solid"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">elt.style.borderColor </span><span style="color:#D73A49">=</span><span style="color:#032F62"> "black"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> sunCSSMarker</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> CSS2DObject</span><span style="color:#24292E">(elt);</span></span>
+<span class="line"><span style="color:#24292E">sun.</span><span style="color:#6F42C1">add</span><span style="color:#24292E">(sunCSSMarker);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">sun.name </span><span style="color:#D73A49">=</span><span style="color:#032F62"> "Sun"</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">instance.</span><span style="color:#6F42C1">add</span><span style="color:#24292E">(sun);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Let's create an ellipsoid helper to help us visualize the ellipsoid and its axes.</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> helper</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> EllipsoidHelper</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">  ellipsoid: ellipsoid.</span><span style="color:#6F42C1">scale</span><span style="color:#24292E">(</span><span style="color:#005CC5">1.01</span><span style="color:#24292E">),</span></span>
+<span class="line"><span style="color:#24292E">  segments: </span><span style="color:#005CC5">64</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"><span style="color:#24292E">instance.threeObjects.</span><span style="color:#6F42C1">add</span><span style="color:#24292E">(helper);</span></span>
+<span class="line"><span style="color:#24292E">helper.visible </span><span style="color:#D73A49">=</span><span style="color:#24292E"> params.showEllipsoidHelper;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> sunlight</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> DirectionalLight</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">instance.</span><span style="color:#6F42C1">add</span><span style="color:#24292E">(sunlight);</span></span>
+<span class="line"><span style="color:#24292E">instance.</span><span style="color:#6F42C1">add</span><span style="color:#24292E">(sunlight.target);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> apparentSunCourseRadius</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> ellipsoid.semiMajorAxis </span><span style="color:#D73A49">*</span><span style="color:#005CC5"> 2</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> actualSunCourseRAdius</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> ellipsoid.semiMajorAxis </span><span style="color:#D73A49">*</span><span style="color:#005CC5"> 200</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> clock</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Clock</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#D73A49">let</span><span style="color:#24292E"> time </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> 0</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> actualSunPosition</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Vector3</span><span style="color:#24292E">(</span><span style="color:#005CC5">0</span><span style="color:#24292E">, </span><span style="color:#005CC5">0</span><span style="color:#24292E">, </span><span style="color:#005CC5">0</span><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#6F42C1"> updateSunPosition</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> () </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#6F42C1">  requestAnimationFrame</span><span style="color:#24292E">(updateSunPosition);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  if</span><span style="color:#24292E"> (</span><span style="color:#D73A49">!</span><span style="color:#24292E">params.automaticSunRotation) {</span></span>
+<span class="line"><span style="color:#24292E">    clock.</span><span style="color:#6F42C1">stop</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#D73A49">    return</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  if</span><span style="color:#24292E"> (</span><span style="color:#D73A49">!</span><span style="color:#24292E">clock.running) {</span></span>
+<span class="line"><span style="color:#24292E">    clock.</span><span style="color:#6F42C1">start</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> speed</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> -</span><span style="color:#005CC5">0.2</span><span style="color:#24292E">; </span><span style="color:#6A737D">//-1</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  time </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> clock.</span><span style="color:#6F42C1">getDelta</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> t</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> speed </span><span style="color:#D73A49">*</span><span style="color:#24292E"> time;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> cosT</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> Math.</span><span style="color:#6F42C1">cos</span><span style="color:#24292E">(t);</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> sinT</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> Math.</span><span style="color:#6F42C1">sin</span><span style="color:#24292E">(t);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> x</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> cosT </span><span style="color:#D73A49">*</span><span style="color:#24292E"> apparentSunCourseRadius;</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> y</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> sinT </span><span style="color:#D73A49">*</span><span style="color:#24292E"> apparentSunCourseRadius;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  actualSunPosition.</span><span style="color:#6F42C1">setX</span><span style="color:#24292E">(cosT </span><span style="color:#D73A49">*</span><span style="color:#24292E"> actualSunCourseRAdius);</span></span>
+<span class="line"><span style="color:#24292E">  actualSunPosition.</span><span style="color:#6F42C1">setY</span><span style="color:#24292E">(sinT </span><span style="color:#D73A49">*</span><span style="color:#24292E"> actualSunCourseRAdius);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  sun.position.</span><span style="color:#6F42C1">set</span><span style="color:#24292E">(x, y, </span><span style="color:#005CC5">0</span><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  sun.material.visible </span><span style="color:#D73A49">=</span><span style="color:#24292E"> params.showSunObject;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  sun.</span><span style="color:#6F42C1">updateMatrixWorld</span><span style="color:#24292E">(</span><span style="color:#005CC5">true</span><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  sunlight.position.</span><span style="color:#6F42C1">copy</span><span style="color:#24292E">(sun.position);</span></span>
+<span class="line"><span style="color:#24292E">  sunlight.</span><span style="color:#6F42C1">lookAt</span><span style="color:#24292E">(globe.position);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  sunlight.</span><span style="color:#6F42C1">updateMatrixWorld</span><span style="color:#24292E">(</span><span style="color:#005CC5">true</span><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  if</span><span style="color:#24292E"> (atmosphere) {</span></span>
+<span class="line"><span style="color:#24292E">    atmosphere.</span><span style="color:#6F42C1">setSunPosition</span><span style="color:#24292E">(sun.position);</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  skyDome.</span><span style="color:#6F42C1">setSunPosition</span><span style="color:#24292E">(sun.position);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  if</span><span style="color:#24292E"> (params.lookAtSun) {</span></span>
+<span class="line"><span style="color:#24292E">    camera.</span><span style="color:#6F42C1">lookAt</span><span style="color:#24292E">(actualSunPosition);</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  instance.</span><span style="color:#6F42C1">notifyChange</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1">updateSunPosition</span><span style="color:#24292E">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#24292E"> [</span><span style="color:#005CC5">setRed</span><span style="color:#24292E">] </span><span style="color:#D73A49">=</span><span style="color:#6F42C1"> bindSlider</span><span style="color:#24292E">(</span><span style="color:#032F62">"red"</span><span style="color:#24292E">, (</span><span style="color:#E36209">v</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#24292E">  params.redWavelength </span><span style="color:#D73A49">=</span><span style="color:#24292E"> v;</span></span>
+<span class="line"><span style="color:#24292E">  atmosphere.redWavelength </span><span style="color:#D73A49">=</span><span style="color:#24292E"> v;</span></span>
+<span class="line"><span style="color:#24292E">  instance.</span><span style="color:#6F42C1">notifyChange</span><span style="color:#24292E">(atmosphere);</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#24292E"> [</span><span style="color:#005CC5">setGreen</span><span style="color:#24292E">] </span><span style="color:#D73A49">=</span><span style="color:#6F42C1"> bindSlider</span><span style="color:#24292E">(</span><span style="color:#032F62">"green"</span><span style="color:#24292E">, (</span><span style="color:#E36209">v</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#24292E">  params.greenWavelength </span><span style="color:#D73A49">=</span><span style="color:#24292E"> v;</span></span>
+<span class="line"><span style="color:#24292E">  atmosphere.greenWavelength </span><span style="color:#D73A49">=</span><span style="color:#24292E"> v;</span></span>
+<span class="line"><span style="color:#24292E">  instance.</span><span style="color:#6F42C1">notifyChange</span><span style="color:#24292E">(atmosphere);</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#24292E"> [</span><span style="color:#005CC5">setBlue</span><span style="color:#24292E">] </span><span style="color:#D73A49">=</span><span style="color:#6F42C1"> bindSlider</span><span style="color:#24292E">(</span><span style="color:#032F62">"blue"</span><span style="color:#24292E">, (</span><span style="color:#E36209">v</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#24292E">  params.blueWavelength </span><span style="color:#D73A49">=</span><span style="color:#24292E"> v;</span></span>
+<span class="line"><span style="color:#24292E">  atmosphere.blueWavelength </span><span style="color:#D73A49">=</span><span style="color:#24292E"> v;</span></span>
+<span class="line"><span style="color:#24292E">  instance.</span><span style="color:#6F42C1">notifyChange</span><span style="color:#24292E">(atmosphere);</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#24292E"> [</span><span style="color:#005CC5">setGlobeColor</span><span style="color:#24292E">] </span><span style="color:#D73A49">=</span><span style="color:#6F42C1"> bindColorPicker</span><span style="color:#24292E">(</span><span style="color:#032F62">"globe-color"</span><span style="color:#24292E">, (</span><span style="color:#E36209">c</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> color</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Color</span><span style="color:#24292E">(c);</span></span>
+<span class="line"><span style="color:#24292E">  params.globeColor </span><span style="color:#D73A49">=</span><span style="color:#032F62"> "#"</span><span style="color:#D73A49"> +</span><span style="color:#24292E"> color.</span><span style="color:#6F42C1">getHexString</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">  globe.material.color </span><span style="color:#D73A49">=</span><span style="color:#24292E"> color;</span></span>
+<span class="line"><span style="color:#24292E">  globe.material.emissive </span><span style="color:#D73A49">=</span><span style="color:#24292E"> color;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  instance.</span><span style="color:#6F42C1">notifyChange</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#24292E"> [</span><span style="color:#005CC5">setThickness</span><span style="color:#24292E">] </span><span style="color:#D73A49">=</span><span style="color:#6F42C1"> bindSlider</span><span style="color:#24292E">(</span><span style="color:#032F62">"thickness"</span><span style="color:#24292E">, (</span><span style="color:#E36209">thickness</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#24292E">  params.thickness </span><span style="color:#D73A49">=</span><span style="color:#24292E"> thickness;</span></span>
+<span class="line"><span style="color:#6F42C1">  createAtmosphere</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#24292E"> [</span><span style="color:#005CC5">showInner</span><span style="color:#24292E">] </span><span style="color:#D73A49">=</span><span style="color:#6F42C1"> bindToggle</span><span style="color:#24292E">(</span><span style="color:#032F62">"inner"</span><span style="color:#24292E">, (</span><span style="color:#E36209">show</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#24292E">  params.inner </span><span style="color:#D73A49">=</span><span style="color:#24292E"> show;</span></span>
+<span class="line"><span style="color:#24292E">  atmosphere.inner.visible </span><span style="color:#D73A49">=</span><span style="color:#24292E"> show;</span></span>
+<span class="line"><span style="color:#24292E">  instance.</span><span style="color:#6F42C1">notifyChange</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#24292E"> [</span><span style="color:#005CC5">showHelper</span><span style="color:#24292E">] </span><span style="color:#D73A49">=</span><span style="color:#6F42C1"> bindToggle</span><span style="color:#24292E">(</span><span style="color:#032F62">"show-ellipsoid"</span><span style="color:#24292E">, (</span><span style="color:#E36209">show</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#24292E">  params.showEllipsoidHelper </span><span style="color:#D73A49">=</span><span style="color:#24292E"> show;</span></span>
+<span class="line"><span style="color:#24292E">  helper.showLabels </span><span style="color:#D73A49">=</span><span style="color:#24292E"> show;</span></span>
+<span class="line"><span style="color:#24292E">  helper.visible </span><span style="color:#D73A49">=</span><span style="color:#24292E"> show;</span></span>
+<span class="line"><span style="color:#24292E">  instance.</span><span style="color:#6F42C1">notifyChange</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#24292E"> [</span><span style="color:#005CC5">setLookAtSun</span><span style="color:#24292E">] </span><span style="color:#D73A49">=</span><span style="color:#6F42C1"> bindToggle</span><span style="color:#24292E">(</span><span style="color:#032F62">"look-at-sun"</span><span style="color:#24292E">, (</span><span style="color:#E36209">enable</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#24292E">  params.lookAtSun </span><span style="color:#D73A49">=</span><span style="color:#24292E"> enable;</span></span>
+<span class="line"><span style="color:#24292E">  instance.</span><span style="color:#6F42C1">notifyChange</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#24292E"> [</span><span style="color:#005CC5">setAutomaticSunRotation</span><span style="color:#24292E">] </span><span style="color:#D73A49">=</span><span style="color:#6F42C1"> bindToggle</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#032F62">  "automatic-sun-rotation"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  (</span><span style="color:#E36209">enabled</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#24292E">    params.automaticSunRotation </span><span style="color:#D73A49">=</span><span style="color:#24292E"> enabled;</span></span>
+<span class="line"><span style="color:#24292E">  },</span></span>
+<span class="line"><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#24292E"> [</span><span style="color:#005CC5">showOuter</span><span style="color:#24292E">] </span><span style="color:#D73A49">=</span><span style="color:#6F42C1"> bindToggle</span><span style="color:#24292E">(</span><span style="color:#032F62">"outer"</span><span style="color:#24292E">, (</span><span style="color:#E36209">show</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#24292E">  params.outer </span><span style="color:#D73A49">=</span><span style="color:#24292E"> show;</span></span>
+<span class="line"><span style="color:#24292E">  atmosphere.outer.visible </span><span style="color:#D73A49">=</span><span style="color:#24292E"> show;</span></span>
+<span class="line"><span style="color:#24292E">  instance.</span><span style="color:#6F42C1">notifyChange</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#24292E"> [</span><span style="color:#005CC5">showMarker</span><span style="color:#24292E">] </span><span style="color:#D73A49">=</span><span style="color:#6F42C1"> bindToggle</span><span style="color:#24292E">(</span><span style="color:#032F62">"sun-marker"</span><span style="color:#24292E">, (</span><span style="color:#E36209">show</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#24292E">  params.showSunMarker </span><span style="color:#D73A49">=</span><span style="color:#24292E"> show;</span></span>
+<span class="line"><span style="color:#24292E">  sunCSSMarker.visible </span><span style="color:#D73A49">=</span><span style="color:#24292E"> show;</span></span>
+<span class="line"><span style="color:#24292E">  instance.</span><span style="color:#6F42C1">notifyChange</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">function</span><span style="color:#6F42C1"> goToGround</span><span style="color:#24292E">(</span><span style="color:#E36209">latitude</span><span style="color:#24292E">, </span><span style="color:#E36209">longitude</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#24292E">  params.fov </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> 120</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  helper.showLabels </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> false</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  controls.enabled </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> false</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">  instance.view.</span><span style="color:#6F42C1">setControls</span><span style="color:#24292E">(</span><span style="color:#005CC5">null</span><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> altitude</span><span style="color:#D73A49"> =</span><span style="color:#005CC5"> 100</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  params.observer </span><span style="color:#D73A49">=</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Coordinates</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#24292E">    CoordinateSystem.epsg4326,</span></span>
+<span class="line"><span style="color:#24292E">    longitude,</span></span>
+<span class="line"><span style="color:#24292E">    latitude,</span></span>
+<span class="line"><span style="color:#24292E">    altitude,</span></span>
+<span class="line"><span style="color:#24292E">  );</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  params.showSunObject </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> false</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">  params.lookAtSun </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> false</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  params.target </span><span style="color:#D73A49">=</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Coordinates</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#24292E">    params.observer.crs,</span></span>
+<span class="line"><span style="color:#24292E">    longitude </span><span style="color:#D73A49">+</span><span style="color:#005CC5"> 0.01</span><span style="color:#24292E">, </span><span style="color:#6A737D">// Look toward the east (the sunrise)</span></span>
+<span class="line"><span style="color:#24292E">    latitude,</span></span>
+<span class="line"><span style="color:#24292E">    altitude </span><span style="color:#D73A49">+</span><span style="color:#005CC5"> 200</span><span style="color:#24292E">, </span><span style="color:#6A737D">// And slightly above the horizon</span></span>
+<span class="line"><span style="color:#24292E">  );</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1">  setLookAtSun</span><span style="color:#24292E">(params.lookAtSun);</span></span>
+<span class="line"><span style="color:#6F42C1">  showInner</span><span style="color:#24292E">(</span><span style="color:#005CC5">false</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#6F42C1">  showOuter</span><span style="color:#24292E">(</span><span style="color:#005CC5">false</span><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1">  updateCamera</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1">bindButton</span><span style="color:#24292E">(</span><span style="color:#032F62">"set-ground-position"</span><span style="color:#24292E">, () </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> drawTool</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> DrawTool</span><span style="color:#24292E">({ instance });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  function</span><span style="color:#6F42C1"> vertexLabelFormatter</span><span style="color:#24292E">({ </span><span style="color:#E36209">position</span><span style="color:#24292E"> }) {</span></span>
+<span class="line"><span style="color:#D73A49">    const</span><span style="color:#005CC5"> geo</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> ellipsoid.</span><span style="color:#6F42C1">toGeodetic</span><span style="color:#24292E">(position.x, position.y, position.z);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">    return</span><span style="color:#032F62"> `lat: ${</span><span style="color:#24292E">geo</span><span style="color:#032F62">.</span><span style="color:#24292E">latitude</span><span style="color:#032F62">.</span><span style="color:#6F42C1">toFixed</span><span style="color:#032F62">(</span><span style="color:#005CC5">3</span><span style="color:#032F62">)</span><span style="color:#032F62">}°, lon: ${</span><span style="color:#24292E">geo</span><span style="color:#032F62">.</span><span style="color:#24292E">longitude</span><span style="color:#032F62">.</span><span style="color:#6F42C1">toFixed</span><span style="color:#032F62">(</span><span style="color:#005CC5">3</span><span style="color:#032F62">)</span><span style="color:#032F62">}°`</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  drawTool</span></span>
+<span class="line"><span style="color:#24292E">    .</span><span style="color:#6F42C1">createPoint</span><span style="color:#24292E">({ showVertexLabels: </span><span style="color:#005CC5">true</span><span style="color:#24292E">, vertexLabelFormatter })</span></span>
+<span class="line"><span style="color:#24292E">    .</span><span style="color:#6F42C1">then</span><span style="color:#24292E">((</span><span style="color:#E36209">shape</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#24292E">      instance.</span><span style="color:#6F42C1">remove</span><span style="color:#24292E">(shape);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">      const</span><span style="color:#005CC5"> point</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> shape.points[</span><span style="color:#005CC5">0</span><span style="color:#24292E">];</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">      const</span><span style="color:#24292E"> { </span><span style="color:#005CC5">latitude</span><span style="color:#24292E">, </span><span style="color:#005CC5">longitude</span><span style="color:#24292E"> } </span><span style="color:#D73A49">=</span><span style="color:#24292E"> ellipsoid.</span><span style="color:#6F42C1">toGeodetic</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#24292E">        point.x,</span></span>
+<span class="line"><span style="color:#24292E">        point.y,</span></span>
+<span class="line"><span style="color:#24292E">        point.z,</span></span>
+<span class="line"><span style="color:#24292E">      );</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1">      goToGround</span><span style="color:#24292E">(latitude, longitude);</span></span>
+<span class="line"><span style="color:#24292E">    });</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">function</span><span style="color:#6F42C1"> reset</span><span style="color:#24292E">() {</span></span>
+<span class="line"><span style="color:#24292E">  params </span><span style="color:#D73A49">=</span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#D73A49">    ...</span><span style="color:#005CC5">DEFAULT_PARAMS</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">    observer: </span><span style="color:#005CC5">DEFAULT_PARAMS</span><span style="color:#24292E">.observer.</span><span style="color:#6F42C1">clone</span><span style="color:#24292E">(),</span></span>
+<span class="line"><span style="color:#24292E">    target: </span><span style="color:#005CC5">DEFAULT_PARAMS</span><span style="color:#24292E">.target.</span><span style="color:#6F42C1">clone</span><span style="color:#24292E">(),</span></span>
+<span class="line"><span style="color:#24292E">  };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1">  showHelper</span><span style="color:#24292E">(params.showEllipsoidHelper);</span></span>
+<span class="line"><span style="color:#6F42C1">  setRed</span><span style="color:#24292E">(params.redWavelength);</span></span>
+<span class="line"><span style="color:#6F42C1">  setGreen</span><span style="color:#24292E">(params.greenWavelength);</span></span>
+<span class="line"><span style="color:#6F42C1">  setBlue</span><span style="color:#24292E">(params.blueWavelength);</span></span>
+<span class="line"><span style="color:#6F42C1">  setGlobeColor</span><span style="color:#24292E">(params.globeColor);</span></span>
+<span class="line"><span style="color:#6F42C1">  setThickness</span><span style="color:#24292E">(params.thickness, </span><span style="color:#005CC5">3_000</span><span style="color:#24292E">, </span><span style="color:#005CC5">300_000</span><span style="color:#24292E">, </span><span style="color:#005CC5">1</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#6F42C1">  showOuter</span><span style="color:#24292E">(params.outer);</span></span>
+<span class="line"><span style="color:#6F42C1">  showInner</span><span style="color:#24292E">(params.inner);</span></span>
+<span class="line"><span style="color:#6F42C1">  setLookAtSun</span><span style="color:#24292E">(params.lookAtSun);</span></span>
+<span class="line"><span style="color:#6F42C1">  showMarker</span><span style="color:#24292E">(params.showSunMarker);</span></span>
+<span class="line"><span style="color:#6F42C1">  setAutomaticSunRotation</span><span style="color:#24292E">(params.automaticSunRotation);</span></span>
+<span class="line"><span style="color:#6F42C1">  updateCamera</span><span style="color:#24292E">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  instance.view.</span><span style="color:#6F42C1">setControls</span><span style="color:#24292E">(controls);</span></span>
+<span class="line"><span style="color:#24292E">  controls.enabled </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> true</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">  controls.target.</span><span style="color:#6F42C1">set</span><span style="color:#24292E">(</span><span style="color:#005CC5">0</span><span style="color:#24292E">, </span><span style="color:#005CC5">0</span><span style="color:#24292E">, </span><span style="color:#005CC5">0</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1">bindButton</span><span style="color:#24292E">(</span><span style="color:#032F62">"reset"</span><span style="color:#24292E">, reset);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1">reset</span><span style="color:#24292E">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">Inspector.</span><span style="color:#6F42C1">attach</span><span style="color:#24292E">(</span><span style="color:#032F62">"inspector"</span><span style="color:#24292E">, instance);</span></span>
+<span class="line"></span></code></pre>
+            </div>
+            
+
+            <!-- HTML code -->
+            
+            <span class="badge text-bg-primary mt-3 mb-1">index.html</span>
+            <div
+                class="border rounded p-3 position-relative mb-3"
+                id="source-html"
+                style="background-color: #ffffff"
+            >
+                <span class="position-absolute top-0 end-0 p-2">
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        onclick="copyContentByID('source-html')"
+                    >
+                        <i class="bi bi-copy"></i>
+                    </button>
+                </span>
+                <pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#24292E">&#x3C;!</span><span style="color:#22863A">doctype</span><span style="color:#6F42C1"> html</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">&#x3C;</span><span style="color:#22863A">html</span><span style="color:#6F42C1"> lang</span><span style="color:#24292E">=</span><span style="color:#032F62">"en"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">  &#x3C;</span><span style="color:#22863A">head</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">title</span><span style="color:#24292E">>Atmosphere&#x3C;/</span><span style="color:#22863A">title</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">meta</span><span style="color:#6F42C1"> charset</span><span style="color:#24292E">=</span><span style="color:#032F62">"UTF-8"</span><span style="color:#24292E"> /></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">meta</span><span style="color:#6F42C1"> name</span><span style="color:#24292E">=</span><span style="color:#032F62">"name"</span><span style="color:#6F42C1"> content</span><span style="color:#24292E">=</span><span style="color:#032F62">"atmosphere2"</span><span style="color:#24292E"> /></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">meta</span></span>
+<span class="line"><span style="color:#6F42C1">      name</span><span style="color:#24292E">=</span><span style="color:#032F62">"description"</span></span>
+<span class="line"><span style="color:#6F42C1">      content</span><span style="color:#24292E">=</span><span style="color:#032F62">"Create a realistic atmosphere and sky dome."</span></span>
+<span class="line"><span style="color:#24292E">    /></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">meta</span><span style="color:#6F42C1"> name</span><span style="color:#24292E">=</span><span style="color:#032F62">"viewport"</span><span style="color:#6F42C1"> content</span><span style="color:#24292E">=</span><span style="color:#032F62">"width=device-width, initial-scale=1.0"</span><span style="color:#24292E"> /></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">link</span><span style="color:#6F42C1"> rel</span><span style="color:#24292E">=</span><span style="color:#032F62">"icon"</span><span style="color:#6F42C1"> href</span><span style="color:#24292E">=</span><span style="color:#032F62">"https://giro3d.org/images/favicon.svg"</span><span style="color:#24292E"> /></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">link</span></span>
+<span class="line"><span style="color:#6F42C1">      href</span><span style="color:#24292E">=</span><span style="color:#032F62">"https://giro3d.org/assets/bootstrap-custom.css"</span></span>
+<span class="line"><span style="color:#6F42C1">      rel</span><span style="color:#24292E">=</span><span style="color:#032F62">"stylesheet"</span></span>
+<span class="line"><span style="color:#24292E">    /></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">script</span><span style="color:#6F42C1"> src</span><span style="color:#24292E">=</span><span style="color:#032F62">"https://giro3d.org/assets/bootstrap.bundle.min.js"</span><span style="color:#24292E">>&#x3C;/</span><span style="color:#22863A">script</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">link</span></span>
+<span class="line"><span style="color:#6F42C1">      rel</span><span style="color:#24292E">=</span><span style="color:#032F62">"stylesheet"</span></span>
+<span class="line"><span style="color:#6F42C1">      type</span><span style="color:#24292E">=</span><span style="color:#032F62">"text/css"</span></span>
+<span class="line"><span style="color:#6F42C1">      href</span><span style="color:#24292E">=</span><span style="color:#032F62">"https://giro3d.org/latest/examples/css/example.css"</span></span>
+<span class="line"><span style="color:#24292E">    /></span></span>
+<span class="line"><span style="color:#24292E">  &#x3C;/</span><span style="color:#22863A">head</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  &#x3C;</span><span style="color:#22863A">body</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> id</span><span style="color:#24292E">=</span><span style="color:#032F62">"view"</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"m-0 p-0 w-100 h-100"</span><span style="color:#24292E">>&#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">div</span></span>
+<span class="line"><span style="color:#6F42C1">      id</span><span style="color:#24292E">=</span><span style="color:#032F62">"inspector"</span></span>
+<span class="line"><span style="color:#6F42C1">      class</span><span style="color:#24292E">=</span><span style="color:#032F62">"position-absolute top-0 start-0 mh-100 overflow-auto"</span></span>
+<span class="line"><span style="color:#24292E">    >&#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"side-pane-with-status-bar"</span><span style="color:#6F42C1"> style</span><span style="color:#24292E">=</span><span style="color:#032F62">"width: 15rem"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#6A737D">      &#x3C;!--Parameters --></span></span>
+<span class="line"><span style="color:#24292E">      &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"card"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">        &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"card-header"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">          Parameters</span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;</span><span style="color:#22863A">button</span></span>
+<span class="line"><span style="color:#6F42C1">            type</span><span style="color:#24292E">=</span><span style="color:#032F62">"button"</span></span>
+<span class="line"><span style="color:#6F42C1">            id</span><span style="color:#24292E">=</span><span style="color:#032F62">"reset"</span></span>
+<span class="line"><span style="color:#6F42C1">            class</span><span style="color:#24292E">=</span><span style="color:#032F62">"btn btn-sm btn-primary rounded float-end"</span></span>
+<span class="line"><span style="color:#24292E">          ></span></span>
+<span class="line"><span style="color:#24292E">            reset</span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;/</span><span style="color:#22863A">button</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">        &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">        &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"card-body"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;</span><span style="color:#22863A">button</span></span>
+<span class="line"><span style="color:#6F42C1">            type</span><span style="color:#24292E">=</span><span style="color:#032F62">"button"</span></span>
+<span class="line"><span style="color:#6F42C1">            class</span><span style="color:#24292E">=</span><span style="color:#032F62">"btn btn-primary w-100"</span></span>
+<span class="line"><span style="color:#6F42C1">            id</span><span style="color:#24292E">=</span><span style="color:#032F62">"set-ground-position"</span></span>
+<span class="line"><span style="color:#6F42C1">            title</span><span style="color:#24292E">=</span><span style="color:#032F62">"Sets the camera position on the ground"</span></span>
+<span class="line"><span style="color:#24292E">          ></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">i</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"bi bi-crosshair"</span><span style="color:#24292E">>&#x3C;/</span><span style="color:#22863A">i</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            Set ground position</span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;/</span><span style="color:#22863A">button</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">          &#x3C;</span><span style="color:#22863A">hr</span><span style="color:#24292E"> /></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">          &#x3C;!-- Toggle outer atmosphere --></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-check form-switch"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">input</span></span>
+<span class="line"><span style="color:#6F42C1">              class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-check-input"</span></span>
+<span class="line"><span style="color:#6F42C1">              checked</span></span>
+<span class="line"><span style="color:#6F42C1">              type</span><span style="color:#24292E">=</span><span style="color:#032F62">"checkbox"</span></span>
+<span class="line"><span style="color:#6F42C1">              role</span><span style="color:#24292E">=</span><span style="color:#032F62">"switch"</span></span>
+<span class="line"><span style="color:#6F42C1">              id</span><span style="color:#24292E">=</span><span style="color:#032F62">"outer"</span></span>
+<span class="line"><span style="color:#6F42C1">              autocomplete</span><span style="color:#24292E">=</span><span style="color:#032F62">"off"</span></span>
+<span class="line"><span style="color:#24292E">            /></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">label</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-check-label"</span><span style="color:#6F42C1"> for</span><span style="color:#24292E">=</span><span style="color:#032F62">"outer"</span><span style="color:#24292E">>Outer atmosphere&#x3C;/</span><span style="color:#22863A">label</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">          &#x3C;!-- Toggle inner atmosphere --></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-check form-switch"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">input</span></span>
+<span class="line"><span style="color:#6F42C1">              class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-check-input"</span></span>
+<span class="line"><span style="color:#6F42C1">              checked</span></span>
+<span class="line"><span style="color:#6F42C1">              type</span><span style="color:#24292E">=</span><span style="color:#032F62">"checkbox"</span></span>
+<span class="line"><span style="color:#6F42C1">              role</span><span style="color:#24292E">=</span><span style="color:#032F62">"switch"</span></span>
+<span class="line"><span style="color:#6F42C1">              id</span><span style="color:#24292E">=</span><span style="color:#032F62">"inner"</span></span>
+<span class="line"><span style="color:#6F42C1">              autocomplete</span><span style="color:#24292E">=</span><span style="color:#032F62">"off"</span></span>
+<span class="line"><span style="color:#24292E">            /></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">label</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-check-label"</span><span style="color:#6F42C1"> for</span><span style="color:#24292E">=</span><span style="color:#032F62">"inner"</span><span style="color:#24292E">>Inner atmosphere&#x3C;/</span><span style="color:#22863A">label</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">          &#x3C;!-- Toggle sun position marker  --></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;</span><span style="color:#22863A">div</span></span>
+<span class="line"><span style="color:#6F42C1">            class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-check form-switch"</span></span>
+<span class="line"><span style="color:#6F42C1">            title</span><span style="color:#24292E">=</span><span style="color:#032F62">"The sun position marker must match the apparent sun position in the sky dome. Any discrepancy indicates an error in the sky dome shader."</span></span>
+<span class="line"><span style="color:#24292E">          ></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">input</span></span>
+<span class="line"><span style="color:#6F42C1">              class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-check-input"</span></span>
+<span class="line"><span style="color:#6F42C1">              type</span><span style="color:#24292E">=</span><span style="color:#032F62">"checkbox"</span></span>
+<span class="line"><span style="color:#6F42C1">              role</span><span style="color:#24292E">=</span><span style="color:#032F62">"switch"</span></span>
+<span class="line"><span style="color:#6F42C1">              id</span><span style="color:#24292E">=</span><span style="color:#032F62">"sun-marker"</span></span>
+<span class="line"><span style="color:#6F42C1">              autocomplete</span><span style="color:#24292E">=</span><span style="color:#032F62">"off"</span></span>
+<span class="line"><span style="color:#24292E">            /></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">label</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-check-label"</span><span style="color:#6F42C1"> for</span><span style="color:#24292E">=</span><span style="color:#032F62">"sun-marker"</span></span>
+<span class="line"><span style="color:#24292E">              >Sun position marker&#x3C;/</span><span style="color:#22863A">label</span></span>
+<span class="line"><span style="color:#24292E">            ></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">          &#x3C;!-- Toggle automatic sun rotation --></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-check form-switch"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">input</span></span>
+<span class="line"><span style="color:#6F42C1">              class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-check-input"</span></span>
+<span class="line"><span style="color:#6F42C1">              checked</span></span>
+<span class="line"><span style="color:#6F42C1">              type</span><span style="color:#24292E">=</span><span style="color:#032F62">"checkbox"</span></span>
+<span class="line"><span style="color:#6F42C1">              role</span><span style="color:#24292E">=</span><span style="color:#032F62">"switch"</span></span>
+<span class="line"><span style="color:#6F42C1">              id</span><span style="color:#24292E">=</span><span style="color:#032F62">"automatic-sun-rotation"</span></span>
+<span class="line"><span style="color:#6F42C1">              autocomplete</span><span style="color:#24292E">=</span><span style="color:#032F62">"off"</span></span>
+<span class="line"><span style="color:#24292E">            /></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">label</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-check-label"</span><span style="color:#6F42C1"> for</span><span style="color:#24292E">=</span><span style="color:#032F62">"automatic-sun-rotation"</span></span>
+<span class="line"><span style="color:#24292E">              >Automatic sun rotation&#x3C;/</span><span style="color:#22863A">label</span></span>
+<span class="line"><span style="color:#24292E">            ></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">          &#x3C;!-- Toggle ellipsoid helper --></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-check form-switch"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">input</span></span>
+<span class="line"><span style="color:#6F42C1">              class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-check-input"</span></span>
+<span class="line"><span style="color:#6F42C1">              checked</span></span>
+<span class="line"><span style="color:#6F42C1">              type</span><span style="color:#24292E">=</span><span style="color:#032F62">"checkbox"</span></span>
+<span class="line"><span style="color:#6F42C1">              role</span><span style="color:#24292E">=</span><span style="color:#032F62">"switch"</span></span>
+<span class="line"><span style="color:#6F42C1">              id</span><span style="color:#24292E">=</span><span style="color:#032F62">"show-ellipsoid"</span></span>
+<span class="line"><span style="color:#6F42C1">              autocomplete</span><span style="color:#24292E">=</span><span style="color:#032F62">"off"</span></span>
+<span class="line"><span style="color:#24292E">            /></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">label</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-check-label"</span><span style="color:#6F42C1"> for</span><span style="color:#24292E">=</span><span style="color:#032F62">"show-ellipsoid"</span></span>
+<span class="line"><span style="color:#24292E">              >Show ellipsoid&#x3C;/</span><span style="color:#22863A">label</span></span>
+<span class="line"><span style="color:#24292E">            ></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">          &#x3C;!-- Toggle look at sun --></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-check form-switch"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">input</span></span>
+<span class="line"><span style="color:#6F42C1">              class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-check-input"</span></span>
+<span class="line"><span style="color:#6F42C1">              checked</span></span>
+<span class="line"><span style="color:#6F42C1">              type</span><span style="color:#24292E">=</span><span style="color:#032F62">"checkbox"</span></span>
+<span class="line"><span style="color:#6F42C1">              role</span><span style="color:#24292E">=</span><span style="color:#032F62">"switch"</span></span>
+<span class="line"><span style="color:#6F42C1">              id</span><span style="color:#24292E">=</span><span style="color:#032F62">"look-at-sun"</span></span>
+<span class="line"><span style="color:#6F42C1">              autocomplete</span><span style="color:#24292E">=</span><span style="color:#032F62">"off"</span></span>
+<span class="line"><span style="color:#24292E">            /></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">label</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-check-label"</span><span style="color:#6F42C1"> for</span><span style="color:#24292E">=</span><span style="color:#032F62">"look-at-sun"</span></span>
+<span class="line"><span style="color:#24292E">              >Look at sun&#x3C;/</span><span style="color:#22863A">label</span></span>
+<span class="line"><span style="color:#24292E">            ></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">          &#x3C;!-- Globe color --></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;</span><span style="color:#22863A">label</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-check-label w-100 mt-3"</span><span style="color:#6F42C1"> for</span><span style="color:#24292E">=</span><span style="color:#032F62">"globe-color"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"row"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">              &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"col"</span><span style="color:#24292E">>Globe color&#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">              &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"col"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">                &#x3C;</span><span style="color:#22863A">input</span></span>
+<span class="line"><span style="color:#6F42C1">                  type</span><span style="color:#24292E">=</span><span style="color:#032F62">"color"</span></span>
+<span class="line"><span style="color:#6F42C1">                  class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-control form-control-color float-end h-100 w-100"</span></span>
+<span class="line"><span style="color:#6F42C1">                  id</span><span style="color:#24292E">=</span><span style="color:#032F62">"globe-color"</span></span>
+<span class="line"><span style="color:#6F42C1">                  value</span><span style="color:#24292E">=</span><span style="color:#032F62">"#2978b4"</span></span>
+<span class="line"><span style="color:#6F42C1">                  title</span><span style="color:#24292E">=</span><span style="color:#032F62">"Globe color"</span></span>
+<span class="line"><span style="color:#6F42C1">                  autocomplete</span><span style="color:#24292E">=</span><span style="color:#032F62">"off"</span></span>
+<span class="line"><span style="color:#24292E">                /></span></span>
+<span class="line"><span style="color:#24292E">              &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;/</span><span style="color:#22863A">label</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">          &#x3C;!-- Thickness --></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"row mt-2"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"col-5"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">              &#x3C;</span><span style="color:#22863A">label</span><span style="color:#6F42C1"> for</span><span style="color:#24292E">=</span><span style="color:#032F62">"thickness"</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-label"</span><span style="color:#24292E">>Thickness&#x3C;/</span><span style="color:#22863A">label</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"col"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">              &#x3C;</span><span style="color:#22863A">input</span></span>
+<span class="line"><span style="color:#6F42C1">                type</span><span style="color:#24292E">=</span><span style="color:#032F62">"range"</span></span>
+<span class="line"><span style="color:#6F42C1">                min</span><span style="color:#24292E">=</span><span style="color:#032F62">"0"</span></span>
+<span class="line"><span style="color:#6F42C1">                max</span><span style="color:#24292E">=</span><span style="color:#032F62">"1"</span></span>
+<span class="line"><span style="color:#6F42C1">                step</span><span style="color:#24292E">=</span><span style="color:#032F62">"0.0001"</span></span>
+<span class="line"><span style="color:#6F42C1">                value</span><span style="color:#24292E">=</span><span style="color:#032F62">"0"</span></span>
+<span class="line"><span style="color:#6F42C1">                class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-range"</span></span>
+<span class="line"><span style="color:#6F42C1">                id</span><span style="color:#24292E">=</span><span style="color:#032F62">"thickness"</span></span>
+<span class="line"><span style="color:#6F42C1">                autocomplete</span><span style="color:#24292E">=</span><span style="color:#032F62">"off"</span></span>
+<span class="line"><span style="color:#24292E">              /></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">          &#x3C;</span><span style="color:#22863A">h6</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"mt-3"</span><span style="color:#24292E">>Wavelengths ([0, 1])&#x3C;/</span><span style="color:#22863A">h6</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">          &#x3C;!-- Red --></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"row"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"col-3"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">              &#x3C;</span><span style="color:#22863A">label</span><span style="color:#6F42C1"> for</span><span style="color:#24292E">=</span><span style="color:#032F62">"red"</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-label"</span><span style="color:#24292E">>Red&#x3C;/</span><span style="color:#22863A">label</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"col"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">              &#x3C;</span><span style="color:#22863A">input</span></span>
+<span class="line"><span style="color:#6F42C1">                type</span><span style="color:#24292E">=</span><span style="color:#032F62">"range"</span></span>
+<span class="line"><span style="color:#6F42C1">                min</span><span style="color:#24292E">=</span><span style="color:#032F62">"0"</span></span>
+<span class="line"><span style="color:#6F42C1">                max</span><span style="color:#24292E">=</span><span style="color:#032F62">"1"</span></span>
+<span class="line"><span style="color:#6F42C1">                step</span><span style="color:#24292E">=</span><span style="color:#032F62">"0.0001"</span></span>
+<span class="line"><span style="color:#6F42C1">                value</span><span style="color:#24292E">=</span><span style="color:#032F62">"0"</span></span>
+<span class="line"><span style="color:#6F42C1">                class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-range"</span></span>
+<span class="line"><span style="color:#6F42C1">                id</span><span style="color:#24292E">=</span><span style="color:#032F62">"red"</span></span>
+<span class="line"><span style="color:#6F42C1">                autocomplete</span><span style="color:#24292E">=</span><span style="color:#032F62">"off"</span></span>
+<span class="line"><span style="color:#24292E">              /></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">          &#x3C;!-- Green --></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"row"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"col-3"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">              &#x3C;</span><span style="color:#22863A">label</span><span style="color:#6F42C1"> for</span><span style="color:#24292E">=</span><span style="color:#032F62">"green"</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-label"</span><span style="color:#24292E">>Green&#x3C;/</span><span style="color:#22863A">label</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"col"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">              &#x3C;</span><span style="color:#22863A">input</span></span>
+<span class="line"><span style="color:#6F42C1">                type</span><span style="color:#24292E">=</span><span style="color:#032F62">"range"</span></span>
+<span class="line"><span style="color:#6F42C1">                min</span><span style="color:#24292E">=</span><span style="color:#032F62">"0"</span></span>
+<span class="line"><span style="color:#6F42C1">                max</span><span style="color:#24292E">=</span><span style="color:#032F62">"1"</span></span>
+<span class="line"><span style="color:#6F42C1">                step</span><span style="color:#24292E">=</span><span style="color:#032F62">"0.0001"</span></span>
+<span class="line"><span style="color:#6F42C1">                value</span><span style="color:#24292E">=</span><span style="color:#032F62">"0"</span></span>
+<span class="line"><span style="color:#6F42C1">                class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-range"</span></span>
+<span class="line"><span style="color:#6F42C1">                id</span><span style="color:#24292E">=</span><span style="color:#032F62">"green"</span></span>
+<span class="line"><span style="color:#6F42C1">                autocomplete</span><span style="color:#24292E">=</span><span style="color:#032F62">"off"</span></span>
+<span class="line"><span style="color:#24292E">              /></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">          &#x3C;!-- Blue --></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"row"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"col-3"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">              &#x3C;</span><span style="color:#22863A">label</span><span style="color:#6F42C1"> for</span><span style="color:#24292E">=</span><span style="color:#032F62">"blue"</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-label"</span><span style="color:#24292E">>Blue&#x3C;/</span><span style="color:#22863A">label</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"col"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">              &#x3C;</span><span style="color:#22863A">input</span></span>
+<span class="line"><span style="color:#6F42C1">                type</span><span style="color:#24292E">=</span><span style="color:#032F62">"range"</span></span>
+<span class="line"><span style="color:#6F42C1">                min</span><span style="color:#24292E">=</span><span style="color:#032F62">"0"</span></span>
+<span class="line"><span style="color:#6F42C1">                max</span><span style="color:#24292E">=</span><span style="color:#032F62">"1"</span></span>
+<span class="line"><span style="color:#6F42C1">                step</span><span style="color:#24292E">=</span><span style="color:#032F62">"0.0001"</span></span>
+<span class="line"><span style="color:#6F42C1">                value</span><span style="color:#24292E">=</span><span style="color:#032F62">"0"</span></span>
+<span class="line"><span style="color:#6F42C1">                class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-range"</span></span>
+<span class="line"><span style="color:#6F42C1">                id</span><span style="color:#24292E">=</span><span style="color:#032F62">"blue"</span></span>
+<span class="line"><span style="color:#6F42C1">                autocomplete</span><span style="color:#24292E">=</span><span style="color:#032F62">"off"</span></span>
+<span class="line"><span style="color:#24292E">              /></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">        &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">      &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">script</span><span style="color:#6F42C1"> type</span><span style="color:#24292E">=</span><span style="color:#032F62">"module"</span><span style="color:#6F42C1"> src</span><span style="color:#24292E">=</span><span style="color:#032F62">"index.js"</span><span style="color:#24292E">>&#x3C;/</span><span style="color:#22863A">script</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">script</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#6A737D">      /* activate popovers */</span></span>
+<span class="line"><span style="color:#D73A49">      const</span><span style="color:#005CC5"> popoverTriggerList</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> [].slice.</span><span style="color:#6F42C1">call</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#24292E">        document.</span><span style="color:#6F42C1">querySelectorAll</span><span style="color:#24292E">(</span><span style="color:#032F62">'[data-bs-toggle="popover"]'</span><span style="color:#24292E">),</span></span>
+<span class="line"><span style="color:#24292E">      );</span></span>
+<span class="line"><span style="color:#24292E">      popoverTriggerList.</span><span style="color:#6F42C1">map</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#6A737D">        // bootstrap is used as script in the template, disable warning about undef</span></span>
+<span class="line"><span style="color:#6A737D">        // eslint-disable-next-line no-undef</span></span>
+<span class="line"><span style="color:#24292E">        (</span><span style="color:#E36209">popoverTriggerEl</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span></span>
+<span class="line"><span style="color:#D73A49">          new</span><span style="color:#24292E"> bootstrap.</span><span style="color:#6F42C1">Popover</span><span style="color:#24292E">(popoverTriggerEl, {</span></span>
+<span class="line"><span style="color:#24292E">            trigger: </span><span style="color:#032F62">"hover"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">            placement: </span><span style="color:#032F62">"left"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">            content: document.</span><span style="color:#6F42C1">getElementById</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#24292E">              popoverTriggerEl.</span><span style="color:#6F42C1">getAttribute</span><span style="color:#24292E">(</span><span style="color:#032F62">"data-bs-content"</span><span style="color:#24292E">),</span></span>
+<span class="line"><span style="color:#24292E">            ).innerHTML,</span></span>
+<span class="line"><span style="color:#24292E">            html: </span><span style="color:#005CC5">true</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">          }),</span></span>
+<span class="line"><span style="color:#24292E">      );</span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;/</span><span style="color:#22863A">script</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">  &#x3C;/</span><span style="color:#22863A">body</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">&#x3C;/</span><span style="color:#22863A">html</span><span style="color:#24292E">></span></span>
+<span class="line"></span></code></pre>
+            </div>
+            
+
+            <!-- package.json code -->
+            
+            <span class="badge text-bg-primary mt-3 mb-1">package.json</span>
+            <div
+                class="border rounded p-3 position-relative mb-3"
+                id="source-package-json"
+                style="background-color: #ffffff"
+            >
+                <span class="position-absolute top-0 end-0 p-2">
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        onclick="copyContentByID('source-package-json')"
+                    >
+                        <i class="bi bi-copy"></i>
+                    </button>
+                </span>
+                <pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#24292E">{</span></span>
+<span class="line"><span style="color:#005CC5">    "name"</span><span style="color:#24292E">: </span><span style="color:#032F62">"atmosphere2"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">    "dependencies"</span><span style="color:#24292E">: {</span></span>
+<span class="line"><span style="color:#005CC5">        "@giro3d/giro3d"</span><span style="color:#24292E">: </span><span style="color:#032F62">"1.0.0"</span></span>
+<span class="line"><span style="color:#24292E">    },</span></span>
+<span class="line"><span style="color:#005CC5">    "devDependencies"</span><span style="color:#24292E">: {</span></span>
+<span class="line"><span style="color:#005CC5">        "vite"</span><span style="color:#24292E">: </span><span style="color:#032F62">"^3.2.3"</span></span>
+<span class="line"><span style="color:#24292E">    },</span></span>
+<span class="line"><span style="color:#005CC5">    "scripts"</span><span style="color:#24292E">: {</span></span>
+<span class="line"><span style="color:#005CC5">        "start"</span><span style="color:#24292E">: </span><span style="color:#032F62">"vite"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">        "build"</span><span style="color:#24292E">: </span><span style="color:#032F62">"vite build"</span></span>
+<span class="line"><span style="color:#24292E">    }</span></span>
+<span class="line"><span style="color:#24292E">}</span></span></code></pre>
+            </div>
+            
+
+            <!-- vite.config.js code -->
+            <span class="badge text-bg-primary mt-3 mb-1">vite.config.js</span>
+            <div
+                class="border rounded p-3 position-relative mb-3"
+                id="source-vite-config"
+                style="background-color: #ffffff"
+            >
+                <span class="position-absolute top-0 end-0 p-2">
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        onclick="copyContentByID('source-vite-config')"
+                    >
+                        <i class="bi bi-copy"></i>
+                    </button>
+                </span>
+                <pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> { defineConfig } </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "vite"</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">export</span><span style="color:#D73A49"> default</span><span style="color:#6F42C1"> defineConfig</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">  build: {</span></span>
+<span class="line"><span style="color:#24292E">    target: </span><span style="color:#032F62">'esnext'</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  },</span></span>
+<span class="line"><span style="color:#24292E">  optimizeDeps: {</span></span>
+<span class="line"><span style="color:#24292E">    esbuildOptions: {</span></span>
+<span class="line"><span style="color:#24292E">      target: </span><span style="color:#032F62">'esnext'</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">    },</span></span>
+<span class="line"><span style="color:#24292E">  },</span></span>
+<span class="line"><span style="color:#24292E">})</span></span></code></pre>
+            </div>
+        </div>
+    </body>
+</html>

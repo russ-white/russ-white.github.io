@@ -1,0 +1,163 @@
+<!DOCTYPE html><html class="default" lang="en"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>PMREMGenerator | API (v1.0.0) - Giro3D</title><meta name="description" content="Documentation for API (v1.0.0) - Giro3D"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><link rel="stylesheet" href="../assets/custom.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script>
+<link rel="icon" href="/images/favicon.svg" />
+<link rel="stylesheet" href="/assets/bootstrap-custom.css" />
+</head><body><script>document.documentElement.dataset.theme = "light";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script>
+
+<header class="header bg-light" data-bs-theme="">
+    <div class="container-fluid">
+        <a href="/" class="navbar-brand mx-0">
+            <img
+                src="/images/favicon.svg"
+                class="brand"
+                width="32"
+                height="32"
+            />
+        </a>
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav navbar-nav-left">
+                
+                <li class="nav-item">
+    <a
+        class="nav-link  "
+        href="/"
+    >
+        Home
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary "
+        href="/giro3d.html"
+    >
+        Giro3D framework
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-success "
+        href="/piero.html"
+    >
+        Piero application
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary "
+        href="/latest/tutorials/getting-started.html"
+    >
+        Getting started with Giro3D
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary "
+        href="/latest/examples/index.html"
+    >
+        Giro3D examples
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary active"
+        href="/latest/apidoc/index.html"
+    >
+        API documentation
+    </a>
+</li>
+
+
+                <li class="nav-item">
+                    <span
+                        class="navbar-text badge text-bg-info"
+                        >Version
+                        v1.0.0</span
+                    >
+                </li>
+            </ul>
+
+            
+
+            
+            <form class="form-inline" id="tsd-search" role="search" data-base="..">
+    <input
+        name="q"
+        type="text"
+        id="tsd-search-field"
+        aria-label="Search"
+        class="form-control search-query"
+        placeholder="Search"
+        autocomplete="off"
+        autofocus
+    />
+    <div class="results"></div>
+</form>
+
+            
+
+            <ul class="navbar-nav ms-2">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://gitlab.com/giro3d/giro3D" target="_blank"
+                        >GitLab <i class="bi bi-box-arrow-up-right"></i
+                    ></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+<div class="container-fluid container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"><li><a href="../modules.html">API (v1.0.0) - Giro3D</a></li><li><a href="../modules/external.html">external</a></li><li><a href="../modules/external.three.html">three</a></li><li><a href="external.three.PMREMGenerator.html">PMREMGenerator</a></li></ul><h1>Class PMREMGenerator</h1></div><section class="tsd-panel tsd-comment"><div class="tsd-comment tsd-typography"><p>This class generates a Prefiltered, Mipmapped Radiance Environment Map (PMREM) from a cubeMap environment texture.</p>
+</div><div class="tsd-comment tsd-typography"><div class="tsd-tag-Remarks"><h4 class="tsd-anchor-link"><a id="Remarks" class="tsd-anchor"></a>Remarks<a href="#Remarks" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>This allows different levels of blur to be quickly accessed based on material roughness
+Unlike a traditional mipmap chain, it only goes down to the LOD_MIN level (above), and then creates extra even more filtered 'mips' at the same LOD_MIN resolution,
+associated with higher roughness levels
+In this way we maintain resolution to smoothly interpolate diffuse lighting while limiting sampling computation.</p>
+</div><div class="tsd-tag-See"><h4 class="tsd-anchor-link"><a id="See" class="tsd-anchor"></a>See<a href="#See" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><ul>
+<li><a href="https://threejs.org/docs/index.html#api/en/extras/PMREMGenerator">Official Documentation</a></li>
+<li><a href="https://github.com/mrdoob/three.js/blob/master/src/extras/PMREMGenerator.js">Source</a></li>
+</ul>
+</div></div></section><aside class="tsd-sources"><ul><li>Defined in ../node_modules/@types/three/src/extras/PMREMGenerator.d.ts:31</li></ul></aside><section class="tsd-panel-group tsd-index-group"><section class="tsd-panel tsd-index-panel"><details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><h5 class="tsd-index-heading uppercase" role="button" aria-expanded="false" tabIndex="0"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><use href="../assets/icons.svg#icon-chevronSmall"></use></svg> Index</h5></summary><div class="tsd-accordion-details"><section class="tsd-index-section"><h3 class="tsd-index-heading">Constructors</h3><div class="tsd-index-list"><a href="external.three.PMREMGenerator.html#constructor" class="tsd-index-link tsd-is-external"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-512"></use></svg><span>constructor</span></a>
+</div></section><section class="tsd-index-section"><h3 class="tsd-index-heading">Methods</h3><div class="tsd-index-list"><a href="external.three.PMREMGenerator.html#compileCubemapShader" class="tsd-index-link tsd-is-external"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-2048"></use></svg><span>compile<wbr/>Cubemap<wbr/>Shader</span></a>
+<a href="external.three.PMREMGenerator.html#compileEquirectangularShader" class="tsd-index-link tsd-is-external"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-2048"></use></svg><span>compile<wbr/>Equirectangular<wbr/>Shader</span></a>
+<a href="external.three.PMREMGenerator.html#dispose" class="tsd-index-link tsd-is-external"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-2048"></use></svg><span>dispose</span></a>
+<a href="external.three.PMREMGenerator.html#fromCubemap" class="tsd-index-link tsd-is-external"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-2048"></use></svg><span>from<wbr/>Cubemap</span></a>
+<a href="external.three.PMREMGenerator.html#fromEquirectangular" class="tsd-index-link tsd-is-external"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-2048"></use></svg><span>from<wbr/>Equirectangular</span></a>
+<a href="external.three.PMREMGenerator.html#fromScene" class="tsd-index-link tsd-is-external"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-2048"></use></svg><span>from<wbr/>Scene</span></a>
+</div></section></div></details></section></section><details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Constructors"><h2><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="../assets/icons.svg#icon-chevronDown"></use></svg> Constructors</h2></summary><section><section class="tsd-panel tsd-member tsd-is-external"><a id="constructor" class="tsd-anchor"></a><h3 class="tsd-anchor-link"><span>constructor</span><a href="#constructor" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ul class="tsd-signatures tsd-is-external"><li class="tsd-signature tsd-anchor-link"><a id="constructor.new_PMREMGenerator" class="tsd-anchor"></a><span class="tsd-kind-constructor-signature">new PMREMGenerator</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">renderer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="external.three.PMREMGenerator.html" class="tsd-signature-type tsd-kind-class">PMREMGenerator</a><a href="#constructor.new_PMREMGenerator" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></li><li class="tsd-description"><div class="tsd-comment tsd-typography"><p>This constructor creates a new PMREMGenerator.</p>
+</div><div class="tsd-parameters"><h4 class="tsd-parameters-title">Parameters</h4><ul class="tsd-parameter-list"><li><span><span class="tsd-kind-parameter">renderer</span>: <a href="external.three.WebGLRenderer.html" class="tsd-signature-type tsd-kind-class">WebGLRenderer</a></span><div class="tsd-comment tsd-typography"></div></li></ul></div><h4 class="tsd-returns-title">Returns <a href="external.three.PMREMGenerator.html" class="tsd-signature-type tsd-kind-class">PMREMGenerator</a></h4><div class="tsd-comment tsd-typography"></div><aside class="tsd-sources"><ul><li>Defined in ../node_modules/@types/three/src/extras/PMREMGenerator.d.ts:36</li></ul></aside></li></ul></section></section></details><details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Methods"><h2><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="../assets/icons.svg#icon-chevronDown"></use></svg> Methods</h2></summary><section><section class="tsd-panel tsd-member tsd-is-external"><a id="compileCubemapShader" class="tsd-anchor"></a><h3 class="tsd-anchor-link"><span>compile<wbr/>Cubemap<wbr/>Shader</span><a href="#compileCubemapShader" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ul class="tsd-signatures tsd-is-external"><li class="tsd-signature tsd-anchor-link"><a id="compileCubemapShader.compileCubemapShader-1" class="tsd-anchor"></a><span class="tsd-kind-call-signature">compile<wbr/>Cubemap<wbr/>Shader</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#compileCubemapShader.compileCubemapShader-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></li><li class="tsd-description"><div class="tsd-comment tsd-typography"><p>Pre-compiles the cubemap shader</p>
+</div><h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><div class="tsd-comment tsd-typography"><div class="tsd-tag-Remarks"><h4 class="tsd-anchor-link"><a id="Remarks-1" class="tsd-anchor"></a>Remarks<a href="#Remarks-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>You can get faster start-up by invoking this method during your texture's network fetch for increased concurrency.</p>
+</div></div><aside class="tsd-sources"><ul><li>Defined in ../node_modules/@types/three/src/extras/PMREMGenerator.d.ts:67</li></ul></aside></li></ul></section><section class="tsd-panel tsd-member tsd-is-external"><a id="compileEquirectangularShader" class="tsd-anchor"></a><h3 class="tsd-anchor-link"><span>compile<wbr/>Equirectangular<wbr/>Shader</span><a href="#compileEquirectangularShader" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ul class="tsd-signatures tsd-is-external"><li class="tsd-signature tsd-anchor-link"><a id="compileEquirectangularShader.compileEquirectangularShader-1" class="tsd-anchor"></a><span class="tsd-kind-call-signature">compile<wbr/>Equirectangular<wbr/>Shader</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#compileEquirectangularShader.compileEquirectangularShader-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></li><li class="tsd-description"><div class="tsd-comment tsd-typography"><p>Pre-compiles the equirectangular shader</p>
+</div><h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><div class="tsd-comment tsd-typography"><div class="tsd-tag-Remarks"><h4 class="tsd-anchor-link"><a id="Remarks-2" class="tsd-anchor"></a>Remarks<a href="#Remarks-2" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>You can get faster start-up by invoking this method during your texture's network fetch for increased concurrency.</p>
+</div></div><aside class="tsd-sources"><ul><li>Defined in ../node_modules/@types/three/src/extras/PMREMGenerator.d.ts:74</li></ul></aside></li></ul></section><section class="tsd-panel tsd-member tsd-is-external"><a id="dispose" class="tsd-anchor"></a><h3 class="tsd-anchor-link"><span>dispose</span><a href="#dispose" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ul class="tsd-signatures tsd-is-external"><li class="tsd-signature tsd-anchor-link"><a id="dispose.dispose-1" class="tsd-anchor"></a><span class="tsd-kind-call-signature">dispose</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#dispose.dispose-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></li><li class="tsd-description"><div class="tsd-comment tsd-typography"><p>Frees the GPU-related resources allocated by this instance</p>
+</div><h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><div class="tsd-comment tsd-typography"><div class="tsd-tag-Remarks"><h4 class="tsd-anchor-link"><a id="Remarks-3" class="tsd-anchor"></a>Remarks<a href="#Remarks-3" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Call this method whenever this instance is no longer used in your app.</p>
+</div></div><aside class="tsd-sources"><ul><li>Defined in ../node_modules/@types/three/src/extras/PMREMGenerator.d.ts:81</li></ul></aside></li></ul></section><section class="tsd-panel tsd-member tsd-is-external"><a id="fromCubemap" class="tsd-anchor"></a><h3 class="tsd-anchor-link"><span>from<wbr/>Cubemap</span><a href="#fromCubemap" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ul class="tsd-signatures tsd-is-external"><li class="tsd-signature tsd-anchor-link"><a id="fromCubemap.fromCubemap-1" class="tsd-anchor"></a><span class="tsd-kind-call-signature">from<wbr/>Cubemap</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">cubemap</span>, <span class="tsd-kind-parameter">renderTarget</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="external.three.WebGLRenderTarget.html" class="tsd-signature-type tsd-kind-class">WebGLRenderTarget</a><span class="tsd-signature-symbol">&lt;</span><a href="external.three.Texture.html" class="tsd-signature-type tsd-kind-class">Texture</a><span class="tsd-signature-symbol">&gt;</span><a href="#fromCubemap.fromCubemap-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></li><li class="tsd-description"><div class="tsd-comment tsd-typography"><p>Generates a PMREM from an cubemap texture, which can be either LDR or HDR. The ideal input cube size is
+256 x 256, as this matches best with the 256 x 256 cubemap output. The smallest supported cube size is 16 x 16.</p>
+</div><div class="tsd-parameters"><h4 class="tsd-parameters-title">Parameters</h4><ul class="tsd-parameter-list"><li><span><span class="tsd-kind-parameter">cubemap</span>: <a href="external.three.CubeTexture.html" class="tsd-signature-type tsd-kind-class">CubeTexture</a></span></li><li><span><code class="tsd-tag">Optional</code><span class="tsd-kind-parameter">renderTarget</span>: <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="external.three.WebGLRenderTarget.html" class="tsd-signature-type tsd-kind-class">WebGLRenderTarget</a><span class="tsd-signature-symbol">&lt;</span><a href="external.three.Texture.html" class="tsd-signature-type tsd-kind-class">Texture</a><span class="tsd-signature-symbol">&gt;</span></span></li></ul></div><h4 class="tsd-returns-title">Returns <a href="external.three.WebGLRenderTarget.html" class="tsd-signature-type tsd-kind-class">WebGLRenderTarget</a><span class="tsd-signature-symbol">&lt;</span><a href="external.three.Texture.html" class="tsd-signature-type tsd-kind-class">Texture</a><span class="tsd-signature-symbol">&gt;</span></h4><div class="tsd-comment tsd-typography"></div><aside class="tsd-sources"><ul><li>Defined in ../node_modules/@types/three/src/extras/PMREMGenerator.d.ts:60</li></ul></aside></li></ul></section><section class="tsd-panel tsd-member tsd-is-external"><a id="fromEquirectangular" class="tsd-anchor"></a><h3 class="tsd-anchor-link"><span>from<wbr/>Equirectangular</span><a href="#fromEquirectangular" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ul class="tsd-signatures tsd-is-external"><li class="tsd-signature tsd-anchor-link"><a id="fromEquirectangular.fromEquirectangular-1" class="tsd-anchor"></a><span class="tsd-kind-call-signature">from<wbr/>Equirectangular</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">equirectangular</span>, <span class="tsd-kind-parameter">renderTarget</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="external.three.WebGLRenderTarget.html" class="tsd-signature-type tsd-kind-class">WebGLRenderTarget</a><span class="tsd-signature-symbol">&lt;</span><a href="external.three.Texture.html" class="tsd-signature-type tsd-kind-class">Texture</a><span class="tsd-signature-symbol">&gt;</span><a href="#fromEquirectangular.fromEquirectangular-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></li><li class="tsd-description"><div class="tsd-comment tsd-typography"><p>Generates a PMREM from an equirectangular texture, which can be either LDR or HDR. The ideal input image size is
+1k (1024 x 512), as this matches best with the 256 x 256 cubemap output. The smallest supported equirectangular
+image size is 64 x 32.</p>
+</div><div class="tsd-parameters"><h4 class="tsd-parameters-title">Parameters</h4><ul class="tsd-parameter-list"><li><span><span class="tsd-kind-parameter">equirectangular</span>: <a href="external.three.Texture.html" class="tsd-signature-type tsd-kind-class">Texture</a></span></li><li><span><code class="tsd-tag">Optional</code><span class="tsd-kind-parameter">renderTarget</span>: <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="external.three.WebGLRenderTarget.html" class="tsd-signature-type tsd-kind-class">WebGLRenderTarget</a><span class="tsd-signature-symbol">&lt;</span><a href="external.three.Texture.html" class="tsd-signature-type tsd-kind-class">Texture</a><span class="tsd-signature-symbol">&gt;</span></span></li></ul></div><h4 class="tsd-returns-title">Returns <a href="external.three.WebGLRenderTarget.html" class="tsd-signature-type tsd-kind-class">WebGLRenderTarget</a><span class="tsd-signature-symbol">&lt;</span><a href="external.three.Texture.html" class="tsd-signature-type tsd-kind-class">Texture</a><span class="tsd-signature-symbol">&gt;</span></h4><div class="tsd-comment tsd-typography"></div><aside class="tsd-sources"><ul><li>Defined in ../node_modules/@types/three/src/extras/PMREMGenerator.d.ts:54</li></ul></aside></li></ul></section><section class="tsd-panel tsd-member tsd-is-external"><a id="fromScene" class="tsd-anchor"></a><h3 class="tsd-anchor-link"><span>from<wbr/>Scene</span><a href="#fromScene" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><ul class="tsd-signatures tsd-is-external"><li class="tsd-signature tsd-anchor-link"><a id="fromScene.fromScene-1" class="tsd-anchor"></a><span class="tsd-kind-call-signature">from<wbr/>Scene</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">scene</span>, <span class="tsd-kind-parameter">sigma</span><span class="tsd-signature-symbol">?</span>, <span class="tsd-kind-parameter">near</span><span class="tsd-signature-symbol">?</span>, <span class="tsd-kind-parameter">far</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="external.three.WebGLRenderTarget.html" class="tsd-signature-type tsd-kind-class">WebGLRenderTarget</a><span class="tsd-signature-symbol">&lt;</span><a href="external.three.Texture.html" class="tsd-signature-type tsd-kind-class">Texture</a><span class="tsd-signature-symbol">&gt;</span><a href="#fromScene.fromScene-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></li><li class="tsd-description"><div class="tsd-comment tsd-typography"><p>Generates a PMREM from a supplied Scene, which can be faster than using an image if networking bandwidth is low</p>
+</div><div class="tsd-parameters"><h4 class="tsd-parameters-title">Parameters</h4><ul class="tsd-parameter-list"><li><span><span class="tsd-kind-parameter">scene</span>: <a href="external.three.Scene.html" class="tsd-signature-type tsd-kind-class">Scene</a></span><div class="tsd-comment tsd-typography"><p>The given scene.</p>
+</div><div class="tsd-comment tsd-typography"></div></li><li><span><code class="tsd-tag">Optional</code><span class="tsd-kind-parameter">sigma</span>: <span class="tsd-signature-type">number</span></span><div class="tsd-comment tsd-typography"><p>Specifies a blur radius in radians to be applied to the scene before PMREM generation. Default <code>0</code>.</p>
+</div><div class="tsd-comment tsd-typography"></div></li><li><span><code class="tsd-tag">Optional</code><span class="tsd-kind-parameter">near</span>: <span class="tsd-signature-type">number</span></span><div class="tsd-comment tsd-typography"><p>The near plane value. Default <code>0.1</code>.</p>
+</div><div class="tsd-comment tsd-typography"></div></li><li><span><code class="tsd-tag">Optional</code><span class="tsd-kind-parameter">far</span>: <span class="tsd-signature-type">number</span></span><div class="tsd-comment tsd-typography"><p>The far plane value. Default <code>100</code>.</p>
+</div><div class="tsd-comment tsd-typography"></div></li></ul></div><h4 class="tsd-returns-title">Returns <a href="external.three.WebGLRenderTarget.html" class="tsd-signature-type tsd-kind-class">WebGLRenderTarget</a><span class="tsd-signature-symbol">&lt;</span><a href="external.three.Texture.html" class="tsd-signature-type tsd-kind-class">Texture</a><span class="tsd-signature-symbol">&gt;</span></h4><div class="tsd-comment tsd-typography"><div class="tsd-tag-Remarks"><h4 class="tsd-anchor-link"><a id="Remarks-4" class="tsd-anchor"></a>Remarks<a href="#Remarks-4" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Optional near and far planes ensure the scene is rendered in its entirety (the cubeCamera is placed at the origin).</p>
+</div></div><aside class="tsd-sources"><ul><li>Defined in ../node_modules/@types/three/src/extras/PMREMGenerator.d.ts:47</li></ul></aside></li></ul></section></section></details></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="tsd-otp-Constructors"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Constructors</summary><div><a href="#constructor" class="tsd-is-external"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-512"></use></svg><span>constructor</span></a></div></details><details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="tsd-otp-Methods"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Methods</summary><div><a href="#compileCubemapShader" class="tsd-is-external"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-2048"></use></svg><span>compile<wbr/>Cubemap<wbr/>Shader</span></a><a href="#compileEquirectangularShader" class="tsd-is-external"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-2048"></use></svg><span>compile<wbr/>Equirectangular<wbr/>Shader</span></a><a href="#dispose" class="tsd-is-external"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-2048"></use></svg><span>dispose</span></a><a href="#fromCubemap" class="tsd-is-external"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-2048"></use></svg><span>from<wbr/>Cubemap</span></a><a href="#fromEquirectangular" class="tsd-is-external"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-2048"></use></svg><span>from<wbr/>Equirectangular</span></a><a href="#fromScene" class="tsd-is-external"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-2048"></use></svg><span>from<wbr/>Scene</span></a></div></details></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="../modules.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1"></use></svg><span>API (v1.0.0) - Giro3D</span></a><ul class="tsd-small-nested-navigation" id="tsd-nav-container" data-base=".."><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p><p>Copyright <strong>Giro3D</strong> 2018-2026, licensed under <a target="blank" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</href></p></footer><div class="overlay"></div><script>
+if (document.location.pathname === "/apidoc/" || document.location.pathname === "/" || document.location.pathname.endsWith("/apidoc/index.html") || document.location.pathname.endsWith("/apidoc/")) {
+    document.querySelector(".col-content .tsd-page-title").style.display = "none";
+}
+</script></body></html>

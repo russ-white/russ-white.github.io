@@ -1,0 +1,752 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Custom controls - Giro3D</title>
+<meta charset="UTF-8" />
+<meta name="name" content="Custom controls - Giro3D" />
+<meta name="description" content="Illustrates the use of the &lt;code&gt;camera-controls&lt;/code&gt; plugin." />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<link rel="icon" href="/images/favicon.svg" />
+<link href="/assets/bootstrap-custom.css" rel="stylesheet" />
+<script src="/assets/bootstrap.bundle.min.js"></script>
+
+<!-- OpenGraph -->
+<meta
+    property="og:description"
+    content="A versatile framework to visualize geospatial data in the browser."
+/>
+<meta
+    property="og:image"
+    content="https://giro3d.org/latest/examples/screenshots/camera-controls-integration.jpg"
+/>
+<meta property="og:locale" content="en_US" />
+<meta property="og:title" content="Custom controls - Giro3D" />
+<meta property="og:site_name" content="Giro3D" />
+<meta property="og:type" content="object" />
+<meta property="og:url" content="https://giro3d.org/latest/examples/camera-controls-integration.html" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta
+    name="twitter:description"
+    content="A versatile framework to visualize geospatial data in the browser."
+/>
+<meta name="twitter:dnt" content="on" />
+<meta
+    name="twitter:image"
+    content="https://giro3d.org/latest/examples/screenshots/camera-controls-integration.jpg"
+/>
+<meta name="twitter:title" content="Custom controls - Giro3D" />
+<meta name="twitter:widgets:align" content="center" />
+
+
+        <link rel="stylesheet" type="text/css" href="css/example.css" />
+        
+    </head>
+    <body class="bg-light">
+        
+
+<header class="header bg-light" data-bs-theme="">
+    <div class="container-fluid">
+        <a href="/" class="navbar-brand mx-0">
+            <img
+                src="/images/favicon.svg"
+                class="brand"
+                width="32"
+                height="32"
+            />
+        </a>
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav navbar-nav-left">
+                
+                <li class="nav-item">
+    <a
+        class="nav-link  "
+        href="/"
+    >
+        Home
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary "
+        href="/giro3d.html"
+    >
+        Giro3D framework
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-success "
+        href="/piero.html"
+    >
+        Piero application
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary "
+        href="/latest/tutorials/getting-started.html"
+    >
+        Getting started with Giro3D
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary active"
+        href="/latest/examples/index.html"
+    >
+        Giro3D examples
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary "
+        href="/latest/apidoc/index.html"
+    >
+        API documentation
+    </a>
+</li>
+
+
+                <li class="nav-item">
+                    <span
+                        class="navbar-text badge text-bg-info"
+                        >Version
+                        v1.0.0</span
+                    >
+                </li>
+            </ul>
+
+            
+
+            
+
+            <ul class="navbar-nav ms-2">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://gitlab.com/giro3d/giro3D" target="_blank"
+                        >GitLab <i class="bi bi-box-arrow-up-right"></i
+                    ></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+
+        <div class="m-3">
+            <!-- Short description (same as in the example card) -->
+            <div>
+                <p class="text-muted">Illustrates the use of the <code>camera-controls</code> plugin.</p>
+            </div>
+
+            <!-- 3D view -->
+            <div id="main-view" class="border position-relative" style="height: 65vh">
+                <!-- Viewer -->
+<!-- Note that we don't go to the bottom of the screen, we stop at the status bar -->
+<div id="view" class="m-0 p-0 w-100" style="height: calc(100% - 1.3rem)"></div>
+<!-- Inspector -->
+<div id="inspector" class="position-absolute top-0 start-0 mh-100 overflow-auto d-none"></div>
+<!-- Optional additional content from the example (custom buttons, etc.) -->
+<div id="gui" class="gui-init"><!-- Screenshot's icon from Lucide: https://github.com/lucide-icons/lucide -->
+<div class="side-pane-with-status-bar">
+    <button class="btn btn-primary" id="animate">Animate</button>
+</div></div>
+<!-- Status bar -->
+<div id="status-bar" class="bg-light w-100 position-absolute bottom-0 start-0 status-bar">
+    <div
+        class="progress m-2 status-progress-bar"
+        role="progressbar"
+        style="height: 5px"
+        aria-label="Loading progress"
+        aria-valuenow="100"
+        aria-valuemin="0"
+        aria-valuemax="100"
+    >
+        <div id="progress-bar" class="progress-bar" style="width: 100%"></div>
+    </div>
+    <span id="loading-percent" class="status-progress-value">100%</span>
+    
+    <span class="text-center status-attribution" id="attributions">© <a target="_blank" href="https://ign.fr/">IGN</a></span>
+    <!-- Coordinates -->
+    <div class="px-1 position-absolute end-0 d-inline-flex">
+        <div id="coordinates" class="mx-2 text-secondary" style="width: 18rem"></div>
+        <button type="button" id="crs" class="badge rounded-pill text-bg-secondary">WGS84</button>
+    </div>
+</div>
+<!-- Button area -->
+<div id="buttons" class="position-absolute top-0 start-0 mx-2 my-2 overflow-auto">
+    <!-- Full-screen button -->
+    <button
+        id="btnFullscreen"
+        type="button"
+        class="btn btn-light btn-sm mb-2"
+        title="toggle full screen"
+        style="align-items: center; justify-content: center"
+    >
+        <!-- Origin: https://icons.getbootstrap.com/icons/arrows-fullscreen/ -->
+        <i id="icon-fullscreen" class="bi bi-arrows-fullscreen"></i>
+    </button>
+
+    <!-- Toggle GUI button -->
+    <button
+        id="btnToggleGUI"
+        type="button"
+        class="btn btn-light btn-sm"
+        title="toggle GUI"
+        style="display: flex; align-items: center; justify-content: center"
+    >
+        <!-- Origin: https://icons.getbootstrap.com/icons/sliders/ -->
+        <i class="bi bi-sliders"></i>
+    </button>
+</div>
+
+<script type="module" src="__vendor.js"></script>
+<script type="module" src="__three.js"></script>
+<script type="module" src="__ol.js"></script>
+<script type="module" src="camera-controls-integration.js"></script>
+<script>
+    /* activate popovers */
+    const popoverTriggerList = [].slice.call(
+        document.querySelectorAll('[data-bs-toggle="popover"]'),
+    );
+    popoverTriggerList.map(
+        // bootstrap is used as script in the template, disable warning about undef
+        // eslint-disable-next-line no-undef
+        popoverTriggerEl =>
+            new bootstrap.Popover(popoverTriggerEl, {
+                trigger: 'hover',
+                placement: 'left',
+                content: document.getElementById(popoverTriggerEl.getAttribute('data-bs-content'))
+                    .innerHTML,
+                html: true,
+            }),
+    );
+
+    const toggleGUIButton = document.getElementById('btnToggleGUI');
+    const guiRoot = document.getElementById('gui');
+
+    if (guiRoot.childElementCount === 0) {
+        toggleGUIButton.remove();
+    } else {
+        var showGUI = window.getComputedStyle(guiRoot, null).display !== 'none';
+
+        function updateGUI(show) {
+            guiRoot.classList.remove('gui-init');
+            if (show) {
+                guiRoot.classList.remove('d-none');
+                toggleGUIButton.classList.remove('btn-light');
+                toggleGUIButton.classList.add('btn-primary');
+            } else {
+                guiRoot.classList.add('d-none');
+                toggleGUIButton.classList.remove('btn-primary');
+                toggleGUIButton.classList.add('btn-light');
+            }
+        }
+
+        if (toggleGUIButton) {
+            toggleGUIButton.onclick = function onclick() {
+                showGUI = !showGUI;
+                updateGUI(showGUI);
+            };
+        }
+
+        updateGUI(showGUI);
+    }
+
+    var fullScreen = false;
+
+    const fullScreenButton = document.getElementById('btnFullscreen');
+
+    function updateFullScreenIcon() {
+        const target = document.getElementById('icon-fullscreen');
+        if (document.fullscreen) {
+            target.className = 'bi bi-fullscreen-exit';
+        } else {
+            target.className = 'bi bi-arrows-fullscreen';
+        }
+    }
+
+    document.addEventListener('fullscreenchange', () => {
+        updateFullScreenIcon();
+    });
+
+    function toggleFullScreen() {
+        if (!fullScreen) {
+            document
+                .getElementById('view')
+                .parentElement.requestFullscreen()
+                .then(() => {
+                    fullScreen = true;
+                });
+        } else {
+            document.exitFullscreen().then(() => {
+                fullScreen = false;
+            });
+        }
+    }
+
+    if (fullScreenButton) fullScreenButton.onclick = toggleFullScreen;
+
+    function copyContentByID(id) {
+        const source = document.getElementById(id);
+        const text = source.textContent;
+        const btn = source.querySelector('.btn');
+        navigator.clipboard
+            .writeText(text.trim())
+            .then(() => {
+                btn.classList.add('pulse-once');
+                setTimeout(() => btn.classList.remove('pulse-once'), 1000);
+            })
+            .catch(e => {
+                console.log('failed', e);
+            });
+    }
+</script>
+
+            </div>
+
+            <!-- Long description (optional) -->
+            
+            <div class="my-3">
+                <p>The <a href="https://github.com/yomotsu/camera-controls" target="_blank"><code>camera-controls</code></a> is a powerful navigation controller for three.js that supports touch and mouse/keyboard-based navigation and is highly configurable.</p>
+            </div>
+            
+
+            <!-- Source code -->
+            
+            <span class="badge text-bg-primary mt-3 mb-1">index.js</span>
+            <div
+                class="border rounded p-3 position-relative mb-3"
+                id="source"
+                style="background-color: #ffffff"
+            >
+                <span class="position-absolute top-0 end-0 p-2">
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        onclick="copyContentByID('source')"
+                    >
+                        <i class="bi bi-copy"></i>
+                    </button>
+                </span>
+                <pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> CameraControls </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "camera-controls"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#24292E">  Box3,</span></span>
+<span class="line"><span style="color:#24292E">  Clock,</span></span>
+<span class="line"><span style="color:#24292E">  CubeTextureLoader,</span></span>
+<span class="line"><span style="color:#24292E">  Matrix4,</span></span>
+<span class="line"><span style="color:#24292E">  Quaternion,</span></span>
+<span class="line"><span style="color:#24292E">  Raycaster,</span></span>
+<span class="line"><span style="color:#24292E">  Sphere,</span></span>
+<span class="line"><span style="color:#24292E">  Spherical,</span></span>
+<span class="line"><span style="color:#24292E">  Vector2,</span></span>
+<span class="line"><span style="color:#24292E">  Vector3,</span></span>
+<span class="line"><span style="color:#24292E">  Vector4,</span></span>
+<span class="line"><span style="color:#24292E">} </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "three"</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> CoordinateSystem </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/core/geographic/CoordinateSystem.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> Instance </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/core/Instance.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> ColorLayer </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/core/layer/ColorLayer.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> Tiles3D </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/entities/Tiles3D.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> Inspector </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/gui/Inspector.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> Panel </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/gui/Panel.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> { MODE } </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/renderer/PointCloudMaterial.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> WmtsSource </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/sources/WmtsSource.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">CameraControls.</span><span style="color:#6F42C1">install</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">  THREE: {</span></span>
+<span class="line"><span style="color:#24292E">    Vector2,</span></span>
+<span class="line"><span style="color:#24292E">    Vector3,</span></span>
+<span class="line"><span style="color:#24292E">    Vector4,</span></span>
+<span class="line"><span style="color:#24292E">    Quaternion,</span></span>
+<span class="line"><span style="color:#24292E">    Matrix4,</span></span>
+<span class="line"><span style="color:#24292E">    Spherical,</span></span>
+<span class="line"><span style="color:#24292E">    Box3,</span></span>
+<span class="line"><span style="color:#24292E">    Sphere,</span></span>
+<span class="line"><span style="color:#24292E">    Raycaster,</span></span>
+<span class="line"><span style="color:#24292E">  },</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> crs</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> CoordinateSystem.</span><span style="color:#6F42C1">register</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#032F62">  "EPSG:3946"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#032F62">  "+proj=lcc +lat_1=45.25 +lat_2=46.75 +lat_0=46 +lon_0=3 +x_0=1700000 "</span><span style="color:#D73A49"> +</span></span>
+<span class="line"><span style="color:#032F62">    "+y_0=5200000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> instance</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Instance</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">  target: </span><span style="color:#032F62">"view"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  crs,</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> pointcloud</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Tiles3D</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">  url: </span><span style="color:#032F62">"https://3d.oslandia.com/3dtiles/lyon.3dtiles/tileset.json"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  pointCloudMode: </span><span style="color:#005CC5">MODE</span><span style="color:#24292E">.</span><span style="color:#005CC5">TEXTURE</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  errorTarget: </span><span style="color:#005CC5">15</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">instance.</span><span style="color:#6F42C1">add</span><span style="color:#24292E">(pointcloud).</span><span style="color:#6F42C1">then</span><span style="color:#24292E">((</span><span style="color:#E36209">pc</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> url</span><span style="color:#D73A49"> =</span></span>
+<span class="line"><span style="color:#032F62">    "https://data.geopf.fr/wmts?SERVICE=WMTS&#x26;VERSION=1.0.0&#x26;REQUEST=GetCapabilities"</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  // Let's build the color layer from the WMTS capabilities</span></span>
+<span class="line"><span style="color:#24292E">  WmtsSource.</span><span style="color:#6F42C1">fromCapabilities</span><span style="color:#24292E">(url, {</span></span>
+<span class="line"><span style="color:#24292E">    layer: </span><span style="color:#032F62">"HR.ORTHOIMAGERY.ORTHOPHOTOS"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  })</span></span>
+<span class="line"><span style="color:#24292E">    .</span><span style="color:#6F42C1">then</span><span style="color:#24292E">((</span><span style="color:#E36209">orthophotoWmts</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#24292E">      pc.</span><span style="color:#6F42C1">setColorLayer</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#D73A49">        new</span><span style="color:#6F42C1"> ColorLayer</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">          name: </span><span style="color:#032F62">"color"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">          source: orthophotoWmts,</span></span>
+<span class="line"><span style="color:#24292E">        }),</span></span>
+<span class="line"><span style="color:#24292E">      );</span></span>
+<span class="line"><span style="color:#24292E">    })</span></span>
+<span class="line"><span style="color:#24292E">    .</span><span style="color:#6F42C1">catch</span><span style="color:#24292E">(console.error);</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Configure our controls</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> controls</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> CameraControls</span><span style="color:#24292E">(instance.view.camera, instance.domElement);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">controls.dollyToCursor </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> true</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">controls.verticalDragToForward </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> true</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">controls.mouseButtons.left </span><span style="color:#D73A49">=</span><span style="color:#24292E"> CameraControls.</span><span style="color:#005CC5">ACTION</span><span style="color:#24292E">.</span><span style="color:#005CC5">TRUCK</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">controls.mouseButtons.right </span><span style="color:#D73A49">=</span><span style="color:#24292E"> CameraControls.</span><span style="color:#005CC5">ACTION</span><span style="color:#24292E">.</span><span style="color:#005CC5">ROTATE</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">controls.mouseButtons.wheel </span><span style="color:#D73A49">=</span><span style="color:#24292E"> CameraControls.</span><span style="color:#005CC5">ACTION</span><span style="color:#24292E">.</span><span style="color:#005CC5">DOLLY</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">controls.mouseButtons.middle </span><span style="color:#D73A49">=</span><span style="color:#24292E"> CameraControls.</span><span style="color:#005CC5">ACTION</span><span style="color:#24292E">.</span><span style="color:#005CC5">DOLLY</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> clock</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Clock</span><span style="color:#24292E">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Update controls from event loop - this replaces the requestAnimationFrame logic from</span></span>
+<span class="line"><span style="color:#6A737D">// camera-controls sample code</span></span>
+<span class="line"><span style="color:#24292E">instance.</span><span style="color:#6F42C1">addEventListener</span><span style="color:#24292E">(</span><span style="color:#032F62">"before-camera-update"</span><span style="color:#24292E">, () </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#6A737D">  // Called from Giro3D</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> delta</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> clock.</span><span style="color:#6F42C1">getDelta</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> hasControlsUpdated</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> controls.</span><span style="color:#6F42C1">update</span><span style="color:#24292E">(delta);</span></span>
+<span class="line"><span style="color:#D73A49">  if</span><span style="color:#24292E"> (hasControlsUpdated) {</span></span>
+<span class="line"><span style="color:#24292E">    instance.</span><span style="color:#6F42C1">notifyChange</span><span style="color:#24292E">(instance.view.camera);</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"><span style="color:#6A737D">// As Giro3D runs the event loop only when needed, we need to notify Giro3D when</span></span>
+<span class="line"><span style="color:#6A737D">// the controls update the view.</span></span>
+<span class="line"><span style="color:#6A737D">// We need both events to make sure the view is updated from user interactions and from animations</span></span>
+<span class="line"><span style="color:#24292E">controls.</span><span style="color:#6F42C1">addEventListener</span><span style="color:#24292E">(</span><span style="color:#032F62">"update"</span><span style="color:#24292E">, () </span><span style="color:#D73A49">=></span></span>
+<span class="line"><span style="color:#24292E">  instance.</span><span style="color:#6F42C1">notifyChange</span><span style="color:#24292E">(instance.view.camera),</span></span>
+<span class="line"><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#24292E">controls.</span><span style="color:#6F42C1">addEventListener</span><span style="color:#24292E">(</span><span style="color:#032F62">"control"</span><span style="color:#24292E">, () </span><span style="color:#D73A49">=></span></span>
+<span class="line"><span style="color:#24292E">  instance.</span><span style="color:#6F42C1">notifyChange</span><span style="color:#24292E">(instance.view.camera),</span></span>
+<span class="line"><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// place camera</span></span>
+<span class="line"><span style="color:#24292E">controls.</span><span style="color:#6F42C1">setLookAt</span><span style="color:#24292E">(</span><span style="color:#005CC5">1842456</span><span style="color:#24292E">, </span><span style="color:#005CC5">5174330</span><span style="color:#24292E">, </span><span style="color:#005CC5">735</span><span style="color:#24292E">, </span><span style="color:#005CC5">1841993</span><span style="color:#24292E">, </span><span style="color:#005CC5">5175493</span><span style="color:#24292E">, </span><span style="color:#005CC5">188</span><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// And now we can add some custom behavior</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#6F42C1"> executeInteraction</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> (</span><span style="color:#E36209">callback</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#6A737D">  // Execute the interaction</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> res</span><span style="color:#D73A49"> =</span><span style="color:#6F42C1"> callback</span><span style="color:#24292E">() </span><span style="color:#D73A49">??</span><span style="color:#005CC5"> Promise</span><span style="color:#24292E">.</span><span style="color:#6F42C1">resolve</span><span style="color:#24292E">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  // As mainloop can pause, before-camera-update can be triggered irregularly</span></span>
+<span class="line"><span style="color:#6A737D">  // Make sure to "reset" the clock to enable smooth transitions with camera-controls</span></span>
+<span class="line"><span style="color:#24292E">  clock.</span><span style="color:#6F42C1">getDelta</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#6A737D">  // Dispatch events so Giro3D gets notified</span></span>
+<span class="line"><span style="color:#24292E">  controls.</span><span style="color:#6F42C1">dispatchEvent</span><span style="color:#24292E">({ type: </span><span style="color:#032F62">"update"</span><span style="color:#24292E"> });</span></span>
+<span class="line"><span style="color:#D73A49">  return</span><span style="color:#24292E"> res;</span></span>
+<span class="line"><span style="color:#24292E">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Add some controls on keyboard</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> keys</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#24292E">  LEFT: </span><span style="color:#032F62">"ArrowLeft"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  UP: </span><span style="color:#032F62">"ArrowUp"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  RIGHT: </span><span style="color:#032F62">"ArrowRight"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  BOTTOM: </span><span style="color:#032F62">"ArrowDown"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">};</span></span>
+<span class="line"><span style="color:#24292E">instance.domElement.</span><span style="color:#6F42C1">addEventListener</span><span style="color:#24292E">(</span><span style="color:#032F62">"keydown"</span><span style="color:#24292E">, (</span><span style="color:#E36209">e</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#D73A49">  let</span><span style="color:#24292E"> forwardDirection </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> 0</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">  let</span><span style="color:#24292E"> truckDirectionX </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> 0</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> factor</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> e.ctrlKey </span><span style="color:#D73A49">||</span><span style="color:#24292E"> e.metaKey </span><span style="color:#D73A49">||</span><span style="color:#24292E"> e.shiftKey </span><span style="color:#D73A49">?</span><span style="color:#005CC5"> 200</span><span style="color:#D73A49"> :</span><span style="color:#005CC5"> 20</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">  switch</span><span style="color:#24292E"> (e.code) {</span></span>
+<span class="line"><span style="color:#D73A49">    case</span><span style="color:#24292E"> keys.</span><span style="color:#005CC5">UP</span><span style="color:#24292E">:</span></span>
+<span class="line"><span style="color:#24292E">      forwardDirection </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> 1</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">      break</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">    case</span><span style="color:#24292E"> keys.</span><span style="color:#005CC5">BOTTOM</span><span style="color:#24292E">:</span></span>
+<span class="line"><span style="color:#24292E">      forwardDirection </span><span style="color:#D73A49">=</span><span style="color:#D73A49"> -</span><span style="color:#005CC5">1</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">      break</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">    case</span><span style="color:#24292E"> keys.</span><span style="color:#005CC5">LEFT</span><span style="color:#24292E">:</span></span>
+<span class="line"><span style="color:#24292E">      truckDirectionX </span><span style="color:#D73A49">=</span><span style="color:#D73A49"> -</span><span style="color:#005CC5">1</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">      break</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">    case</span><span style="color:#24292E"> keys.</span><span style="color:#005CC5">RIGHT</span><span style="color:#24292E">:</span></span>
+<span class="line"><span style="color:#24292E">      truckDirectionX </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> 1</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">      break</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">    default</span><span style="color:#24292E">:</span></span>
+<span class="line"><span style="color:#6A737D">    // do nothing</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"><span style="color:#D73A49">  if</span><span style="color:#24292E"> (forwardDirection) {</span></span>
+<span class="line"><span style="color:#6F42C1">    executeInteraction</span><span style="color:#24292E">(() </span><span style="color:#D73A49">=></span></span>
+<span class="line"><span style="color:#24292E">      controls.</span><span style="color:#6F42C1">forward</span><span style="color:#24292E">(forwardDirection </span><span style="color:#D73A49">*</span><span style="color:#24292E"> controls.truckSpeed </span><span style="color:#D73A49">*</span><span style="color:#24292E"> factor, </span><span style="color:#005CC5">true</span><span style="color:#24292E">),</span></span>
+<span class="line"><span style="color:#24292E">    );</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"><span style="color:#D73A49">  if</span><span style="color:#24292E"> (truckDirectionX) {</span></span>
+<span class="line"><span style="color:#6F42C1">    executeInteraction</span><span style="color:#24292E">(() </span><span style="color:#D73A49">=></span></span>
+<span class="line"><span style="color:#24292E">      controls.</span><span style="color:#6F42C1">truck</span><span style="color:#24292E">(truckDirectionX </span><span style="color:#D73A49">*</span><span style="color:#24292E"> controls.truckSpeed </span><span style="color:#D73A49">*</span><span style="color:#24292E"> factor, </span><span style="color:#005CC5">0</span><span style="color:#24292E">, </span><span style="color:#005CC5">true</span><span style="color:#24292E">),</span></span>
+<span class="line"><span style="color:#24292E">    );</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Make rotation around where the user clicked</span></span>
+<span class="line"><span style="color:#24292E">instance.domElement.</span><span style="color:#6F42C1">addEventListener</span><span style="color:#24292E">(</span><span style="color:#032F62">"contextmenu"</span><span style="color:#24292E">, (</span><span style="color:#E36209">e</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> picked</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> instance.</span><span style="color:#6F42C1">pickObjectsAt</span><span style="color:#24292E">(e, {</span></span>
+<span class="line"><span style="color:#24292E">    limit: </span><span style="color:#005CC5">1</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">    radius: </span><span style="color:#005CC5">20</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#6F42C1">    filter</span><span style="color:#24292E">: (</span><span style="color:#E36209">p</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span></span>
+<span class="line"><span style="color:#6A737D">      // Make sure we pick a valid point</span></span>
+<span class="line"><span style="color:#24292E">      Number.</span><span style="color:#6F42C1">isFinite</span><span style="color:#24292E">(p.point.x) </span><span style="color:#D73A49">&#x26;&#x26;</span></span>
+<span class="line"><span style="color:#24292E">      Number.</span><span style="color:#6F42C1">isFinite</span><span style="color:#24292E">(p.point.y) </span><span style="color:#D73A49">&#x26;&#x26;</span></span>
+<span class="line"><span style="color:#24292E">      Number.</span><span style="color:#6F42C1">isFinite</span><span style="color:#24292E">(p.point.z),</span></span>
+<span class="line"><span style="color:#24292E">  })[</span><span style="color:#005CC5">0</span><span style="color:#24292E">];</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  if</span><span style="color:#24292E"> (picked) {</span></span>
+<span class="line"><span style="color:#24292E">    controls.</span><span style="color:#6F42C1">setOrbitPoint</span><span style="color:#24292E">(picked.point.x, picked.point.y, picked.point.z);</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// add a skybox background</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> cubeTextureLoader</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> CubeTextureLoader</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">cubeTextureLoader.</span><span style="color:#6F42C1">setPath</span><span style="color:#24292E">(</span><span style="color:#032F62">"image/skyboxsun25deg_zup/"</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> cubeTexture</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> cubeTextureLoader.</span><span style="color:#6F42C1">load</span><span style="color:#24292E">([</span></span>
+<span class="line"><span style="color:#032F62">  "px.jpg"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#032F62">  "nx.jpg"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#032F62">  "py.jpg"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#032F62">  "ny.jpg"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#032F62">  "pz.jpg"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#032F62">  "nz.jpg"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">]);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">instance.scene.background </span><span style="color:#D73A49">=</span><span style="color:#24292E"> cubeTexture;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> inspector</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> Inspector.</span><span style="color:#6F42C1">attach</span><span style="color:#24292E">(</span><span style="color:#032F62">"inspector"</span><span style="color:#24292E">, instance);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">class</span><span style="color:#6F42C1"> ControlsInspector</span><span style="color:#D73A49"> extends</span><span style="color:#6F42C1"> Panel</span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#D73A49">  constructor</span><span style="color:#24292E">(</span><span style="color:#E36209">gui</span><span style="color:#24292E">, </span><span style="color:#E36209">_instance</span><span style="color:#24292E">, </span><span style="color:#E36209">_controls</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#005CC5">    super</span><span style="color:#24292E">(gui, _instance, </span><span style="color:#032F62">"Controls"</span><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5">    this</span><span style="color:#24292E">.controls </span><span style="color:#D73A49">=</span><span style="color:#24292E"> _controls;</span></span>
+<span class="line"><span style="color:#005CC5">    this</span><span style="color:#24292E">.target </span><span style="color:#D73A49">=</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Vector3</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#005CC5">    this</span><span style="color:#24292E">.controls.</span><span style="color:#6F42C1">getTarget</span><span style="color:#24292E">(</span><span style="color:#005CC5">this</span><span style="color:#24292E">.target);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5">    this</span><span style="color:#24292E">.</span><span style="color:#6F42C1">addController</span><span style="color:#24292E">(</span><span style="color:#005CC5">this</span><span style="color:#24292E">.controls, </span><span style="color:#032F62">"enabled"</span><span style="color:#24292E">).</span><span style="color:#6F42C1">name</span><span style="color:#24292E">(</span><span style="color:#032F62">"Enabled"</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#005CC5">    this</span><span style="color:#24292E">.</span><span style="color:#6F42C1">addController</span><span style="color:#24292E">(</span><span style="color:#005CC5">this</span><span style="color:#24292E">.controls, </span><span style="color:#032F62">"active"</span><span style="color:#24292E">).</span><span style="color:#6F42C1">name</span><span style="color:#24292E">(</span><span style="color:#032F62">"Active"</span><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">    const</span><span style="color:#005CC5"> target</span><span style="color:#D73A49"> =</span><span style="color:#005CC5"> this</span><span style="color:#24292E">.gui.</span><span style="color:#6F42C1">addFolder</span><span style="color:#24292E">(</span><span style="color:#032F62">"Target"</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#24292E">    target.</span><span style="color:#6F42C1">close</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#005CC5">    this</span><span style="color:#24292E">._controllers.</span><span style="color:#6F42C1">push</span><span style="color:#24292E">(target.</span><span style="color:#6F42C1">add</span><span style="color:#24292E">(</span><span style="color:#005CC5">this</span><span style="color:#24292E">.target, </span><span style="color:#032F62">"x"</span><span style="color:#24292E">));</span></span>
+<span class="line"><span style="color:#005CC5">    this</span><span style="color:#24292E">._controllers.</span><span style="color:#6F42C1">push</span><span style="color:#24292E">(target.</span><span style="color:#6F42C1">add</span><span style="color:#24292E">(</span><span style="color:#005CC5">this</span><span style="color:#24292E">.target, </span><span style="color:#032F62">"y"</span><span style="color:#24292E">));</span></span>
+<span class="line"><span style="color:#005CC5">    this</span><span style="color:#24292E">._controllers.</span><span style="color:#6F42C1">push</span><span style="color:#24292E">(target.</span><span style="color:#6F42C1">add</span><span style="color:#24292E">(</span><span style="color:#005CC5">this</span><span style="color:#24292E">.target, </span><span style="color:#032F62">"z"</span><span style="color:#24292E">));</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5">    this</span><span style="color:#24292E">._eventhandlers </span><span style="color:#D73A49">=</span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#6F42C1">      control</span><span style="color:#24292E">: () </span><span style="color:#D73A49">=></span><span style="color:#005CC5"> this</span><span style="color:#24292E">.controls.</span><span style="color:#6F42C1">getTarget</span><span style="color:#24292E">(</span><span style="color:#005CC5">this</span><span style="color:#24292E">.target),</span></span>
+<span class="line"><span style="color:#24292E">    };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5">    this</span><span style="color:#24292E">.</span><span style="color:#6F42C1">addController</span><span style="color:#24292E">(</span><span style="color:#005CC5">this</span><span style="color:#24292E">.controls, </span><span style="color:#032F62">"distance"</span><span style="color:#24292E">).</span><span style="color:#6F42C1">name</span><span style="color:#24292E">(</span><span style="color:#032F62">"Distance"</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#005CC5">    this</span><span style="color:#24292E">.</span><span style="color:#6F42C1">addController</span><span style="color:#24292E">(</span><span style="color:#005CC5">this</span><span style="color:#24292E">.controls, </span><span style="color:#032F62">"polarAngle"</span><span style="color:#24292E">).</span><span style="color:#6F42C1">name</span><span style="color:#24292E">(</span><span style="color:#032F62">"Polar angle"</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#005CC5">    this</span><span style="color:#24292E">.</span><span style="color:#6F42C1">addController</span><span style="color:#24292E">(</span><span style="color:#005CC5">this</span><span style="color:#24292E">.controls, </span><span style="color:#032F62">"azimuthAngle"</span><span style="color:#24292E">).</span><span style="color:#6F42C1">name</span><span style="color:#24292E">(</span><span style="color:#032F62">"Azimuth angle"</span><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5">    this</span><span style="color:#24292E">.needsUpdate </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> false</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5">    this</span><span style="color:#24292E">.controls.</span><span style="color:#6F42C1">addEventListener</span><span style="color:#24292E">(</span><span style="color:#032F62">"update"</span><span style="color:#24292E">, </span><span style="color:#005CC5">this</span><span style="color:#24292E">._eventhandlers.control);</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1">  dispose</span><span style="color:#24292E">() {</span></span>
+<span class="line"><span style="color:#005CC5">    this</span><span style="color:#24292E">.controls.</span><span style="color:#6F42C1">removeEventListener</span><span style="color:#24292E">(</span><span style="color:#032F62">"update"</span><span style="color:#24292E">, </span><span style="color:#005CC5">this</span><span style="color:#24292E">._eventhandlers.control);</span></span>
+<span class="line"><span style="color:#005CC5">    super</span><span style="color:#24292E">.</span><span style="color:#6F42C1">dispose</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> controlsInspector</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> ControlsInspector</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#24292E">  inspector.gui,</span></span>
+<span class="line"><span style="color:#24292E">  instance,</span></span>
+<span class="line"><span style="color:#24292E">  controls,</span></span>
+<span class="line"><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#24292E">inspector.</span><span style="color:#6F42C1">addPanel</span><span style="color:#24292E">(controlsInspector);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Add some animations</span></span>
+<span class="line"><span style="color:#24292E">document.</span><span style="color:#6F42C1">getElementById</span><span style="color:#24292E">(</span><span style="color:#032F62">"animate"</span><span style="color:#24292E">).</span><span style="color:#6F42C1">onclick</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> () </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#6F42C1">  executeInteraction</span><span style="color:#24292E">(</span><span style="color:#D73A49">async</span><span style="color:#24292E"> () </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#D73A49">    await</span><span style="color:#24292E"> controls.</span><span style="color:#6F42C1">rotate</span><span style="color:#24292E">((Math.</span><span style="color:#6F42C1">random</span><span style="color:#24292E">() </span><span style="color:#D73A49">-</span><span style="color:#005CC5"> 0.5</span><span style="color:#24292E">) </span><span style="color:#D73A49">*</span><span style="color:#24292E"> (Math.</span><span style="color:#005CC5">PI</span><span style="color:#D73A49"> /</span><span style="color:#005CC5"> 2</span><span style="color:#24292E">), </span><span style="color:#005CC5">0</span><span style="color:#24292E">, </span><span style="color:#005CC5">true</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#D73A49">    await</span><span style="color:#24292E"> controls.</span><span style="color:#6F42C1">rotatePolarTo</span><span style="color:#24292E">(Math.</span><span style="color:#005CC5">PI</span><span style="color:#D73A49"> /</span><span style="color:#005CC5"> 8</span><span style="color:#24292E">, </span><span style="color:#005CC5">true</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#D73A49">    await</span><span style="color:#24292E"> controls.</span><span style="color:#6F42C1">dolly</span><span style="color:#24292E">((Math.</span><span style="color:#6F42C1">random</span><span style="color:#24292E">() </span><span style="color:#D73A49">-</span><span style="color:#005CC5"> 0.5</span><span style="color:#24292E">) </span><span style="color:#D73A49">*</span><span style="color:#005CC5"> 1000</span><span style="color:#24292E">, </span><span style="color:#005CC5">true</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#24292E">  });</span></span>
+<span class="line"><span style="color:#24292E">};</span></span>
+<span class="line"></span></code></pre>
+            </div>
+            
+
+            <!-- HTML code -->
+            
+            <span class="badge text-bg-primary mt-3 mb-1">index.html</span>
+            <div
+                class="border rounded p-3 position-relative mb-3"
+                id="source-html"
+                style="background-color: #ffffff"
+            >
+                <span class="position-absolute top-0 end-0 p-2">
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        onclick="copyContentByID('source-html')"
+                    >
+                        <i class="bi bi-copy"></i>
+                    </button>
+                </span>
+                <pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#24292E">&#x3C;!</span><span style="color:#22863A">doctype</span><span style="color:#6F42C1"> html</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">&#x3C;</span><span style="color:#22863A">html</span><span style="color:#6F42C1"> lang</span><span style="color:#24292E">=</span><span style="color:#032F62">"en"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">  &#x3C;</span><span style="color:#22863A">head</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">title</span><span style="color:#24292E">>Custom controls&#x3C;/</span><span style="color:#22863A">title</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">meta</span><span style="color:#6F42C1"> charset</span><span style="color:#24292E">=</span><span style="color:#032F62">"UTF-8"</span><span style="color:#24292E"> /></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">meta</span><span style="color:#6F42C1"> name</span><span style="color:#24292E">=</span><span style="color:#032F62">"name"</span><span style="color:#6F42C1"> content</span><span style="color:#24292E">=</span><span style="color:#032F62">"camera-controls-integration"</span><span style="color:#24292E"> /></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">meta</span></span>
+<span class="line"><span style="color:#6F42C1">      name</span><span style="color:#24292E">=</span><span style="color:#032F62">"description"</span></span>
+<span class="line"><span style="color:#6F42C1">      content</span><span style="color:#24292E">=</span><span style="color:#032F62">"Illustrates the use of the </span><span style="color:#005CC5">&#x26;lt;</span><span style="color:#032F62">code</span><span style="color:#005CC5">&#x26;gt;</span><span style="color:#032F62">camera-controls</span><span style="color:#005CC5">&#x26;lt;</span><span style="color:#032F62">/code</span><span style="color:#005CC5">&#x26;gt;</span><span style="color:#032F62"> plugin."</span></span>
+<span class="line"><span style="color:#24292E">    /></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">meta</span><span style="color:#6F42C1"> name</span><span style="color:#24292E">=</span><span style="color:#032F62">"viewport"</span><span style="color:#6F42C1"> content</span><span style="color:#24292E">=</span><span style="color:#032F62">"width=device-width, initial-scale=1.0"</span><span style="color:#24292E"> /></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">link</span><span style="color:#6F42C1"> rel</span><span style="color:#24292E">=</span><span style="color:#032F62">"icon"</span><span style="color:#6F42C1"> href</span><span style="color:#24292E">=</span><span style="color:#032F62">"https://giro3d.org/images/favicon.svg"</span><span style="color:#24292E"> /></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">link</span></span>
+<span class="line"><span style="color:#6F42C1">      href</span><span style="color:#24292E">=</span><span style="color:#032F62">"https://giro3d.org/assets/bootstrap-custom.css"</span></span>
+<span class="line"><span style="color:#6F42C1">      rel</span><span style="color:#24292E">=</span><span style="color:#032F62">"stylesheet"</span></span>
+<span class="line"><span style="color:#24292E">    /></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">script</span><span style="color:#6F42C1"> src</span><span style="color:#24292E">=</span><span style="color:#032F62">"https://giro3d.org/assets/bootstrap.bundle.min.js"</span><span style="color:#24292E">>&#x3C;/</span><span style="color:#22863A">script</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">link</span></span>
+<span class="line"><span style="color:#6F42C1">      rel</span><span style="color:#24292E">=</span><span style="color:#032F62">"stylesheet"</span></span>
+<span class="line"><span style="color:#6F42C1">      type</span><span style="color:#24292E">=</span><span style="color:#032F62">"text/css"</span></span>
+<span class="line"><span style="color:#6F42C1">      href</span><span style="color:#24292E">=</span><span style="color:#032F62">"https://giro3d.org/latest/examples/css/example.css"</span></span>
+<span class="line"><span style="color:#24292E">    /></span></span>
+<span class="line"><span style="color:#24292E">  &#x3C;/</span><span style="color:#22863A">head</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  &#x3C;</span><span style="color:#22863A">body</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> id</span><span style="color:#24292E">=</span><span style="color:#032F62">"view"</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"m-0 p-0 w-100 h-100"</span><span style="color:#24292E">>&#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">div</span></span>
+<span class="line"><span style="color:#6F42C1">      id</span><span style="color:#24292E">=</span><span style="color:#032F62">"inspector"</span></span>
+<span class="line"><span style="color:#6F42C1">      class</span><span style="color:#24292E">=</span><span style="color:#032F62">"position-absolute top-0 start-0 mh-100 overflow-auto"</span></span>
+<span class="line"><span style="color:#24292E">    >&#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    &#x3C;!-- Screenshot's icon from Lucide: https://github.com/lucide-icons/lucide --></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"side-pane-with-status-bar"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">      &#x3C;</span><span style="color:#22863A">button</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"btn btn-primary"</span><span style="color:#6F42C1"> id</span><span style="color:#24292E">=</span><span style="color:#032F62">"animate"</span><span style="color:#24292E">>Animate&#x3C;/</span><span style="color:#22863A">button</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">script</span><span style="color:#6F42C1"> type</span><span style="color:#24292E">=</span><span style="color:#032F62">"module"</span><span style="color:#6F42C1"> src</span><span style="color:#24292E">=</span><span style="color:#032F62">"index.js"</span><span style="color:#24292E">>&#x3C;/</span><span style="color:#22863A">script</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">script</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#6A737D">      /* activate popovers */</span></span>
+<span class="line"><span style="color:#D73A49">      const</span><span style="color:#005CC5"> popoverTriggerList</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> [].slice.</span><span style="color:#6F42C1">call</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#24292E">        document.</span><span style="color:#6F42C1">querySelectorAll</span><span style="color:#24292E">(</span><span style="color:#032F62">'[data-bs-toggle="popover"]'</span><span style="color:#24292E">),</span></span>
+<span class="line"><span style="color:#24292E">      );</span></span>
+<span class="line"><span style="color:#24292E">      popoverTriggerList.</span><span style="color:#6F42C1">map</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#6A737D">        // bootstrap is used as script in the template, disable warning about undef</span></span>
+<span class="line"><span style="color:#6A737D">        // eslint-disable-next-line no-undef</span></span>
+<span class="line"><span style="color:#24292E">        (</span><span style="color:#E36209">popoverTriggerEl</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span></span>
+<span class="line"><span style="color:#D73A49">          new</span><span style="color:#24292E"> bootstrap.</span><span style="color:#6F42C1">Popover</span><span style="color:#24292E">(popoverTriggerEl, {</span></span>
+<span class="line"><span style="color:#24292E">            trigger: </span><span style="color:#032F62">"hover"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">            placement: </span><span style="color:#032F62">"left"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">            content: document.</span><span style="color:#6F42C1">getElementById</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#24292E">              popoverTriggerEl.</span><span style="color:#6F42C1">getAttribute</span><span style="color:#24292E">(</span><span style="color:#032F62">"data-bs-content"</span><span style="color:#24292E">),</span></span>
+<span class="line"><span style="color:#24292E">            ).innerHTML,</span></span>
+<span class="line"><span style="color:#24292E">            html: </span><span style="color:#005CC5">true</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">          }),</span></span>
+<span class="line"><span style="color:#24292E">      );</span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;/</span><span style="color:#22863A">script</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">  &#x3C;/</span><span style="color:#22863A">body</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">&#x3C;/</span><span style="color:#22863A">html</span><span style="color:#24292E">></span></span>
+<span class="line"></span></code></pre>
+            </div>
+            
+
+            <!-- package.json code -->
+            
+            <span class="badge text-bg-primary mt-3 mb-1">package.json</span>
+            <div
+                class="border rounded p-3 position-relative mb-3"
+                id="source-package-json"
+                style="background-color: #ffffff"
+            >
+                <span class="position-absolute top-0 end-0 p-2">
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        onclick="copyContentByID('source-package-json')"
+                    >
+                        <i class="bi bi-copy"></i>
+                    </button>
+                </span>
+                <pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#24292E">{</span></span>
+<span class="line"><span style="color:#005CC5">    "name"</span><span style="color:#24292E">: </span><span style="color:#032F62">"camera-controls-integration"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">    "dependencies"</span><span style="color:#24292E">: {</span></span>
+<span class="line"><span style="color:#005CC5">        "camera-controls"</span><span style="color:#24292E">: </span><span style="color:#032F62">"^2.9.0"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">        "@giro3d/giro3d"</span><span style="color:#24292E">: </span><span style="color:#032F62">"1.0.0"</span></span>
+<span class="line"><span style="color:#24292E">    },</span></span>
+<span class="line"><span style="color:#005CC5">    "devDependencies"</span><span style="color:#24292E">: {</span></span>
+<span class="line"><span style="color:#005CC5">        "vite"</span><span style="color:#24292E">: </span><span style="color:#032F62">"^3.2.3"</span></span>
+<span class="line"><span style="color:#24292E">    },</span></span>
+<span class="line"><span style="color:#005CC5">    "scripts"</span><span style="color:#24292E">: {</span></span>
+<span class="line"><span style="color:#005CC5">        "start"</span><span style="color:#24292E">: </span><span style="color:#032F62">"vite"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">        "build"</span><span style="color:#24292E">: </span><span style="color:#032F62">"vite build"</span></span>
+<span class="line"><span style="color:#24292E">    }</span></span>
+<span class="line"><span style="color:#24292E">}</span></span></code></pre>
+            </div>
+            
+
+            <!-- vite.config.js code -->
+            <span class="badge text-bg-primary mt-3 mb-1">vite.config.js</span>
+            <div
+                class="border rounded p-3 position-relative mb-3"
+                id="source-vite-config"
+                style="background-color: #ffffff"
+            >
+                <span class="position-absolute top-0 end-0 p-2">
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        onclick="copyContentByID('source-vite-config')"
+                    >
+                        <i class="bi bi-copy"></i>
+                    </button>
+                </span>
+                <pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> { defineConfig } </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "vite"</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">export</span><span style="color:#D73A49"> default</span><span style="color:#6F42C1"> defineConfig</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">  build: {</span></span>
+<span class="line"><span style="color:#24292E">    target: </span><span style="color:#032F62">'esnext'</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  },</span></span>
+<span class="line"><span style="color:#24292E">  optimizeDeps: {</span></span>
+<span class="line"><span style="color:#24292E">    esbuildOptions: {</span></span>
+<span class="line"><span style="color:#24292E">      target: </span><span style="color:#032F62">'esnext'</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">    },</span></span>
+<span class="line"><span style="color:#24292E">  },</span></span>
+<span class="line"><span style="color:#24292E">})</span></span></code></pre>
+            </div>
+        </div>
+    </body>
+</html>
