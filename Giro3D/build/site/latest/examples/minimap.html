@@ -1,0 +1,741 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Minimap - Giro3D</title>
+<meta charset="UTF-8" />
+<meta name="name" content="Minimap - Giro3D" />
+<meta name="description" content="Illustrates the use of a secondary Giro3D instance to display a minimap." />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<link rel="icon" href="/images/favicon.svg" />
+<link href="/assets/bootstrap-custom.css" rel="stylesheet" />
+<script src="/assets/bootstrap.bundle.min.js"></script>
+
+<!-- OpenGraph -->
+<meta
+    property="og:description"
+    content="A versatile framework to visualize geospatial data in the browser."
+/>
+<meta
+    property="og:image"
+    content="https://giro3d.org/latest/examples/screenshots/minimap.jpg"
+/>
+<meta property="og:locale" content="en_US" />
+<meta property="og:title" content="Minimap - Giro3D" />
+<meta property="og:site_name" content="Giro3D" />
+<meta property="og:type" content="object" />
+<meta property="og:url" content="https://giro3d.org/latest/examples/minimap.html" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta
+    name="twitter:description"
+    content="A versatile framework to visualize geospatial data in the browser."
+/>
+<meta name="twitter:dnt" content="on" />
+<meta
+    name="twitter:image"
+    content="https://giro3d.org/latest/examples/screenshots/minimap.jpg"
+/>
+<meta name="twitter:title" content="Minimap - Giro3D" />
+<meta name="twitter:widgets:align" content="center" />
+
+
+        <link rel="stylesheet" type="text/css" href="css/example.css" />
+        
+    </head>
+    <body class="bg-light">
+        
+
+<header class="header bg-light" data-bs-theme="">
+    <div class="container-fluid">
+        <a href="/" class="navbar-brand mx-0">
+            <img
+                src="/images/favicon.svg"
+                class="brand"
+                width="32"
+                height="32"
+            />
+        </a>
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav navbar-nav-left">
+                
+                <li class="nav-item">
+    <a
+        class="nav-link  "
+        href="/"
+    >
+        Home
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary "
+        href="/giro3d.html"
+    >
+        Giro3D framework
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-success "
+        href="/piero.html"
+    >
+        Piero application
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary "
+        href="/latest/tutorials/getting-started.html"
+    >
+        Getting started with Giro3D
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary active"
+        href="/latest/examples/index.html"
+    >
+        Giro3D examples
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary "
+        href="/latest/apidoc/index.html"
+    >
+        API documentation
+    </a>
+</li>
+
+
+                <li class="nav-item">
+                    <span
+                        class="navbar-text badge text-bg-info"
+                        >Version
+                        v1.0.0</span
+                    >
+                </li>
+            </ul>
+
+            
+
+            
+
+            <ul class="navbar-nav ms-2">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://gitlab.com/giro3d/giro3D" target="_blank"
+                        >GitLab <i class="bi bi-box-arrow-up-right"></i
+                    ></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+
+        <div class="m-3">
+            <!-- Short description (same as in the example card) -->
+            <div>
+                <p class="text-muted">Illustrates the use of a secondary Giro3D instance to display a minimap.</p>
+            </div>
+
+            <!-- 3D view -->
+            <div id="main-view" class="border position-relative" style="height: 65vh">
+                <!-- Viewer -->
+<!-- Note that we don't go to the bottom of the screen, we stop at the status bar -->
+<div id="view" class="m-0 p-0 w-100" style="height: calc(100% - 1.3rem)"></div>
+<!-- Inspector -->
+<div id="inspector" class="position-absolute top-0 start-0 mh-100 overflow-auto d-none"></div>
+<!-- Optional additional content from the example (custom buttons, etc.) -->
+<div id="gui" class="gui-init"><div class="side-pane-with-status-bar">
+    <div
+        id="minimap"
+        class="card m-1"
+        style="
+            width: 20rem;
+            height: 14rem;
+            overflow: hidden;
+            border-radius: var(--bs-card-border-radius);
+        "
+    ></div>
+</div></div>
+<!-- Status bar -->
+<div id="status-bar" class="bg-light w-100 position-absolute bottom-0 start-0 status-bar">
+    <div
+        class="progress m-2 status-progress-bar"
+        role="progressbar"
+        style="height: 5px"
+        aria-label="Loading progress"
+        aria-valuenow="100"
+        aria-valuemin="0"
+        aria-valuemax="100"
+    >
+        <div id="progress-bar" class="progress-bar" style="width: 100%"></div>
+    </div>
+    <span id="loading-percent" class="status-progress-value">100%</span>
+    
+    <span class="text-center status-attribution" id="attributions">© <a target="_blank" href="https://ign.fr/">IGN</a></span>
+    <!-- Coordinates -->
+    <div class="px-1 position-absolute end-0 d-inline-flex">
+        <div id="coordinates" class="mx-2 text-secondary" style="width: 18rem"></div>
+        <button type="button" id="crs" class="badge rounded-pill text-bg-secondary">WGS84</button>
+    </div>
+</div>
+<!-- Button area -->
+<div id="buttons" class="position-absolute top-0 start-0 mx-2 my-2 overflow-auto">
+    <!-- Full-screen button -->
+    <button
+        id="btnFullscreen"
+        type="button"
+        class="btn btn-light btn-sm mb-2"
+        title="toggle full screen"
+        style="align-items: center; justify-content: center"
+    >
+        <!-- Origin: https://icons.getbootstrap.com/icons/arrows-fullscreen/ -->
+        <i id="icon-fullscreen" class="bi bi-arrows-fullscreen"></i>
+    </button>
+
+    <!-- Toggle GUI button -->
+    <button
+        id="btnToggleGUI"
+        type="button"
+        class="btn btn-light btn-sm"
+        title="toggle GUI"
+        style="display: flex; align-items: center; justify-content: center"
+    >
+        <!-- Origin: https://icons.getbootstrap.com/icons/sliders/ -->
+        <i class="bi bi-sliders"></i>
+    </button>
+</div>
+
+<script type="module" src="__vendor.js"></script>
+<script type="module" src="__three.js"></script>
+<script type="module" src="__ol.js"></script>
+<script type="module" src="minimap.js"></script>
+<script>
+    /* activate popovers */
+    const popoverTriggerList = [].slice.call(
+        document.querySelectorAll('[data-bs-toggle="popover"]'),
+    );
+    popoverTriggerList.map(
+        // bootstrap is used as script in the template, disable warning about undef
+        // eslint-disable-next-line no-undef
+        popoverTriggerEl =>
+            new bootstrap.Popover(popoverTriggerEl, {
+                trigger: 'hover',
+                placement: 'left',
+                content: document.getElementById(popoverTriggerEl.getAttribute('data-bs-content'))
+                    .innerHTML,
+                html: true,
+            }),
+    );
+
+    const toggleGUIButton = document.getElementById('btnToggleGUI');
+    const guiRoot = document.getElementById('gui');
+
+    if (guiRoot.childElementCount === 0) {
+        toggleGUIButton.remove();
+    } else {
+        var showGUI = window.getComputedStyle(guiRoot, null).display !== 'none';
+
+        function updateGUI(show) {
+            guiRoot.classList.remove('gui-init');
+            if (show) {
+                guiRoot.classList.remove('d-none');
+                toggleGUIButton.classList.remove('btn-light');
+                toggleGUIButton.classList.add('btn-primary');
+            } else {
+                guiRoot.classList.add('d-none');
+                toggleGUIButton.classList.remove('btn-primary');
+                toggleGUIButton.classList.add('btn-light');
+            }
+        }
+
+        if (toggleGUIButton) {
+            toggleGUIButton.onclick = function onclick() {
+                showGUI = !showGUI;
+                updateGUI(showGUI);
+            };
+        }
+
+        updateGUI(showGUI);
+    }
+
+    var fullScreen = false;
+
+    const fullScreenButton = document.getElementById('btnFullscreen');
+
+    function updateFullScreenIcon() {
+        const target = document.getElementById('icon-fullscreen');
+        if (document.fullscreen) {
+            target.className = 'bi bi-fullscreen-exit';
+        } else {
+            target.className = 'bi bi-arrows-fullscreen';
+        }
+    }
+
+    document.addEventListener('fullscreenchange', () => {
+        updateFullScreenIcon();
+    });
+
+    function toggleFullScreen() {
+        if (!fullScreen) {
+            document
+                .getElementById('view')
+                .parentElement.requestFullscreen()
+                .then(() => {
+                    fullScreen = true;
+                });
+        } else {
+            document.exitFullscreen().then(() => {
+                fullScreen = false;
+            });
+        }
+    }
+
+    if (fullScreenButton) fullScreenButton.onclick = toggleFullScreen;
+
+    function copyContentByID(id) {
+        const source = document.getElementById(id);
+        const text = source.textContent;
+        const btn = source.querySelector('.btn');
+        navigator.clipboard
+            .writeText(text.trim())
+            .then(() => {
+                btn.classList.add('pulse-once');
+                setTimeout(() => btn.classList.remove('pulse-once'), 1000);
+            })
+            .catch(e => {
+                console.log('failed', e);
+            });
+    }
+</script>
+
+            </div>
+
+            <!-- Long description (optional) -->
+            
+            <div class="my-3">
+                <p>You can use any number of Giro3D instance in a given page. One common use for multiple instances is to implement a minimap view, where the minimap view contains a single map with a simple, fast to load color layer. You can also synchronize the position of the minimap camera with the main view camera. In this example, the minimap view uses an orthographic camera.</p>
+            </div>
+            
+
+            <!-- Source code -->
+            
+            <span class="badge text-bg-primary mt-3 mb-1">index.js</span>
+            <div
+                class="border rounded p-3 position-relative mb-3"
+                id="source"
+                style="background-color: #ffffff"
+            >
+                <span class="position-absolute top-0 end-0 p-2">
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        onclick="copyContentByID('source')"
+                    >
+                        <i class="bi bi-copy"></i>
+                    </button>
+                </span>
+                <pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> OSM </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "ol/source/OSM.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#24292E">  Color,</span></span>
+<span class="line"><span style="color:#24292E">  CubeTextureLoader,</span></span>
+<span class="line"><span style="color:#24292E">  MathUtils,</span></span>
+<span class="line"><span style="color:#24292E">  OrthographicCamera,</span></span>
+<span class="line"><span style="color:#24292E">  Vector3,</span></span>
+<span class="line"><span style="color:#24292E">} </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "three"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> { MapControls } </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "three/examples/jsm/controls/MapControls.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> Coordinates </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/core/geographic/Coordinates.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> CoordinateSystem </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/core/geographic/CoordinateSystem.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> Extent </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/core/geographic/Extent.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> Instance </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/core/Instance.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> ColorLayer </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/core/layer/ColorLayer.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> ElevationLayer </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/core/layer/ElevationLayer.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> Map </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/entities/Map.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> BilFormat </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/formats/BilFormat.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> Inspector </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/gui/Inspector.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> TiledImageSource </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/sources/TiledImageSource.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> WmtsSource </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/sources/WmtsSource.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> crs</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> CoordinateSystem.</span><span style="color:#6F42C1">register</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#032F62">  "EPSG:2154"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#032F62">  "+proj=lcc +lat_0=46.5 +lon_0=3 +lat_1=49 +lat_2=44 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs +type=crs"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#24292E">CoordinateSystem.</span><span style="color:#6F42C1">register</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#032F62">  "IGNF:WGS84G"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#032F62">  'GEOGCS["GCS_WGS_1984",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]]'</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> SKY_COLOR</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Color</span><span style="color:#24292E">(</span><span style="color:#005CC5">0xf1e9c6</span><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> mainInstance</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Instance</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">  target: </span><span style="color:#032F62">"view"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  crs,</span></span>
+<span class="line"><span style="color:#24292E">  backgroundColor: </span><span style="color:#005CC5">SKY_COLOR</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// create a map</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> extent</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Extent</span><span style="color:#24292E">(crs, </span><span style="color:#D73A49">-</span><span style="color:#005CC5">111629.52</span><span style="color:#24292E">, </span><span style="color:#005CC5">1275028.84</span><span style="color:#24292E">, </span><span style="color:#005CC5">5976033.79</span><span style="color:#24292E">, </span><span style="color:#005CC5">7230161.64</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> map</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Map</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">  extent,</span></span>
+<span class="line"><span style="color:#24292E">  backgroundColor: </span><span style="color:#032F62">"gray"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  lighting: {</span></span>
+<span class="line"><span style="color:#24292E">    enabled: </span><span style="color:#005CC5">true</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">    elevationLayersOnly: </span><span style="color:#005CC5">true</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  },</span></span>
+<span class="line"><span style="color:#24292E">  discardNoData: </span><span style="color:#005CC5">true</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"><span style="color:#24292E">mainInstance.</span><span style="color:#6F42C1">add</span><span style="color:#24292E">(map);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> noDataValue</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> -</span><span style="color:#005CC5">1000</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> capabilitiesUrl</span><span style="color:#D73A49"> =</span></span>
+<span class="line"><span style="color:#032F62">  "https://data.geopf.fr/wmts?SERVICE=WMTS&#x26;VERSION=1.0.0&#x26;REQUEST=GetCapabilities"</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">WmtsSource.</span><span style="color:#6F42C1">fromCapabilities</span><span style="color:#24292E">(capabilitiesUrl, {</span></span>
+<span class="line"><span style="color:#24292E">  layer: </span><span style="color:#032F62">"ELEVATION.ELEVATIONGRIDCOVERAGE.HIGHRES"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  format: </span><span style="color:#D73A49">new</span><span style="color:#6F42C1"> BilFormat</span><span style="color:#24292E">(),</span></span>
+<span class="line"><span style="color:#24292E">  noDataValue,</span></span>
+<span class="line"><span style="color:#24292E">})</span></span>
+<span class="line"><span style="color:#24292E">  .</span><span style="color:#6F42C1">then</span><span style="color:#24292E">((</span><span style="color:#E36209">elevationWmts</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#24292E">    map.</span><span style="color:#6F42C1">addLayer</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#D73A49">      new</span><span style="color:#6F42C1"> ElevationLayer</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">        name: </span><span style="color:#032F62">"wmts_elevation"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">        extent: map.extent,</span></span>
+<span class="line"><span style="color:#6A737D">        // We don't need the full resolution of terrain because we are not using any shading</span></span>
+<span class="line"><span style="color:#24292E">        resolutionFactor: </span><span style="color:#005CC5">1</span><span style="color:#D73A49"> /</span><span style="color:#005CC5"> 8</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">        minmax: { min: </span><span style="color:#005CC5">0</span><span style="color:#24292E">, max: </span><span style="color:#005CC5">5000</span><span style="color:#24292E"> },</span></span>
+<span class="line"><span style="color:#24292E">        noDataOptions: {</span></span>
+<span class="line"><span style="color:#24292E">          replaceNoData: </span><span style="color:#005CC5">false</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">        },</span></span>
+<span class="line"><span style="color:#24292E">        source: elevationWmts,</span></span>
+<span class="line"><span style="color:#24292E">      }),</span></span>
+<span class="line"><span style="color:#24292E">    );</span></span>
+<span class="line"><span style="color:#24292E">  })</span></span>
+<span class="line"><span style="color:#24292E">  .</span><span style="color:#6F42C1">catch</span><span style="color:#24292E">(console.error);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">WmtsSource.</span><span style="color:#6F42C1">fromCapabilities</span><span style="color:#24292E">(capabilitiesUrl, {</span></span>
+<span class="line"><span style="color:#24292E">  layer: </span><span style="color:#032F62">"HR.ORTHOIMAGERY.ORTHOPHOTOS"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">})</span></span>
+<span class="line"><span style="color:#24292E">  .</span><span style="color:#6F42C1">then</span><span style="color:#24292E">((</span><span style="color:#E36209">orthophotoWmts</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#24292E">    map.</span><span style="color:#6F42C1">addLayer</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#D73A49">      new</span><span style="color:#6F42C1"> ColorLayer</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">        name: </span><span style="color:#032F62">"wmts_orthophotos"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">        extent: map.extent,</span></span>
+<span class="line"><span style="color:#24292E">        source: orthophotoWmts,</span></span>
+<span class="line"><span style="color:#24292E">      }),</span></span>
+<span class="line"><span style="color:#24292E">    );</span></span>
+<span class="line"><span style="color:#24292E">  })</span></span>
+<span class="line"><span style="color:#24292E">  .</span><span style="color:#6F42C1">catch</span><span style="color:#24292E">(console.error);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">mainInstance.view.camera.position.</span><span style="color:#6F42C1">set</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#005CC5">  913349.2364044407</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">  6456426.459171033</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">  1706.0108044011636</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> lookAt</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Vector3</span><span style="color:#24292E">(</span><span style="color:#005CC5">913896</span><span style="color:#24292E">, </span><span style="color:#005CC5">6459191</span><span style="color:#24292E">, </span><span style="color:#005CC5">200</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#24292E">mainInstance.view.camera.</span><span style="color:#6F42C1">lookAt</span><span style="color:#24292E">(lookAt);</span></span>
+<span class="line"><span style="color:#24292E">mainInstance.</span><span style="color:#6F42C1">notifyChange</span><span style="color:#24292E">(mainInstance.view.camera);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> controls</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> MapControls</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#24292E">  mainInstance.view.camera,</span></span>
+<span class="line"><span style="color:#24292E">  mainInstance.domElement,</span></span>
+<span class="line"><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#24292E">controls.enableDamping </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> true</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">controls.dampingFactor </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> 0.2</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">controls.target.</span><span style="color:#6F42C1">copy</span><span style="color:#24292E">(lookAt);</span></span>
+<span class="line"><span style="color:#24292E">controls.</span><span style="color:#6F42C1">saveState</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">mainInstance.view.</span><span style="color:#6F42C1">setControls</span><span style="color:#24292E">(controls);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> cubeTextureLoader</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> CubeTextureLoader</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">cubeTextureLoader.</span><span style="color:#6F42C1">setPath</span><span style="color:#24292E">(</span><span style="color:#032F62">"image/skyboxsun25deg_zup/"</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> cubeTexture</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> cubeTextureLoader.</span><span style="color:#6F42C1">load</span><span style="color:#24292E">([</span></span>
+<span class="line"><span style="color:#032F62">  "px.jpg"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#032F62">  "nx.jpg"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#032F62">  "py.jpg"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#032F62">  "ny.jpg"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#032F62">  "pz.jpg"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#032F62">  "nz.jpg"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">]);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">mainInstance.scene.background </span><span style="color:#D73A49">=</span><span style="color:#24292E"> cubeTexture;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">/////////////////////////////// Minimap configuration //////////////////////////////////////////////</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// The minimap is a regular Giro3D instance located in a &#x3C;div> element in the top right corner</span></span>
+<span class="line"><span style="color:#6A737D">// of the window. Its configuration is very similar to the main view, with some important</span></span>
+<span class="line"><span style="color:#6A737D">// differences related to the camera and navigation.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Create our minimap instance and attach it to the 'minimap' &#x3C;div> element.</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> minimapInstance</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Instance</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">  target: </span><span style="color:#032F62">"minimap"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  crs: CoordinateSystem.epsg3857, </span><span style="color:#6A737D">// Contrary to the main view, this minimap uses the Web mercator projection</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Set the minimap camera view width, in meters. This can be changed later when</span></span>
+<span class="line"><span style="color:#6A737D">// the user uses the mouse wheel on to zoom in/out.</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> minimapCameraWidth</span><span style="color:#D73A49"> =</span><span style="color:#005CC5"> 2000</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> minimapCamera</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> OrthographicCamera</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#D73A49">  -</span><span style="color:#24292E">minimapCameraWidth </span><span style="color:#D73A49">/</span><span style="color:#005CC5"> 2</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  minimapCameraWidth </span><span style="color:#D73A49">/</span><span style="color:#005CC5"> 2</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">  100</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#D73A49">  -</span><span style="color:#005CC5">100</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// We replace the default perspective camera of the minimap view by</span></span>
+<span class="line"><span style="color:#6A737D">// an orthographic camera, which is much more suitable for this kind of view.</span></span>
+<span class="line"><span style="color:#24292E">minimapInstance.view.camera </span><span style="color:#D73A49">=</span><span style="color:#24292E"> minimapCamera;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Let's create our minimap map with the same extent than the main map.</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> minimap</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Map</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">  extent: map.extent.</span><span style="color:#6F42C1">as</span><span style="color:#24292E">(minimapInstance.coordinateSystem),</span></span>
+<span class="line"><span style="color:#24292E">  terrain: {</span></span>
+<span class="line"><span style="color:#6A737D">    // We can disable terrain deformation because our map will be flat.</span></span>
+<span class="line"><span style="color:#24292E">    enabled: </span><span style="color:#005CC5">false</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#6A737D">    // Since the map is flat (no terrain applied), we can use 1 segment per tile.</span></span>
+<span class="line"><span style="color:#24292E">    segments: </span><span style="color:#005CC5">1</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  },</span></span>
+<span class="line"><span style="color:#24292E">  backgroundColor: </span><span style="color:#032F62">"black"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">minimapInstance.</span><span style="color:#6F42C1">add</span><span style="color:#24292E">(minimap);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// We use an OpenStreetMap color layer for the minimap, because it's readable and fast to display.</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> osmLayer</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> ColorLayer</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">  name: </span><span style="color:#032F62">"osm"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  preloadImages: </span><span style="color:#005CC5">true</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  source: </span><span style="color:#D73A49">new</span><span style="color:#6F42C1"> TiledImageSource</span><span style="color:#24292E">({ source: </span><span style="color:#D73A49">new</span><span style="color:#6F42C1"> OSM</span><span style="color:#24292E">() }),</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">minimap.</span><span style="color:#6F42C1">addLayer</span><span style="color:#24292E">(osmLayer);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">function</span><span style="color:#6F42C1"> synchronizeCameras</span><span style="color:#24292E">() {</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> target</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> controls.target;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  // Since our minimap does not use the same projection as the main view (EPSG:2154),</span></span>
+<span class="line"><span style="color:#6A737D">  // we must convert the camera position into this projection (EPSG:3857).</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> srcProj</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> mainInstance.coordinateSystem;</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> dstProj</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> minimapInstance.coordinateSystem;</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> srcPosition</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Coordinates</span><span style="color:#24292E">(srcProj, target.x, target.y);</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> position</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> srcPosition.</span><span style="color:#6F42C1">as</span><span style="color:#24292E">(dstProj);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  // Then we can assign the position to the camera, while still keeping a constant altitude.</span></span>
+<span class="line"><span style="color:#6A737D">  // The minimap camera "altitude" never changes because we are using an orthographic camera.</span></span>
+<span class="line"><span style="color:#6A737D">  // Changing this value will not change the size of objects rendered in this view.</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> MINIMAP_CAMERA_ALTITUDE</span><span style="color:#D73A49"> =</span><span style="color:#005CC5"> 10</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">  minimapInstance.view.camera.position.</span><span style="color:#6F42C1">set</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#24292E">    position.x,</span></span>
+<span class="line"><span style="color:#24292E">    position.y,</span></span>
+<span class="line"><span style="color:#005CC5">    MINIMAP_CAMERA_ALTITUDE</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  );</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  // Instruct the minimap instance to render the view.</span></span>
+<span class="line"><span style="color:#24292E">  minimapInstance.</span><span style="color:#6F42C1">notifyChange</span><span style="color:#24292E">(minimap);</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Synchronize the minimap camera position with the *target* of the main camera</span></span>
+<span class="line"><span style="color:#24292E">mainInstance.</span><span style="color:#6F42C1">addEventListener</span><span style="color:#24292E">(</span><span style="color:#032F62">"after-camera-update"</span><span style="color:#24292E">, synchronizeCameras);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">function</span><span style="color:#6F42C1"> handleMouseWheel</span><span style="color:#24292E">(</span><span style="color:#E36209">event</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> delta</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> event.wheelDelta;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> absDelta</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> Math.</span><span style="color:#6F42C1">abs</span><span style="color:#24292E">(delta);</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> ZOOM_SPEED</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> MathUtils.</span><span style="color:#6F42C1">mapLinear</span><span style="color:#24292E">(absDelta, </span><span style="color:#005CC5">0</span><span style="color:#24292E">, </span><span style="color:#005CC5">120</span><span style="color:#24292E">, </span><span style="color:#005CC5">1.01</span><span style="color:#24292E">, </span><span style="color:#005CC5">1.2</span><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  if</span><span style="color:#24292E"> (delta </span><span style="color:#D73A49">></span><span style="color:#005CC5"> 0</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#24292E">    minimapCamera.zoom </span><span style="color:#D73A49">*=</span><span style="color:#005CC5"> ZOOM_SPEED</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">  } </span><span style="color:#D73A49">else</span><span style="color:#D73A49"> if</span><span style="color:#24292E"> (delta </span><span style="color:#D73A49">&#x3C;</span><span style="color:#005CC5"> 0</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#24292E">    minimapCamera.zoom </span><span style="color:#D73A49">/=</span><span style="color:#005CC5"> ZOOM_SPEED</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  minimapInstance.</span><span style="color:#6F42C1">notifyChange</span><span style="color:#24292E">(minimapCamera);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  // Prevent this event from bubbling and make the page scroll.</span></span>
+<span class="line"><span style="color:#24292E">  event.</span><span style="color:#6F42C1">preventDefault</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Use the mouse wheel on the minimap view to set the zoom of the minimap camera.</span></span>
+<span class="line"><span style="color:#6A737D">// We use the 'wheel' event (careful not to use the non-standard 'mousewheel' event).</span></span>
+<span class="line"><span style="color:#24292E">minimapInstance.domElement.</span><span style="color:#6F42C1">addEventListener</span><span style="color:#24292E">(</span><span style="color:#032F62">"wheel"</span><span style="color:#24292E">, handleMouseWheel);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">Inspector.</span><span style="color:#6F42C1">attach</span><span style="color:#24292E">(</span><span style="color:#032F62">"inspector"</span><span style="color:#24292E">, mainInstance, { title: </span><span style="color:#032F62">"main"</span><span style="color:#24292E"> });</span></span>
+<span class="line"><span style="color:#24292E">Inspector.</span><span style="color:#6F42C1">attach</span><span style="color:#24292E">(</span><span style="color:#032F62">"inspector"</span><span style="color:#24292E">, minimapInstance, { title: </span><span style="color:#032F62">"minimap"</span><span style="color:#24292E"> });</span></span>
+<span class="line"></span></code></pre>
+            </div>
+            
+
+            <!-- HTML code -->
+            
+            <span class="badge text-bg-primary mt-3 mb-1">index.html</span>
+            <div
+                class="border rounded p-3 position-relative mb-3"
+                id="source-html"
+                style="background-color: #ffffff"
+            >
+                <span class="position-absolute top-0 end-0 p-2">
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        onclick="copyContentByID('source-html')"
+                    >
+                        <i class="bi bi-copy"></i>
+                    </button>
+                </span>
+                <pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#24292E">&#x3C;!</span><span style="color:#22863A">doctype</span><span style="color:#6F42C1"> html</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">&#x3C;</span><span style="color:#22863A">html</span><span style="color:#6F42C1"> lang</span><span style="color:#24292E">=</span><span style="color:#032F62">"en"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">  &#x3C;</span><span style="color:#22863A">head</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">title</span><span style="color:#24292E">>Minimap&#x3C;/</span><span style="color:#22863A">title</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">meta</span><span style="color:#6F42C1"> charset</span><span style="color:#24292E">=</span><span style="color:#032F62">"UTF-8"</span><span style="color:#24292E"> /></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">meta</span><span style="color:#6F42C1"> name</span><span style="color:#24292E">=</span><span style="color:#032F62">"name"</span><span style="color:#6F42C1"> content</span><span style="color:#24292E">=</span><span style="color:#032F62">"minimap"</span><span style="color:#24292E"> /></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">meta</span></span>
+<span class="line"><span style="color:#6F42C1">      name</span><span style="color:#24292E">=</span><span style="color:#032F62">"description"</span></span>
+<span class="line"><span style="color:#6F42C1">      content</span><span style="color:#24292E">=</span><span style="color:#032F62">"Illustrates the use of a secondary Giro3D instance to display a minimap."</span></span>
+<span class="line"><span style="color:#24292E">    /></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">meta</span><span style="color:#6F42C1"> name</span><span style="color:#24292E">=</span><span style="color:#032F62">"viewport"</span><span style="color:#6F42C1"> content</span><span style="color:#24292E">=</span><span style="color:#032F62">"width=device-width, initial-scale=1.0"</span><span style="color:#24292E"> /></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">link</span><span style="color:#6F42C1"> rel</span><span style="color:#24292E">=</span><span style="color:#032F62">"icon"</span><span style="color:#6F42C1"> href</span><span style="color:#24292E">=</span><span style="color:#032F62">"https://giro3d.org/images/favicon.svg"</span><span style="color:#24292E"> /></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">link</span></span>
+<span class="line"><span style="color:#6F42C1">      href</span><span style="color:#24292E">=</span><span style="color:#032F62">"https://giro3d.org/assets/bootstrap-custom.css"</span></span>
+<span class="line"><span style="color:#6F42C1">      rel</span><span style="color:#24292E">=</span><span style="color:#032F62">"stylesheet"</span></span>
+<span class="line"><span style="color:#24292E">    /></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">script</span><span style="color:#6F42C1"> src</span><span style="color:#24292E">=</span><span style="color:#032F62">"https://giro3d.org/assets/bootstrap.bundle.min.js"</span><span style="color:#24292E">>&#x3C;/</span><span style="color:#22863A">script</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">link</span></span>
+<span class="line"><span style="color:#6F42C1">      rel</span><span style="color:#24292E">=</span><span style="color:#032F62">"stylesheet"</span></span>
+<span class="line"><span style="color:#6F42C1">      type</span><span style="color:#24292E">=</span><span style="color:#032F62">"text/css"</span></span>
+<span class="line"><span style="color:#6F42C1">      href</span><span style="color:#24292E">=</span><span style="color:#032F62">"https://giro3d.org/latest/examples/css/example.css"</span></span>
+<span class="line"><span style="color:#24292E">    /></span></span>
+<span class="line"><span style="color:#24292E">  &#x3C;/</span><span style="color:#22863A">head</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  &#x3C;</span><span style="color:#22863A">body</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> id</span><span style="color:#24292E">=</span><span style="color:#032F62">"view"</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"m-0 p-0 w-100 h-100"</span><span style="color:#24292E">>&#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">div</span></span>
+<span class="line"><span style="color:#6F42C1">      id</span><span style="color:#24292E">=</span><span style="color:#032F62">"inspector"</span></span>
+<span class="line"><span style="color:#6F42C1">      class</span><span style="color:#24292E">=</span><span style="color:#032F62">"position-absolute top-0 start-0 mh-100 overflow-auto"</span></span>
+<span class="line"><span style="color:#24292E">    >&#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"side-pane-with-status-bar"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">      &#x3C;</span><span style="color:#22863A">div</span></span>
+<span class="line"><span style="color:#6F42C1">        id</span><span style="color:#24292E">=</span><span style="color:#032F62">"minimap"</span></span>
+<span class="line"><span style="color:#6F42C1">        class</span><span style="color:#24292E">=</span><span style="color:#032F62">"card m-1"</span></span>
+<span class="line"><span style="color:#6F42C1">        style</span><span style="color:#24292E">=</span><span style="color:#032F62">"</span></span>
+<span class="line"><span style="color:#032F62">          width: 20rem;</span></span>
+<span class="line"><span style="color:#032F62">          height: 14rem;</span></span>
+<span class="line"><span style="color:#032F62">          overflow: hidden;</span></span>
+<span class="line"><span style="color:#032F62">          border-radius: var(--bs-card-border-radius);</span></span>
+<span class="line"><span style="color:#032F62">        "</span></span>
+<span class="line"><span style="color:#24292E">      >&#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">script</span><span style="color:#6F42C1"> type</span><span style="color:#24292E">=</span><span style="color:#032F62">"module"</span><span style="color:#6F42C1"> src</span><span style="color:#24292E">=</span><span style="color:#032F62">"index.js"</span><span style="color:#24292E">>&#x3C;/</span><span style="color:#22863A">script</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">script</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#6A737D">      /* activate popovers */</span></span>
+<span class="line"><span style="color:#D73A49">      const</span><span style="color:#005CC5"> popoverTriggerList</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> [].slice.</span><span style="color:#6F42C1">call</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#24292E">        document.</span><span style="color:#6F42C1">querySelectorAll</span><span style="color:#24292E">(</span><span style="color:#032F62">'[data-bs-toggle="popover"]'</span><span style="color:#24292E">),</span></span>
+<span class="line"><span style="color:#24292E">      );</span></span>
+<span class="line"><span style="color:#24292E">      popoverTriggerList.</span><span style="color:#6F42C1">map</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#6A737D">        // bootstrap is used as script in the template, disable warning about undef</span></span>
+<span class="line"><span style="color:#6A737D">        // eslint-disable-next-line no-undef</span></span>
+<span class="line"><span style="color:#24292E">        (</span><span style="color:#E36209">popoverTriggerEl</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span></span>
+<span class="line"><span style="color:#D73A49">          new</span><span style="color:#24292E"> bootstrap.</span><span style="color:#6F42C1">Popover</span><span style="color:#24292E">(popoverTriggerEl, {</span></span>
+<span class="line"><span style="color:#24292E">            trigger: </span><span style="color:#032F62">"hover"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">            placement: </span><span style="color:#032F62">"left"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">            content: document.</span><span style="color:#6F42C1">getElementById</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#24292E">              popoverTriggerEl.</span><span style="color:#6F42C1">getAttribute</span><span style="color:#24292E">(</span><span style="color:#032F62">"data-bs-content"</span><span style="color:#24292E">),</span></span>
+<span class="line"><span style="color:#24292E">            ).innerHTML,</span></span>
+<span class="line"><span style="color:#24292E">            html: </span><span style="color:#005CC5">true</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">          }),</span></span>
+<span class="line"><span style="color:#24292E">      );</span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;/</span><span style="color:#22863A">script</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">  &#x3C;/</span><span style="color:#22863A">body</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">&#x3C;/</span><span style="color:#22863A">html</span><span style="color:#24292E">></span></span>
+<span class="line"></span></code></pre>
+            </div>
+            
+
+            <!-- package.json code -->
+            
+            <span class="badge text-bg-primary mt-3 mb-1">package.json</span>
+            <div
+                class="border rounded p-3 position-relative mb-3"
+                id="source-package-json"
+                style="background-color: #ffffff"
+            >
+                <span class="position-absolute top-0 end-0 p-2">
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        onclick="copyContentByID('source-package-json')"
+                    >
+                        <i class="bi bi-copy"></i>
+                    </button>
+                </span>
+                <pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#24292E">{</span></span>
+<span class="line"><span style="color:#005CC5">    "name"</span><span style="color:#24292E">: </span><span style="color:#032F62">"minimap"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">    "dependencies"</span><span style="color:#24292E">: {</span></span>
+<span class="line"><span style="color:#005CC5">        "@giro3d/giro3d"</span><span style="color:#24292E">: </span><span style="color:#032F62">"1.0.0"</span></span>
+<span class="line"><span style="color:#24292E">    },</span></span>
+<span class="line"><span style="color:#005CC5">    "devDependencies"</span><span style="color:#24292E">: {</span></span>
+<span class="line"><span style="color:#005CC5">        "vite"</span><span style="color:#24292E">: </span><span style="color:#032F62">"^3.2.3"</span></span>
+<span class="line"><span style="color:#24292E">    },</span></span>
+<span class="line"><span style="color:#005CC5">    "scripts"</span><span style="color:#24292E">: {</span></span>
+<span class="line"><span style="color:#005CC5">        "start"</span><span style="color:#24292E">: </span><span style="color:#032F62">"vite"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">        "build"</span><span style="color:#24292E">: </span><span style="color:#032F62">"vite build"</span></span>
+<span class="line"><span style="color:#24292E">    }</span></span>
+<span class="line"><span style="color:#24292E">}</span></span></code></pre>
+            </div>
+            
+
+            <!-- vite.config.js code -->
+            <span class="badge text-bg-primary mt-3 mb-1">vite.config.js</span>
+            <div
+                class="border rounded p-3 position-relative mb-3"
+                id="source-vite-config"
+                style="background-color: #ffffff"
+            >
+                <span class="position-absolute top-0 end-0 p-2">
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        onclick="copyContentByID('source-vite-config')"
+                    >
+                        <i class="bi bi-copy"></i>
+                    </button>
+                </span>
+                <pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> { defineConfig } </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "vite"</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">export</span><span style="color:#D73A49"> default</span><span style="color:#6F42C1"> defineConfig</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">  build: {</span></span>
+<span class="line"><span style="color:#24292E">    target: </span><span style="color:#032F62">'esnext'</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  },</span></span>
+<span class="line"><span style="color:#24292E">  optimizeDeps: {</span></span>
+<span class="line"><span style="color:#24292E">    esbuildOptions: {</span></span>
+<span class="line"><span style="color:#24292E">      target: </span><span style="color:#032F62">'esnext'</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">    },</span></span>
+<span class="line"><span style="color:#24292E">  },</span></span>
+<span class="line"><span style="color:#24292E">})</span></span></code></pre>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,1008 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Dynamic layer updates - Giro3D</title>
+<meta charset="UTF-8" />
+<meta name="name" content="Dynamic layer updates - Giro3D" />
+<meta name="description" content="The layer is updated when the style changes." />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<link rel="icon" href="/images/favicon.svg" />
+<link href="/assets/bootstrap-custom.css" rel="stylesheet" />
+<script src="/assets/bootstrap.bundle.min.js"></script>
+
+<!-- OpenGraph -->
+<meta
+    property="og:description"
+    content="A versatile framework to visualize geospatial data in the browser."
+/>
+<meta
+    property="og:image"
+    content="https://giro3d.org/latest/examples/screenshots/layer-update.jpg"
+/>
+<meta property="og:locale" content="en_US" />
+<meta property="og:title" content="Dynamic layer updates - Giro3D" />
+<meta property="og:site_name" content="Giro3D" />
+<meta property="og:type" content="object" />
+<meta property="og:url" content="https://giro3d.org/latest/examples/layer-update.html" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta
+    name="twitter:description"
+    content="A versatile framework to visualize geospatial data in the browser."
+/>
+<meta name="twitter:dnt" content="on" />
+<meta
+    name="twitter:image"
+    content="https://giro3d.org/latest/examples/screenshots/layer-update.jpg"
+/>
+<meta name="twitter:title" content="Dynamic layer updates - Giro3D" />
+<meta name="twitter:widgets:align" content="center" />
+
+
+        <link rel="stylesheet" type="text/css" href="css/example.css" />
+        
+    </head>
+    <body class="bg-light">
+        
+
+<header class="header bg-light" data-bs-theme="">
+    <div class="container-fluid">
+        <a href="/" class="navbar-brand mx-0">
+            <img
+                src="/images/favicon.svg"
+                class="brand"
+                width="32"
+                height="32"
+            />
+        </a>
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav navbar-nav-left">
+                
+                <li class="nav-item">
+    <a
+        class="nav-link  "
+        href="/"
+    >
+        Home
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary "
+        href="/giro3d.html"
+    >
+        Giro3D framework
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-success "
+        href="/piero.html"
+    >
+        Piero application
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary "
+        href="/latest/tutorials/getting-started.html"
+    >
+        Getting started with Giro3D
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary active"
+        href="/latest/examples/index.html"
+    >
+        Giro3D examples
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary "
+        href="/latest/apidoc/index.html"
+    >
+        API documentation
+    </a>
+</li>
+
+
+                <li class="nav-item">
+                    <span
+                        class="navbar-text badge text-bg-info"
+                        >Version
+                        v1.0.0</span
+                    >
+                </li>
+            </ul>
+
+            
+
+            
+
+            <ul class="navbar-nav ms-2">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://gitlab.com/giro3d/giro3D" target="_blank"
+                        >GitLab <i class="bi bi-box-arrow-up-right"></i
+                    ></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+
+        <div class="m-3">
+            <!-- Short description (same as in the example card) -->
+            <div>
+                <p class="text-muted">The layer is updated when the style changes.</p>
+            </div>
+
+            <!-- 3D view -->
+            <div id="main-view" class="border position-relative" style="height: 65vh">
+                <!-- Viewer -->
+<!-- Note that we don't go to the bottom of the screen, we stop at the status bar -->
+<div id="view" class="m-0 p-0 w-100" style="height: calc(100% - 1.3rem)"></div>
+<!-- Inspector -->
+<div id="inspector" class="position-absolute top-0 start-0 mh-100 overflow-auto d-none"></div>
+<!-- Optional additional content from the example (custom buttons, etc.) -->
+<div id="gui" class="gui-init"><div class="side-pane-with-status-bar">
+    <!-- Top color layer -->
+    <div class="card">
+        <div class="card-header">Options</div>
+
+        <div class="card-body" id="top-options">
+            <!-- Show point -->
+            <div class="input-group my-2">
+                <div>
+                    <div class="form-check form-switch">
+                        <input
+                            class="form-check-input"
+                            checked
+                            type="checkbox"
+                            role="switch"
+                            id="show-point"
+                            autocomplete="off"
+                        />
+                        <label class="form-check-label" for="show-point">Show point</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Show polygon -->
+            <div class="input-group my-2">
+                <div>
+                    <div class="form-check form-switch">
+                        <input
+                            class="form-check-input"
+                            checked
+                            type="checkbox"
+                            role="switch"
+                            id="show-polygon"
+                            autocomplete="off"
+                        />
+                        <label class="form-check-label" for="show-polygon">Show polygon</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Show line -->
+            <div class="input-group my-2">
+                <div>
+                    <div class="form-check form-switch">
+                        <input
+                            class="form-check-input"
+                            checked
+                            type="checkbox"
+                            role="switch"
+                            id="show-line"
+                            autocomplete="off"
+                        />
+                        <label class="form-check-label" for="show-line">Show line</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stroke width -->
+            <div class="input-group my-2">
+                <label for="stroke-width" class="form-label">Stroke width</label>
+                <div class="input-group">
+                    <input
+                        type="range"
+                        min="1"
+                        step="1"
+                        max="20"
+                        value="5"
+                        class="form-range"
+                        id="stroke-width"
+                        autocomplete="off"
+                    />
+                </div>
+            </div>
+
+            <!-- Point radius -->
+            <div class="input-group my-2">
+                <label for="point-radius" class="form-label">Point radius</label>
+                <div class="input-group">
+                    <input
+                        type="range"
+                        min="0.1"
+                        step="0.05"
+                        max="100"
+                        value="20"
+                        class="form-range"
+                        id="point-radius"
+                        autocomplete="off"
+                    />
+                </div>
+            </div>
+
+            <!-- Style opacity -->
+            <div class="input-group my-2">
+                <label for="style-opacity" class="form-label">Style opacity</label>
+                <div class="input-group">
+                    <input
+                        type="range"
+                        min="0"
+                        step="0.05"
+                        max="1"
+                        value="1"
+                        class="form-range"
+                        id="style-opacity"
+                        autocomplete="off"
+                    />
+                </div>
+            </div>
+
+            <hr />
+
+            <!-- Randomize style -->
+            <button type="button" class="btn btn-primary w-100" id="randomize">
+                Randomize style
+            </button>
+        </div>
+    </div>
+</div></div>
+<!-- Status bar -->
+<div id="status-bar" class="bg-light w-100 position-absolute bottom-0 start-0 status-bar">
+    <div
+        class="progress m-2 status-progress-bar"
+        role="progressbar"
+        style="height: 5px"
+        aria-label="Loading progress"
+        aria-valuenow="100"
+        aria-valuemin="0"
+        aria-valuemax="100"
+    >
+        <div id="progress-bar" class="progress-bar" style="width: 100%"></div>
+    </div>
+    <span id="loading-percent" class="status-progress-value">100%</span>
+    
+    <span class="text-center status-attribution" id="attributions"></span>
+    <!-- Coordinates -->
+    <div class="px-1 position-absolute end-0 d-inline-flex">
+        <div id="coordinates" class="mx-2 text-secondary" style="width: 18rem"></div>
+        <button type="button" id="crs" class="badge rounded-pill text-bg-secondary">WGS84</button>
+    </div>
+</div>
+<!-- Button area -->
+<div id="buttons" class="position-absolute top-0 start-0 mx-2 my-2 overflow-auto">
+    <!-- Full-screen button -->
+    <button
+        id="btnFullscreen"
+        type="button"
+        class="btn btn-light btn-sm mb-2"
+        title="toggle full screen"
+        style="align-items: center; justify-content: center"
+    >
+        <!-- Origin: https://icons.getbootstrap.com/icons/arrows-fullscreen/ -->
+        <i id="icon-fullscreen" class="bi bi-arrows-fullscreen"></i>
+    </button>
+
+    <!-- Toggle GUI button -->
+    <button
+        id="btnToggleGUI"
+        type="button"
+        class="btn btn-light btn-sm"
+        title="toggle GUI"
+        style="display: flex; align-items: center; justify-content: center"
+    >
+        <!-- Origin: https://icons.getbootstrap.com/icons/sliders/ -->
+        <i class="bi bi-sliders"></i>
+    </button>
+</div>
+
+<script type="module" src="__vendor.js"></script>
+<script type="module" src="__three.js"></script>
+<script type="module" src="__ol.js"></script>
+<script type="module" src="layer-update.js"></script>
+<script>
+    /* activate popovers */
+    const popoverTriggerList = [].slice.call(
+        document.querySelectorAll('[data-bs-toggle="popover"]'),
+    );
+    popoverTriggerList.map(
+        // bootstrap is used as script in the template, disable warning about undef
+        // eslint-disable-next-line no-undef
+        popoverTriggerEl =>
+            new bootstrap.Popover(popoverTriggerEl, {
+                trigger: 'hover',
+                placement: 'left',
+                content: document.getElementById(popoverTriggerEl.getAttribute('data-bs-content'))
+                    .innerHTML,
+                html: true,
+            }),
+    );
+
+    const toggleGUIButton = document.getElementById('btnToggleGUI');
+    const guiRoot = document.getElementById('gui');
+
+    if (guiRoot.childElementCount === 0) {
+        toggleGUIButton.remove();
+    } else {
+        var showGUI = window.getComputedStyle(guiRoot, null).display !== 'none';
+
+        function updateGUI(show) {
+            guiRoot.classList.remove('gui-init');
+            if (show) {
+                guiRoot.classList.remove('d-none');
+                toggleGUIButton.classList.remove('btn-light');
+                toggleGUIButton.classList.add('btn-primary');
+            } else {
+                guiRoot.classList.add('d-none');
+                toggleGUIButton.classList.remove('btn-primary');
+                toggleGUIButton.classList.add('btn-light');
+            }
+        }
+
+        if (toggleGUIButton) {
+            toggleGUIButton.onclick = function onclick() {
+                showGUI = !showGUI;
+                updateGUI(showGUI);
+            };
+        }
+
+        updateGUI(showGUI);
+    }
+
+    var fullScreen = false;
+
+    const fullScreenButton = document.getElementById('btnFullscreen');
+
+    function updateFullScreenIcon() {
+        const target = document.getElementById('icon-fullscreen');
+        if (document.fullscreen) {
+            target.className = 'bi bi-fullscreen-exit';
+        } else {
+            target.className = 'bi bi-arrows-fullscreen';
+        }
+    }
+
+    document.addEventListener('fullscreenchange', () => {
+        updateFullScreenIcon();
+    });
+
+    function toggleFullScreen() {
+        if (!fullScreen) {
+            document
+                .getElementById('view')
+                .parentElement.requestFullscreen()
+                .then(() => {
+                    fullScreen = true;
+                });
+        } else {
+            document.exitFullscreen().then(() => {
+                fullScreen = false;
+            });
+        }
+    }
+
+    if (fullScreenButton) fullScreenButton.onclick = toggleFullScreen;
+
+    function copyContentByID(id) {
+        const source = document.getElementById(id);
+        const text = source.textContent;
+        const btn = source.querySelector('.btn');
+        navigator.clipboard
+            .writeText(text.trim())
+            .then(() => {
+                btn.classList.add('pulse-once');
+                setTimeout(() => btn.classList.remove('pulse-once'), 1000);
+            })
+            .catch(e => {
+                console.log('failed', e);
+            });
+    }
+</script>
+
+            </div>
+
+            <!-- Long description (optional) -->
+            
+
+            <!-- Source code -->
+            
+            <span class="badge text-bg-primary mt-3 mb-1">index.js</span>
+            <div
+                class="border rounded p-3 position-relative mb-3"
+                id="source"
+                style="background-color: #ffffff"
+            >
+                <span class="position-absolute top-0 end-0 p-2">
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        onclick="copyContentByID('source')"
+                    >
+                        <i class="bi bi-copy"></i>
+                    </button>
+                </span>
+                <pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> { Feature } </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "ol"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> { LineString, Point, Polygon } </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "ol/geom.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> { Circle, Fill, Stroke, Style } </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "ol/style.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> { Color, MathUtils } </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "three"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> { MapControls } </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "three/examples/jsm/controls/MapControls.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> CoordinateSystem </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/core/geographic/CoordinateSystem.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> Extent </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/core/geographic/Extent.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> Instance </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/core/Instance.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> ColorLayer </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/core/layer/ColorLayer.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> Map </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/entities/Map.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> Inspector </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/gui/Inspector.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> VectorSource </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/sources/VectorSource.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">function</span><span style="color:#6F42C1"> bindButton</span><span style="color:#24292E">(</span><span style="color:#E36209">id</span><span style="color:#24292E">, </span><span style="color:#E36209">onClick</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> element</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> document.</span><span style="color:#6F42C1">getElementById</span><span style="color:#24292E">(id);</span></span>
+<span class="line"><span style="color:#D73A49">  if</span><span style="color:#24292E"> (</span><span style="color:#D73A49">!</span><span style="color:#24292E">(element </span><span style="color:#D73A49">instanceof</span><span style="color:#6F42C1"> HTMLButtonElement</span><span style="color:#24292E">)) {</span></span>
+<span class="line"><span style="color:#D73A49">    throw</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Error</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#032F62">      "invalid binding element: expected HTMLButtonElement, got: "</span><span style="color:#D73A49"> +</span></span>
+<span class="line"><span style="color:#24292E">        element.</span><span style="color:#005CC5">constructor</span><span style="color:#24292E">.name,</span></span>
+<span class="line"><span style="color:#24292E">    );</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  element.</span><span style="color:#6F42C1">onclick</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> () </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#6F42C1">    onClick</span><span style="color:#24292E">(element);</span></span>
+<span class="line"><span style="color:#24292E">  };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  return</span><span style="color:#24292E"> element;</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">function</span><span style="color:#6F42C1"> bindSlider</span><span style="color:#24292E">(</span><span style="color:#E36209">id</span><span style="color:#24292E">, </span><span style="color:#E36209">onChange</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> element</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> document.</span><span style="color:#6F42C1">getElementById</span><span style="color:#24292E">(id);</span></span>
+<span class="line"><span style="color:#D73A49">  if</span><span style="color:#24292E"> (</span><span style="color:#D73A49">!</span><span style="color:#24292E">(element </span><span style="color:#D73A49">instanceof</span><span style="color:#6F42C1"> HTMLInputElement</span><span style="color:#24292E">)) {</span></span>
+<span class="line"><span style="color:#D73A49">    throw</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Error</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#032F62">      "invalid binding element: expected HTMLInputElement, got: "</span><span style="color:#D73A49"> +</span></span>
+<span class="line"><span style="color:#24292E">        element.</span><span style="color:#005CC5">constructor</span><span style="color:#24292E">.name,</span></span>
+<span class="line"><span style="color:#24292E">    );</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  element.</span><span style="color:#6F42C1">oninput</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> function</span><span style="color:#6F42C1"> oninput</span><span style="color:#24292E">() {</span></span>
+<span class="line"><span style="color:#6F42C1">    onChange</span><span style="color:#24292E">(element.valueAsNumber);</span></span>
+<span class="line"><span style="color:#24292E">  };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#6F42C1"> setValue</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> (</span><span style="color:#E36209">v</span><span style="color:#24292E">, </span><span style="color:#E36209">min</span><span style="color:#24292E">, </span><span style="color:#E36209">max</span><span style="color:#24292E">, </span><span style="color:#E36209">step</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#D73A49">    if</span><span style="color:#24292E"> (min </span><span style="color:#D73A49">!=</span><span style="color:#005CC5"> null</span><span style="color:#D73A49"> &#x26;&#x26;</span><span style="color:#24292E"> max </span><span style="color:#D73A49">!=</span><span style="color:#005CC5"> null</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#24292E">      element.min </span><span style="color:#D73A49">=</span><span style="color:#24292E"> min.</span><span style="color:#6F42C1">toString</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">      element.max </span><span style="color:#D73A49">=</span><span style="color:#24292E"> max.</span><span style="color:#6F42C1">toString</span><span style="color:#24292E">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">      if</span><span style="color:#24292E"> (step </span><span style="color:#D73A49">!=</span><span style="color:#005CC5"> null</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#24292E">        element.step </span><span style="color:#D73A49">=</span><span style="color:#24292E"> step;</span></span>
+<span class="line"><span style="color:#24292E">      }</span></span>
+<span class="line"><span style="color:#24292E">    }</span></span>
+<span class="line"><span style="color:#24292E">    element.valueAsNumber </span><span style="color:#D73A49">=</span><span style="color:#24292E"> v;</span></span>
+<span class="line"><span style="color:#6F42C1">    onChange</span><span style="color:#24292E">(element.valueAsNumber);</span></span>
+<span class="line"><span style="color:#24292E">  };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> initialValue</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> element.valueAsNumber;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  return</span><span style="color:#24292E"> [setValue, initialValue, element];</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">function</span><span style="color:#6F42C1"> bindToggle</span><span style="color:#24292E">(</span><span style="color:#E36209">id</span><span style="color:#24292E">, </span><span style="color:#E36209">onChange</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> element</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> document.</span><span style="color:#6F42C1">getElementById</span><span style="color:#24292E">(id);</span></span>
+<span class="line"><span style="color:#D73A49">  if</span><span style="color:#24292E"> (</span><span style="color:#D73A49">!</span><span style="color:#24292E">(element </span><span style="color:#D73A49">instanceof</span><span style="color:#6F42C1"> HTMLInputElement</span><span style="color:#24292E">)) {</span></span>
+<span class="line"><span style="color:#D73A49">    throw</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Error</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#032F62">      "invalid binding element: expected HTMLButtonElement, got: "</span><span style="color:#D73A49"> +</span></span>
+<span class="line"><span style="color:#24292E">        element.</span><span style="color:#005CC5">constructor</span><span style="color:#24292E">.name,</span></span>
+<span class="line"><span style="color:#24292E">    );</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  element.</span><span style="color:#6F42C1">oninput</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> function</span><span style="color:#6F42C1"> oninput</span><span style="color:#24292E">() {</span></span>
+<span class="line"><span style="color:#6F42C1">    onChange</span><span style="color:#24292E">(element.checked);</span></span>
+<span class="line"><span style="color:#24292E">  };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#6F42C1"> callback</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> (</span><span style="color:#E36209">v</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#24292E">    element.checked </span><span style="color:#D73A49">=</span><span style="color:#24292E"> v;</span></span>
+<span class="line"><span style="color:#6F42C1">    onChange</span><span style="color:#24292E">(element.checked);</span></span>
+<span class="line"><span style="color:#24292E">  };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  return</span><span style="color:#24292E"> [callback, element.checked, element];</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> extent</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> Extent.</span><span style="color:#6F42C1">fromCenterAndSize</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#24292E">  CoordinateSystem.epsg3857,</span></span>
+<span class="line"><span style="color:#24292E">  { x: </span><span style="color:#005CC5">11393552</span><span style="color:#24292E">, y: </span><span style="color:#005CC5">44035</span><span style="color:#24292E"> },</span></span>
+<span class="line"><span style="color:#005CC5">  1000000</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">  500000</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> instance</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Instance</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">  target: </span><span style="color:#032F62">"view"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  crs: extent.crs,</span></span>
+<span class="line"><span style="color:#24292E">  backgroundColor: </span><span style="color:#032F62">"white"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> center</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> extent.</span><span style="color:#6F42C1">centerAsVector3</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">instance.view.camera.position.</span><span style="color:#6F42C1">set</span><span style="color:#24292E">(center.x, center.y </span><span style="color:#D73A49">-</span><span style="color:#005CC5"> 1</span><span style="color:#24292E">, </span><span style="color:#005CC5">1000000</span><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> controls</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> MapControls</span><span style="color:#24292E">(instance.view.camera, instance.domElement);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">controls.target </span><span style="color:#D73A49">=</span><span style="color:#24292E"> center;</span></span>
+<span class="line"><span style="color:#24292E">controls.</span><span style="color:#6F42C1">saveState</span><span style="color:#24292E">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">instance.view.</span><span style="color:#6F42C1">setControls</span><span style="color:#24292E">(controls);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> map</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Map</span><span style="color:#24292E">({ extent });</span></span>
+<span class="line"><span style="color:#24292E">instance.</span><span style="color:#6F42C1">add</span><span style="color:#24292E">(map);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> fillColor</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Color</span><span style="color:#24292E">(</span><span style="color:#032F62">"orange"</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> strokeColor</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Color</span><span style="color:#24292E">(</span><span style="color:#032F62">"red"</span><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> image</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Circle</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">  radius: </span><span style="color:#005CC5">20</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  fill: </span><span style="color:#D73A49">new</span><span style="color:#6F42C1"> Fill</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">    color: </span><span style="color:#032F62">`#${</span><span style="color:#24292E">fillColor</span><span style="color:#032F62">.</span><span style="color:#6F42C1">getHexString</span><span style="color:#032F62">()</span><span style="color:#032F62">}`</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  }),</span></span>
+<span class="line"><span style="color:#24292E">  stroke: </span><span style="color:#D73A49">new</span><span style="color:#6F42C1"> Stroke</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">    color: </span><span style="color:#032F62">`#${</span><span style="color:#24292E">strokeColor</span><span style="color:#032F62">.</span><span style="color:#6F42C1">getHexString</span><span style="color:#032F62">()</span><span style="color:#032F62">}`</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">    width: </span><span style="color:#005CC5">5</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  }),</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> fill</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Fill</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">  color: </span><span style="color:#032F62">`#${</span><span style="color:#24292E">fillColor</span><span style="color:#032F62">.</span><span style="color:#6F42C1">getHexString</span><span style="color:#032F62">()</span><span style="color:#032F62">}`</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> stroke</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Stroke</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">  color: </span><span style="color:#032F62">`#${</span><span style="color:#24292E">strokeColor</span><span style="color:#032F62">.</span><span style="color:#6F42C1">getHexString</span><span style="color:#032F62">()</span><span style="color:#032F62">}`</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  width: </span><span style="color:#005CC5">5</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">let</span><span style="color:#24292E"> style </span><span style="color:#D73A49">=</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Style</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">  fill,</span></span>
+<span class="line"><span style="color:#24292E">  stroke,</span></span>
+<span class="line"><span style="color:#24292E">  image,</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> polygon</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Feature</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#D73A49">  new</span><span style="color:#6F42C1"> Polygon</span><span style="color:#24292E">([</span></span>
+<span class="line"><span style="color:#24292E">    [</span></span>
+<span class="line"><span style="color:#24292E">      [</span><span style="color:#005CC5">100.0</span><span style="color:#24292E">, </span><span style="color:#005CC5">0.0</span><span style="color:#24292E">],</span></span>
+<span class="line"><span style="color:#24292E">      [</span><span style="color:#005CC5">101.0</span><span style="color:#24292E">, </span><span style="color:#005CC5">0.0</span><span style="color:#24292E">],</span></span>
+<span class="line"><span style="color:#24292E">      [</span><span style="color:#005CC5">101.0</span><span style="color:#24292E">, </span><span style="color:#005CC5">1.0</span><span style="color:#24292E">],</span></span>
+<span class="line"><span style="color:#24292E">      [</span><span style="color:#005CC5">100.0</span><span style="color:#24292E">, </span><span style="color:#005CC5">1.0</span><span style="color:#24292E">],</span></span>
+<span class="line"><span style="color:#24292E">      [</span><span style="color:#005CC5">100.0</span><span style="color:#24292E">, </span><span style="color:#005CC5">0.0</span><span style="color:#24292E">],</span></span>
+<span class="line"><span style="color:#24292E">    ],</span></span>
+<span class="line"><span style="color:#24292E">  ]).</span><span style="color:#6F42C1">transform</span><span style="color:#24292E">(</span><span style="color:#032F62">"EPSG:4326"</span><span style="color:#24292E">, </span><span style="color:#032F62">"EPSG:3857"</span><span style="color:#24292E">),</span></span>
+<span class="line"><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> line</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Feature</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#D73A49">  new</span><span style="color:#6F42C1"> LineString</span><span style="color:#24292E">([</span></span>
+<span class="line"><span style="color:#24292E">    [</span><span style="color:#005CC5">102.0</span><span style="color:#24292E">, </span><span style="color:#005CC5">0.0</span><span style="color:#24292E">],</span></span>
+<span class="line"><span style="color:#24292E">    [</span><span style="color:#005CC5">103.0</span><span style="color:#24292E">, </span><span style="color:#005CC5">1.0</span><span style="color:#24292E">],</span></span>
+<span class="line"><span style="color:#24292E">    [</span><span style="color:#005CC5">104.0</span><span style="color:#24292E">, </span><span style="color:#005CC5">0.0</span><span style="color:#24292E">],</span></span>
+<span class="line"><span style="color:#24292E">    [</span><span style="color:#005CC5">105.0</span><span style="color:#24292E">, </span><span style="color:#005CC5">1.0</span><span style="color:#24292E">],</span></span>
+<span class="line"><span style="color:#24292E">  ]).</span><span style="color:#6F42C1">transform</span><span style="color:#24292E">(</span><span style="color:#032F62">"EPSG:4326"</span><span style="color:#24292E">, </span><span style="color:#032F62">"EPSG:3857"</span><span style="color:#24292E">),</span></span>
+<span class="line"><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> point</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Feature</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#D73A49">  new</span><span style="color:#6F42C1"> Point</span><span style="color:#24292E">([</span><span style="color:#005CC5">102.0</span><span style="color:#24292E">, </span><span style="color:#005CC5">0.5</span><span style="color:#24292E">]).</span><span style="color:#6F42C1">transform</span><span style="color:#24292E">(</span><span style="color:#032F62">"EPSG:4326"</span><span style="color:#24292E">, </span><span style="color:#032F62">"EPSG:3857"</span><span style="color:#24292E">),</span></span>
+<span class="line"><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> source</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> VectorSource</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">  data: [],</span></span>
+<span class="line"><span style="color:#24292E">  dataProjection: CoordinateSystem.epsg3857,</span></span>
+<span class="line"><span style="color:#24292E">  style,</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> layer</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> ColorLayer</span><span style="color:#24292E">({ source });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">map.</span><span style="color:#6F42C1">addLayer</span><span style="color:#24292E">(layer);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">Inspector.</span><span style="color:#6F42C1">attach</span><span style="color:#24292E">(</span><span style="color:#032F62">"inspector"</span><span style="color:#24292E">, instance);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">instance.</span><span style="color:#6F42C1">notifyChange</span><span style="color:#24292E">(map);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">source.</span><span style="color:#6F42C1">addFeatures</span><span style="color:#24292E">([point, line, polygon]);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#24292E"> [</span><span style="color:#005CC5">setStrokeWidth</span><span style="color:#24292E">] </span><span style="color:#D73A49">=</span><span style="color:#6F42C1"> bindSlider</span><span style="color:#24292E">(</span><span style="color:#032F62">"stroke-width"</span><span style="color:#24292E">, (</span><span style="color:#E36209">v</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#24292E">  style.</span><span style="color:#6F42C1">getStroke</span><span style="color:#24292E">().</span><span style="color:#6F42C1">setWidth</span><span style="color:#24292E">(v);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> circle</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> style.</span><span style="color:#6F42C1">getImage</span><span style="color:#24292E">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  circle.</span><span style="color:#6F42C1">getStroke</span><span style="color:#24292E">().</span><span style="color:#6F42C1">setWidth</span><span style="color:#24292E">(v);</span></span>
+<span class="line"><span style="color:#24292E">  circle.</span><span style="color:#6F42C1">setRadius</span><span style="color:#24292E">(circle.</span><span style="color:#6F42C1">getRadius</span><span style="color:#24292E">());</span></span>
+<span class="line"><span style="color:#24292E">  source.</span><span style="color:#6F42C1">update</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#24292E"> [</span><span style="color:#005CC5">setPointRadius</span><span style="color:#24292E">] </span><span style="color:#D73A49">=</span><span style="color:#6F42C1"> bindSlider</span><span style="color:#24292E">(</span><span style="color:#032F62">"point-radius"</span><span style="color:#24292E">, (</span><span style="color:#E36209">v</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> circle</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> style.</span><span style="color:#6F42C1">getImage</span><span style="color:#24292E">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  circle.</span><span style="color:#6F42C1">setRadius</span><span style="color:#24292E">(v);</span></span>
+<span class="line"><span style="color:#24292E">  style.</span><span style="color:#6F42C1">setImage</span><span style="color:#24292E">(style.</span><span style="color:#6F42C1">getImage</span><span style="color:#24292E">());</span></span>
+<span class="line"><span style="color:#24292E">  source.</span><span style="color:#6F42C1">update</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#6F42C1"> toCssColor</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> (</span><span style="color:#E36209">color</span><span style="color:#24292E">, </span><span style="color:#E36209">alpha</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span></span>
+<span class="line"><span style="color:#032F62">  `rgba(${</span><span style="color:#24292E">Math</span><span style="color:#032F62">.</span><span style="color:#6F42C1">round</span><span style="color:#032F62">(</span><span style="color:#24292E">color</span><span style="color:#032F62">.</span><span style="color:#24292E">r</span><span style="color:#D73A49"> *</span><span style="color:#005CC5"> 255</span><span style="color:#032F62">)</span><span style="color:#032F62">}, ${</span><span style="color:#24292E">Math</span><span style="color:#032F62">.</span><span style="color:#6F42C1">round</span><span style="color:#032F62">(</span><span style="color:#24292E">color</span><span style="color:#032F62">.</span><span style="color:#24292E">g</span><span style="color:#D73A49"> *</span><span style="color:#005CC5"> 255</span><span style="color:#032F62">)</span><span style="color:#032F62">}, ${</span><span style="color:#24292E">Math</span><span style="color:#032F62">.</span><span style="color:#6F42C1">round</span><span style="color:#032F62">(</span><span style="color:#24292E">color</span><span style="color:#032F62">.</span><span style="color:#24292E">b</span><span style="color:#D73A49"> *</span><span style="color:#005CC5"> 255</span><span style="color:#032F62">)</span><span style="color:#032F62">}, ${</span><span style="color:#24292E">alpha</span><span style="color:#032F62">})`</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#24292E"> [</span><span style="color:#005CC5">setOpacity</span><span style="color:#24292E">] </span><span style="color:#D73A49">=</span><span style="color:#6F42C1"> bindSlider</span><span style="color:#24292E">(</span><span style="color:#032F62">"style-opacity"</span><span style="color:#24292E">, (</span><span style="color:#E36209">v</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> circle</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> style.</span><span style="color:#6F42C1">getImage</span><span style="color:#24292E">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  circle.</span><span style="color:#6F42C1">getStroke</span><span style="color:#24292E">().</span><span style="color:#6F42C1">setColor</span><span style="color:#24292E">(</span><span style="color:#6F42C1">toCssColor</span><span style="color:#24292E">(strokeColor, v));</span></span>
+<span class="line"><span style="color:#24292E">  circle.</span><span style="color:#6F42C1">getFill</span><span style="color:#24292E">().</span><span style="color:#6F42C1">setColor</span><span style="color:#24292E">(</span><span style="color:#6F42C1">toCssColor</span><span style="color:#24292E">(fillColor, v));</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  style.</span><span style="color:#6F42C1">getStroke</span><span style="color:#24292E">().</span><span style="color:#6F42C1">setColor</span><span style="color:#24292E">(</span><span style="color:#6F42C1">toCssColor</span><span style="color:#24292E">(strokeColor, v));</span></span>
+<span class="line"><span style="color:#24292E">  style.</span><span style="color:#6F42C1">getFill</span><span style="color:#24292E">().</span><span style="color:#6F42C1">setColor</span><span style="color:#24292E">(</span><span style="color:#6F42C1">toCssColor</span><span style="color:#24292E">(fillColor, v));</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  circle.</span><span style="color:#6F42C1">setRadius</span><span style="color:#24292E">(circle.</span><span style="color:#6F42C1">getRadius</span><span style="color:#24292E">());</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  source.</span><span style="color:#6F42C1">update</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1">bindToggle</span><span style="color:#24292E">(</span><span style="color:#032F62">"show-line"</span><span style="color:#24292E">, (</span><span style="color:#E36209">v</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#D73A49">  if</span><span style="color:#24292E"> (v) {</span></span>
+<span class="line"><span style="color:#24292E">    source.</span><span style="color:#6F42C1">addFeature</span><span style="color:#24292E">(line);</span></span>
+<span class="line"><span style="color:#24292E">  } </span><span style="color:#D73A49">else</span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#24292E">    source.</span><span style="color:#6F42C1">removeFeature</span><span style="color:#24292E">(line);</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"><span style="color:#24292E">  source.</span><span style="color:#6F42C1">update</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"><span style="color:#6F42C1">bindToggle</span><span style="color:#24292E">(</span><span style="color:#032F62">"show-polygon"</span><span style="color:#24292E">, (</span><span style="color:#E36209">v</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#D73A49">  if</span><span style="color:#24292E"> (v) {</span></span>
+<span class="line"><span style="color:#24292E">    source.</span><span style="color:#6F42C1">addFeature</span><span style="color:#24292E">(polygon);</span></span>
+<span class="line"><span style="color:#24292E">  } </span><span style="color:#D73A49">else</span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#24292E">    source.</span><span style="color:#6F42C1">removeFeature</span><span style="color:#24292E">(polygon);</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"><span style="color:#24292E">  source.</span><span style="color:#6F42C1">update</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"><span style="color:#6F42C1">bindToggle</span><span style="color:#24292E">(</span><span style="color:#032F62">"show-point"</span><span style="color:#24292E">, (</span><span style="color:#E36209">v</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#D73A49">  if</span><span style="color:#24292E"> (v) {</span></span>
+<span class="line"><span style="color:#24292E">    source.</span><span style="color:#6F42C1">addFeature</span><span style="color:#24292E">(point);</span></span>
+<span class="line"><span style="color:#24292E">  } </span><span style="color:#D73A49">else</span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#24292E">    source.</span><span style="color:#6F42C1">removeFeature</span><span style="color:#24292E">(point);</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"><span style="color:#24292E">  source.</span><span style="color:#6F42C1">update</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1">bindButton</span><span style="color:#24292E">(</span><span style="color:#032F62">"randomize"</span><span style="color:#24292E">, () </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#24292E">  strokeColor.r </span><span style="color:#D73A49">=</span><span style="color:#24292E"> MathUtils.</span><span style="color:#6F42C1">randFloat</span><span style="color:#24292E">(</span><span style="color:#005CC5">0</span><span style="color:#24292E">, </span><span style="color:#005CC5">1</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#24292E">  strokeColor.g </span><span style="color:#D73A49">=</span><span style="color:#24292E"> MathUtils.</span><span style="color:#6F42C1">randFloat</span><span style="color:#24292E">(</span><span style="color:#005CC5">0</span><span style="color:#24292E">, </span><span style="color:#005CC5">1</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#24292E">  strokeColor.b </span><span style="color:#D73A49">=</span><span style="color:#24292E"> MathUtils.</span><span style="color:#6F42C1">randFloat</span><span style="color:#24292E">(</span><span style="color:#005CC5">0</span><span style="color:#24292E">, </span><span style="color:#005CC5">1</span><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  fillColor.r </span><span style="color:#D73A49">=</span><span style="color:#24292E"> MathUtils.</span><span style="color:#6F42C1">randFloat</span><span style="color:#24292E">(</span><span style="color:#005CC5">0</span><span style="color:#24292E">, </span><span style="color:#005CC5">1</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#24292E">  fillColor.g </span><span style="color:#D73A49">=</span><span style="color:#24292E"> MathUtils.</span><span style="color:#6F42C1">randFloat</span><span style="color:#24292E">(</span><span style="color:#005CC5">0</span><span style="color:#24292E">, </span><span style="color:#005CC5">1</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#24292E">  fillColor.b </span><span style="color:#D73A49">=</span><span style="color:#24292E"> MathUtils.</span><span style="color:#6F42C1">randFloat</span><span style="color:#24292E">(</span><span style="color:#005CC5">0</span><span style="color:#24292E">, </span><span style="color:#005CC5">1</span><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> pointRadius</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> MathUtils.</span><span style="color:#6F42C1">randFloat</span><span style="color:#24292E">(</span><span style="color:#005CC5">0.1</span><span style="color:#24292E">, </span><span style="color:#005CC5">20</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> strokeWidth</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> MathUtils.</span><span style="color:#6F42C1">randFloat</span><span style="color:#24292E">(</span><span style="color:#005CC5">1</span><span style="color:#24292E">, </span><span style="color:#005CC5">20</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> opacity</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> MathUtils.</span><span style="color:#6F42C1">randFloat</span><span style="color:#24292E">(</span><span style="color:#005CC5">0</span><span style="color:#24292E">, </span><span style="color:#005CC5">1</span><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> newStyle</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Style</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">    fill: </span><span style="color:#D73A49">new</span><span style="color:#6F42C1"> Fill</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">      color: </span><span style="color:#6F42C1">toCssColor</span><span style="color:#24292E">(fillColor, opacity),</span></span>
+<span class="line"><span style="color:#24292E">    }),</span></span>
+<span class="line"><span style="color:#24292E">    stroke: </span><span style="color:#D73A49">new</span><span style="color:#6F42C1"> Stroke</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">      color: </span><span style="color:#6F42C1">toCssColor</span><span style="color:#24292E">(strokeColor, opacity),</span></span>
+<span class="line"><span style="color:#24292E">      width: strokeWidth,</span></span>
+<span class="line"><span style="color:#24292E">    }),</span></span>
+<span class="line"><span style="color:#24292E">    image: </span><span style="color:#D73A49">new</span><span style="color:#6F42C1"> Circle</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">      radius: pointRadius,</span></span>
+<span class="line"><span style="color:#24292E">      fill: </span><span style="color:#D73A49">new</span><span style="color:#6F42C1"> Fill</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">        color: </span><span style="color:#6F42C1">toCssColor</span><span style="color:#24292E">(fillColor, opacity),</span></span>
+<span class="line"><span style="color:#24292E">      }),</span></span>
+<span class="line"><span style="color:#24292E">      stroke: </span><span style="color:#D73A49">new</span><span style="color:#6F42C1"> Stroke</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">        color: </span><span style="color:#6F42C1">toCssColor</span><span style="color:#24292E">(strokeColor, opacity),</span></span>
+<span class="line"><span style="color:#24292E">        width: strokeWidth,</span></span>
+<span class="line"><span style="color:#24292E">      }),</span></span>
+<span class="line"><span style="color:#24292E">    }),</span></span>
+<span class="line"><span style="color:#24292E">  });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1">  setPointRadius</span><span style="color:#24292E">(pointRadius);</span></span>
+<span class="line"><span style="color:#6F42C1">  setStrokeWidth</span><span style="color:#24292E">(strokeWidth);</span></span>
+<span class="line"><span style="color:#6F42C1">  setOpacity</span><span style="color:#24292E">(opacity);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  style </span><span style="color:#D73A49">=</span><span style="color:#24292E"> newStyle;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  // Here we test that setStyle() takes the new style into account</span></span>
+<span class="line"><span style="color:#6A737D">  // and that the layer is repainted.</span></span>
+<span class="line"><span style="color:#24292E">  source.</span><span style="color:#6F42C1">setStyle</span><span style="color:#24292E">(newStyle);</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"></span></code></pre>
+            </div>
+            
+
+            <!-- HTML code -->
+            
+            <span class="badge text-bg-primary mt-3 mb-1">index.html</span>
+            <div
+                class="border rounded p-3 position-relative mb-3"
+                id="source-html"
+                style="background-color: #ffffff"
+            >
+                <span class="position-absolute top-0 end-0 p-2">
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        onclick="copyContentByID('source-html')"
+                    >
+                        <i class="bi bi-copy"></i>
+                    </button>
+                </span>
+                <pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#24292E">&#x3C;!</span><span style="color:#22863A">doctype</span><span style="color:#6F42C1"> html</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">&#x3C;</span><span style="color:#22863A">html</span><span style="color:#6F42C1"> lang</span><span style="color:#24292E">=</span><span style="color:#032F62">"en"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">  &#x3C;</span><span style="color:#22863A">head</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">title</span><span style="color:#24292E">>Dynamic layer updates&#x3C;/</span><span style="color:#22863A">title</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">meta</span><span style="color:#6F42C1"> charset</span><span style="color:#24292E">=</span><span style="color:#032F62">"UTF-8"</span><span style="color:#24292E"> /></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">meta</span><span style="color:#6F42C1"> name</span><span style="color:#24292E">=</span><span style="color:#032F62">"name"</span><span style="color:#6F42C1"> content</span><span style="color:#24292E">=</span><span style="color:#032F62">"layer-update"</span><span style="color:#24292E"> /></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">meta</span></span>
+<span class="line"><span style="color:#6F42C1">      name</span><span style="color:#24292E">=</span><span style="color:#032F62">"description"</span></span>
+<span class="line"><span style="color:#6F42C1">      content</span><span style="color:#24292E">=</span><span style="color:#032F62">"The layer is updated when the style changes."</span></span>
+<span class="line"><span style="color:#24292E">    /></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">meta</span><span style="color:#6F42C1"> name</span><span style="color:#24292E">=</span><span style="color:#032F62">"viewport"</span><span style="color:#6F42C1"> content</span><span style="color:#24292E">=</span><span style="color:#032F62">"width=device-width, initial-scale=1.0"</span><span style="color:#24292E"> /></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">link</span><span style="color:#6F42C1"> rel</span><span style="color:#24292E">=</span><span style="color:#032F62">"icon"</span><span style="color:#6F42C1"> href</span><span style="color:#24292E">=</span><span style="color:#032F62">"https://giro3d.org/images/favicon.svg"</span><span style="color:#24292E"> /></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">link</span></span>
+<span class="line"><span style="color:#6F42C1">      href</span><span style="color:#24292E">=</span><span style="color:#032F62">"https://giro3d.org/assets/bootstrap-custom.css"</span></span>
+<span class="line"><span style="color:#6F42C1">      rel</span><span style="color:#24292E">=</span><span style="color:#032F62">"stylesheet"</span></span>
+<span class="line"><span style="color:#24292E">    /></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">script</span><span style="color:#6F42C1"> src</span><span style="color:#24292E">=</span><span style="color:#032F62">"https://giro3d.org/assets/bootstrap.bundle.min.js"</span><span style="color:#24292E">>&#x3C;/</span><span style="color:#22863A">script</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">link</span></span>
+<span class="line"><span style="color:#6F42C1">      rel</span><span style="color:#24292E">=</span><span style="color:#032F62">"stylesheet"</span></span>
+<span class="line"><span style="color:#6F42C1">      type</span><span style="color:#24292E">=</span><span style="color:#032F62">"text/css"</span></span>
+<span class="line"><span style="color:#6F42C1">      href</span><span style="color:#24292E">=</span><span style="color:#032F62">"https://giro3d.org/latest/examples/css/example.css"</span></span>
+<span class="line"><span style="color:#24292E">    /></span></span>
+<span class="line"><span style="color:#24292E">  &#x3C;/</span><span style="color:#22863A">head</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  &#x3C;</span><span style="color:#22863A">body</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> id</span><span style="color:#24292E">=</span><span style="color:#032F62">"view"</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"m-0 p-0 w-100 h-100"</span><span style="color:#24292E">>&#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">div</span></span>
+<span class="line"><span style="color:#6F42C1">      id</span><span style="color:#24292E">=</span><span style="color:#032F62">"inspector"</span></span>
+<span class="line"><span style="color:#6F42C1">      class</span><span style="color:#24292E">=</span><span style="color:#032F62">"position-absolute top-0 start-0 mh-100 overflow-auto"</span></span>
+<span class="line"><span style="color:#24292E">    >&#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"side-pane-with-status-bar"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#6A737D">      &#x3C;!-- Top color layer --></span></span>
+<span class="line"><span style="color:#24292E">      &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"card"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">        &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"card-header"</span><span style="color:#24292E">>Options&#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">        &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"card-body"</span><span style="color:#6F42C1"> id</span><span style="color:#24292E">=</span><span style="color:#032F62">"top-options"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#6A737D">          &#x3C;!-- Show point --></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"input-group my-2"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">              &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-check form-switch"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">                &#x3C;</span><span style="color:#22863A">input</span></span>
+<span class="line"><span style="color:#6F42C1">                  class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-check-input"</span></span>
+<span class="line"><span style="color:#6F42C1">                  checked</span></span>
+<span class="line"><span style="color:#6F42C1">                  type</span><span style="color:#24292E">=</span><span style="color:#032F62">"checkbox"</span></span>
+<span class="line"><span style="color:#6F42C1">                  role</span><span style="color:#24292E">=</span><span style="color:#032F62">"switch"</span></span>
+<span class="line"><span style="color:#6F42C1">                  id</span><span style="color:#24292E">=</span><span style="color:#032F62">"show-point"</span></span>
+<span class="line"><span style="color:#6F42C1">                  autocomplete</span><span style="color:#24292E">=</span><span style="color:#032F62">"off"</span></span>
+<span class="line"><span style="color:#24292E">                /></span></span>
+<span class="line"><span style="color:#24292E">                &#x3C;</span><span style="color:#22863A">label</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-check-label"</span><span style="color:#6F42C1"> for</span><span style="color:#24292E">=</span><span style="color:#032F62">"show-point"</span></span>
+<span class="line"><span style="color:#24292E">                  >Show point&#x3C;/</span><span style="color:#22863A">label</span></span>
+<span class="line"><span style="color:#24292E">                ></span></span>
+<span class="line"><span style="color:#24292E">              &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">          &#x3C;!-- Show polygon --></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"input-group my-2"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">              &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-check form-switch"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">                &#x3C;</span><span style="color:#22863A">input</span></span>
+<span class="line"><span style="color:#6F42C1">                  class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-check-input"</span></span>
+<span class="line"><span style="color:#6F42C1">                  checked</span></span>
+<span class="line"><span style="color:#6F42C1">                  type</span><span style="color:#24292E">=</span><span style="color:#032F62">"checkbox"</span></span>
+<span class="line"><span style="color:#6F42C1">                  role</span><span style="color:#24292E">=</span><span style="color:#032F62">"switch"</span></span>
+<span class="line"><span style="color:#6F42C1">                  id</span><span style="color:#24292E">=</span><span style="color:#032F62">"show-polygon"</span></span>
+<span class="line"><span style="color:#6F42C1">                  autocomplete</span><span style="color:#24292E">=</span><span style="color:#032F62">"off"</span></span>
+<span class="line"><span style="color:#24292E">                /></span></span>
+<span class="line"><span style="color:#24292E">                &#x3C;</span><span style="color:#22863A">label</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-check-label"</span><span style="color:#6F42C1"> for</span><span style="color:#24292E">=</span><span style="color:#032F62">"show-polygon"</span></span>
+<span class="line"><span style="color:#24292E">                  >Show polygon&#x3C;/</span><span style="color:#22863A">label</span></span>
+<span class="line"><span style="color:#24292E">                ></span></span>
+<span class="line"><span style="color:#24292E">              &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">          &#x3C;!-- Show line --></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"input-group my-2"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">              &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-check form-switch"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">                &#x3C;</span><span style="color:#22863A">input</span></span>
+<span class="line"><span style="color:#6F42C1">                  class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-check-input"</span></span>
+<span class="line"><span style="color:#6F42C1">                  checked</span></span>
+<span class="line"><span style="color:#6F42C1">                  type</span><span style="color:#24292E">=</span><span style="color:#032F62">"checkbox"</span></span>
+<span class="line"><span style="color:#6F42C1">                  role</span><span style="color:#24292E">=</span><span style="color:#032F62">"switch"</span></span>
+<span class="line"><span style="color:#6F42C1">                  id</span><span style="color:#24292E">=</span><span style="color:#032F62">"show-line"</span></span>
+<span class="line"><span style="color:#6F42C1">                  autocomplete</span><span style="color:#24292E">=</span><span style="color:#032F62">"off"</span></span>
+<span class="line"><span style="color:#24292E">                /></span></span>
+<span class="line"><span style="color:#24292E">                &#x3C;</span><span style="color:#22863A">label</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-check-label"</span><span style="color:#6F42C1"> for</span><span style="color:#24292E">=</span><span style="color:#032F62">"show-line"</span></span>
+<span class="line"><span style="color:#24292E">                  >Show line&#x3C;/</span><span style="color:#22863A">label</span></span>
+<span class="line"><span style="color:#24292E">                ></span></span>
+<span class="line"><span style="color:#24292E">              &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">          &#x3C;!-- Stroke width --></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"input-group my-2"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">label</span><span style="color:#6F42C1"> for</span><span style="color:#24292E">=</span><span style="color:#032F62">"stroke-width"</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-label"</span><span style="color:#24292E">>Stroke width&#x3C;/</span><span style="color:#22863A">label</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"input-group"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">              &#x3C;</span><span style="color:#22863A">input</span></span>
+<span class="line"><span style="color:#6F42C1">                type</span><span style="color:#24292E">=</span><span style="color:#032F62">"range"</span></span>
+<span class="line"><span style="color:#6F42C1">                min</span><span style="color:#24292E">=</span><span style="color:#032F62">"1"</span></span>
+<span class="line"><span style="color:#6F42C1">                step</span><span style="color:#24292E">=</span><span style="color:#032F62">"1"</span></span>
+<span class="line"><span style="color:#6F42C1">                max</span><span style="color:#24292E">=</span><span style="color:#032F62">"20"</span></span>
+<span class="line"><span style="color:#6F42C1">                value</span><span style="color:#24292E">=</span><span style="color:#032F62">"5"</span></span>
+<span class="line"><span style="color:#6F42C1">                class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-range"</span></span>
+<span class="line"><span style="color:#6F42C1">                id</span><span style="color:#24292E">=</span><span style="color:#032F62">"stroke-width"</span></span>
+<span class="line"><span style="color:#6F42C1">                autocomplete</span><span style="color:#24292E">=</span><span style="color:#032F62">"off"</span></span>
+<span class="line"><span style="color:#24292E">              /></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">          &#x3C;!-- Point radius --></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"input-group my-2"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">label</span><span style="color:#6F42C1"> for</span><span style="color:#24292E">=</span><span style="color:#032F62">"point-radius"</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-label"</span><span style="color:#24292E">>Point radius&#x3C;/</span><span style="color:#22863A">label</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"input-group"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">              &#x3C;</span><span style="color:#22863A">input</span></span>
+<span class="line"><span style="color:#6F42C1">                type</span><span style="color:#24292E">=</span><span style="color:#032F62">"range"</span></span>
+<span class="line"><span style="color:#6F42C1">                min</span><span style="color:#24292E">=</span><span style="color:#032F62">"0.1"</span></span>
+<span class="line"><span style="color:#6F42C1">                step</span><span style="color:#24292E">=</span><span style="color:#032F62">"0.05"</span></span>
+<span class="line"><span style="color:#6F42C1">                max</span><span style="color:#24292E">=</span><span style="color:#032F62">"100"</span></span>
+<span class="line"><span style="color:#6F42C1">                value</span><span style="color:#24292E">=</span><span style="color:#032F62">"20"</span></span>
+<span class="line"><span style="color:#6F42C1">                class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-range"</span></span>
+<span class="line"><span style="color:#6F42C1">                id</span><span style="color:#24292E">=</span><span style="color:#032F62">"point-radius"</span></span>
+<span class="line"><span style="color:#6F42C1">                autocomplete</span><span style="color:#24292E">=</span><span style="color:#032F62">"off"</span></span>
+<span class="line"><span style="color:#24292E">              /></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">          &#x3C;!-- Style opacity --></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"input-group my-2"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">label</span><span style="color:#6F42C1"> for</span><span style="color:#24292E">=</span><span style="color:#032F62">"style-opacity"</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-label"</span><span style="color:#24292E">>Style opacity&#x3C;/</span><span style="color:#22863A">label</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"input-group"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">              &#x3C;</span><span style="color:#22863A">input</span></span>
+<span class="line"><span style="color:#6F42C1">                type</span><span style="color:#24292E">=</span><span style="color:#032F62">"range"</span></span>
+<span class="line"><span style="color:#6F42C1">                min</span><span style="color:#24292E">=</span><span style="color:#032F62">"0"</span></span>
+<span class="line"><span style="color:#6F42C1">                step</span><span style="color:#24292E">=</span><span style="color:#032F62">"0.05"</span></span>
+<span class="line"><span style="color:#6F42C1">                max</span><span style="color:#24292E">=</span><span style="color:#032F62">"1"</span></span>
+<span class="line"><span style="color:#6F42C1">                value</span><span style="color:#24292E">=</span><span style="color:#032F62">"1"</span></span>
+<span class="line"><span style="color:#6F42C1">                class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-range"</span></span>
+<span class="line"><span style="color:#6F42C1">                id</span><span style="color:#24292E">=</span><span style="color:#032F62">"style-opacity"</span></span>
+<span class="line"><span style="color:#6F42C1">                autocomplete</span><span style="color:#24292E">=</span><span style="color:#032F62">"off"</span></span>
+<span class="line"><span style="color:#24292E">              /></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">          &#x3C;</span><span style="color:#22863A">hr</span><span style="color:#24292E"> /></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">          &#x3C;!-- Randomize style --></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;</span><span style="color:#22863A">button</span><span style="color:#6F42C1"> type</span><span style="color:#24292E">=</span><span style="color:#032F62">"button"</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"btn btn-primary w-100"</span><span style="color:#6F42C1"> id</span><span style="color:#24292E">=</span><span style="color:#032F62">"randomize"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            Randomize style</span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;/</span><span style="color:#22863A">button</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">        &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">      &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">script</span><span style="color:#6F42C1"> type</span><span style="color:#24292E">=</span><span style="color:#032F62">"module"</span><span style="color:#6F42C1"> src</span><span style="color:#24292E">=</span><span style="color:#032F62">"index.js"</span><span style="color:#24292E">>&#x3C;/</span><span style="color:#22863A">script</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">script</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#6A737D">      /* activate popovers */</span></span>
+<span class="line"><span style="color:#D73A49">      const</span><span style="color:#005CC5"> popoverTriggerList</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> [].slice.</span><span style="color:#6F42C1">call</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#24292E">        document.</span><span style="color:#6F42C1">querySelectorAll</span><span style="color:#24292E">(</span><span style="color:#032F62">'[data-bs-toggle="popover"]'</span><span style="color:#24292E">),</span></span>
+<span class="line"><span style="color:#24292E">      );</span></span>
+<span class="line"><span style="color:#24292E">      popoverTriggerList.</span><span style="color:#6F42C1">map</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#6A737D">        // bootstrap is used as script in the template, disable warning about undef</span></span>
+<span class="line"><span style="color:#6A737D">        // eslint-disable-next-line no-undef</span></span>
+<span class="line"><span style="color:#24292E">        (</span><span style="color:#E36209">popoverTriggerEl</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span></span>
+<span class="line"><span style="color:#D73A49">          new</span><span style="color:#24292E"> bootstrap.</span><span style="color:#6F42C1">Popover</span><span style="color:#24292E">(popoverTriggerEl, {</span></span>
+<span class="line"><span style="color:#24292E">            trigger: </span><span style="color:#032F62">"hover"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">            placement: </span><span style="color:#032F62">"left"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">            content: document.</span><span style="color:#6F42C1">getElementById</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#24292E">              popoverTriggerEl.</span><span style="color:#6F42C1">getAttribute</span><span style="color:#24292E">(</span><span style="color:#032F62">"data-bs-content"</span><span style="color:#24292E">),</span></span>
+<span class="line"><span style="color:#24292E">            ).innerHTML,</span></span>
+<span class="line"><span style="color:#24292E">            html: </span><span style="color:#005CC5">true</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">          }),</span></span>
+<span class="line"><span style="color:#24292E">      );</span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;/</span><span style="color:#22863A">script</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">  &#x3C;/</span><span style="color:#22863A">body</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">&#x3C;/</span><span style="color:#22863A">html</span><span style="color:#24292E">></span></span>
+<span class="line"></span></code></pre>
+            </div>
+            
+
+            <!-- package.json code -->
+            
+            <span class="badge text-bg-primary mt-3 mb-1">package.json</span>
+            <div
+                class="border rounded p-3 position-relative mb-3"
+                id="source-package-json"
+                style="background-color: #ffffff"
+            >
+                <span class="position-absolute top-0 end-0 p-2">
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        onclick="copyContentByID('source-package-json')"
+                    >
+                        <i class="bi bi-copy"></i>
+                    </button>
+                </span>
+                <pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#24292E">{</span></span>
+<span class="line"><span style="color:#005CC5">    "name"</span><span style="color:#24292E">: </span><span style="color:#032F62">"layer-update"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">    "dependencies"</span><span style="color:#24292E">: {</span></span>
+<span class="line"><span style="color:#005CC5">        "@giro3d/giro3d"</span><span style="color:#24292E">: </span><span style="color:#032F62">"1.0.0"</span></span>
+<span class="line"><span style="color:#24292E">    },</span></span>
+<span class="line"><span style="color:#005CC5">    "devDependencies"</span><span style="color:#24292E">: {</span></span>
+<span class="line"><span style="color:#005CC5">        "vite"</span><span style="color:#24292E">: </span><span style="color:#032F62">"^3.2.3"</span></span>
+<span class="line"><span style="color:#24292E">    },</span></span>
+<span class="line"><span style="color:#005CC5">    "scripts"</span><span style="color:#24292E">: {</span></span>
+<span class="line"><span style="color:#005CC5">        "start"</span><span style="color:#24292E">: </span><span style="color:#032F62">"vite"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">        "build"</span><span style="color:#24292E">: </span><span style="color:#032F62">"vite build"</span></span>
+<span class="line"><span style="color:#24292E">    }</span></span>
+<span class="line"><span style="color:#24292E">}</span></span></code></pre>
+            </div>
+            
+
+            <!-- vite.config.js code -->
+            <span class="badge text-bg-primary mt-3 mb-1">vite.config.js</span>
+            <div
+                class="border rounded p-3 position-relative mb-3"
+                id="source-vite-config"
+                style="background-color: #ffffff"
+            >
+                <span class="position-absolute top-0 end-0 p-2">
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        onclick="copyContentByID('source-vite-config')"
+                    >
+                        <i class="bi bi-copy"></i>
+                    </button>
+                </span>
+                <pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> { defineConfig } </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "vite"</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">export</span><span style="color:#D73A49"> default</span><span style="color:#6F42C1"> defineConfig</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">  build: {</span></span>
+<span class="line"><span style="color:#24292E">    target: </span><span style="color:#032F62">'esnext'</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  },</span></span>
+<span class="line"><span style="color:#24292E">  optimizeDeps: {</span></span>
+<span class="line"><span style="color:#24292E">    esbuildOptions: {</span></span>
+<span class="line"><span style="color:#24292E">      target: </span><span style="color:#032F62">'esnext'</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">    },</span></span>
+<span class="line"><span style="color:#24292E">  },</span></span>
+<span class="line"><span style="color:#24292E">})</span></span></code></pre>
+            </div>
+        </div>
+    </body>
+</html>

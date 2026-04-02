@@ -1,0 +1,818 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Layer reprojection - Giro3D</title>
+<meta charset="UTF-8" />
+<meta name="name" content="Layer reprojection - Giro3D" />
+<meta name="description" content="Reproject layers with heterogenous coordinate systems." />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<link rel="icon" href="/images/favicon.svg" />
+<link href="/assets/bootstrap-custom.css" rel="stylesheet" />
+<script src="/assets/bootstrap.bundle.min.js"></script>
+
+<!-- OpenGraph -->
+<meta
+    property="og:description"
+    content="A versatile framework to visualize geospatial data in the browser."
+/>
+<meta
+    property="og:image"
+    content="https://giro3d.org/latest/examples/screenshots/layer-reprojection.jpg"
+/>
+<meta property="og:locale" content="en_US" />
+<meta property="og:title" content="Layer reprojection - Giro3D" />
+<meta property="og:site_name" content="Giro3D" />
+<meta property="og:type" content="object" />
+<meta property="og:url" content="https://giro3d.org/latest/examples/layer-reprojection.html" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta
+    name="twitter:description"
+    content="A versatile framework to visualize geospatial data in the browser."
+/>
+<meta name="twitter:dnt" content="on" />
+<meta
+    name="twitter:image"
+    content="https://giro3d.org/latest/examples/screenshots/layer-reprojection.jpg"
+/>
+<meta name="twitter:title" content="Layer reprojection - Giro3D" />
+<meta name="twitter:widgets:align" content="center" />
+
+
+        <link rel="stylesheet" type="text/css" href="css/example.css" />
+        
+    </head>
+    <body class="bg-light">
+        
+
+<header class="header bg-light" data-bs-theme="">
+    <div class="container-fluid">
+        <a href="/" class="navbar-brand mx-0">
+            <img
+                src="/images/favicon.svg"
+                class="brand"
+                width="32"
+                height="32"
+            />
+        </a>
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav navbar-nav-left">
+                
+                <li class="nav-item">
+    <a
+        class="nav-link  "
+        href="/"
+    >
+        Home
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary "
+        href="/giro3d.html"
+    >
+        Giro3D framework
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-success "
+        href="/piero.html"
+    >
+        Piero application
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary "
+        href="/latest/tutorials/getting-started.html"
+    >
+        Getting started with Giro3D
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary active"
+        href="/latest/examples/index.html"
+    >
+        Giro3D examples
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary "
+        href="/latest/apidoc/index.html"
+    >
+        API documentation
+    </a>
+</li>
+
+
+                <li class="nav-item">
+                    <span
+                        class="navbar-text badge text-bg-info"
+                        >Version
+                        v1.0.0</span
+                    >
+                </li>
+            </ul>
+
+            
+
+            
+
+            <ul class="navbar-nav ms-2">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://gitlab.com/giro3d/giro3D" target="_blank"
+                        >GitLab <i class="bi bi-box-arrow-up-right"></i
+                    ></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+
+        <div class="m-3">
+            <!-- Short description (same as in the example card) -->
+            <div>
+                <p class="text-muted">Reproject layers with heterogenous coordinate systems.</p>
+            </div>
+
+            <!-- 3D view -->
+            <div id="main-view" class="border position-relative" style="height: 65vh">
+                <!-- Viewer -->
+<!-- Note that we don't go to the bottom of the screen, we stop at the status bar -->
+<div id="view" class="m-0 p-0 w-100" style="height: calc(100% - 1.3rem)"></div>
+<!-- Inspector -->
+<div id="inspector" class="position-absolute top-0 start-0 mh-100 overflow-auto d-none"></div>
+<!-- Optional additional content from the example (custom buttons, etc.) -->
+<div id="gui" class="gui-init"><div class="side-pane-with-status-bar" style="width: 22rem">
+    <div class="mh-100 overflow-y-auto">
+        <div class="card" id="currentCrsSection">
+            <!-- CRS code -->
+            <div class="card-header">Parameters</div>
+
+            <!-- tooltip -->
+            <span
+                class="badge bg-secondary position-absolute top-0 end-0 m-2"
+                data-bs-toggle="popover"
+                data-bs-content="help"
+                >?</span
+            >
+            <p class="card-text d-none" id="help">
+                Type a projected CRS in the field below, then "Update" to create a scene with
+                various layers. You can search for projection codes on
+                <a target="_blank" href="https://epsg.io/?q=epsg">epsg.io</a>. <b>Note:</b> not all
+                projections are supported.
+            </p>
+
+            <!-- CRS name and area -->
+            <div class="card-body">
+                <!-- CRS selector -->
+                <div class="input-group">
+                    <span class="input-group-text" id="code-label">EPSG</span>
+                    <input
+                        type="number"
+                        class="form-control"
+                        id="code"
+                        placeholder="EPSG code (e.g 3857)"
+                        value="2154"
+                        aria-label="EpsgCode"
+                        autocomplete="off"
+                        aria-describedby="code-label"
+                    />
+                    <button class="input-group-text btn btn-primary" id="create">Update</button>
+                </div>
+
+                <hr />
+                <h5 class="card-title" id="name">RGF93 v1 / Lambert-93 -- France</h5>
+                <h6 class="card-subtitle text-body-secondary mb-2" id="srid">EPSG:2154</h6>
+                <p class="card-text" id="description">
+                    France - onshore and offshore, mainland and Corsica (France métropolitaine
+                    including Corsica).
+                </p>
+                <a id="link" target="_blank">See on epsg.io</a>
+            </div>
+        </div>
+
+        <!-- Error message -->
+        <div class="alert alert-danger mt-3" id="message" style="display: none" role="alert">
+            A simple primary alert—check it out!
+        </div>
+    </div>
+</div></div>
+<!-- Status bar -->
+<div id="status-bar" class="bg-light w-100 position-absolute bottom-0 start-0 status-bar">
+    <div
+        class="progress m-2 status-progress-bar"
+        role="progressbar"
+        style="height: 5px"
+        aria-label="Loading progress"
+        aria-valuenow="100"
+        aria-valuemin="0"
+        aria-valuemax="100"
+    >
+        <div id="progress-bar" class="progress-bar" style="width: 100%"></div>
+    </div>
+    <span id="loading-percent" class="status-progress-value">100%</span>
+    
+    <span class="text-center status-attribution" id="attributions">© <a target="_blank" href="https://www.mapbox.com/">Mapbox</a>, CRS data provided by <a target="_blank" href="https://www.epsg.io/">epsg.io</a></span>
+    <!-- Coordinates -->
+    <div class="px-1 position-absolute end-0 d-inline-flex">
+        <div id="coordinates" class="mx-2 text-secondary" style="width: 18rem"></div>
+        <button type="button" id="crs" class="badge rounded-pill text-bg-secondary">WGS84</button>
+    </div>
+</div>
+<!-- Button area -->
+<div id="buttons" class="position-absolute top-0 start-0 mx-2 my-2 overflow-auto">
+    <!-- Full-screen button -->
+    <button
+        id="btnFullscreen"
+        type="button"
+        class="btn btn-light btn-sm mb-2"
+        title="toggle full screen"
+        style="align-items: center; justify-content: center"
+    >
+        <!-- Origin: https://icons.getbootstrap.com/icons/arrows-fullscreen/ -->
+        <i id="icon-fullscreen" class="bi bi-arrows-fullscreen"></i>
+    </button>
+
+    <!-- Toggle GUI button -->
+    <button
+        id="btnToggleGUI"
+        type="button"
+        class="btn btn-light btn-sm"
+        title="toggle GUI"
+        style="display: flex; align-items: center; justify-content: center"
+    >
+        <!-- Origin: https://icons.getbootstrap.com/icons/sliders/ -->
+        <i class="bi bi-sliders"></i>
+    </button>
+</div>
+
+<script type="module" src="__vendor.js"></script>
+<script type="module" src="__three.js"></script>
+<script type="module" src="__ol.js"></script>
+<script type="module" src="layer-reprojection.js"></script>
+<script>
+    /* activate popovers */
+    const popoverTriggerList = [].slice.call(
+        document.querySelectorAll('[data-bs-toggle="popover"]'),
+    );
+    popoverTriggerList.map(
+        // bootstrap is used as script in the template, disable warning about undef
+        // eslint-disable-next-line no-undef
+        popoverTriggerEl =>
+            new bootstrap.Popover(popoverTriggerEl, {
+                trigger: 'hover',
+                placement: 'left',
+                content: document.getElementById(popoverTriggerEl.getAttribute('data-bs-content'))
+                    .innerHTML,
+                html: true,
+            }),
+    );
+
+    const toggleGUIButton = document.getElementById('btnToggleGUI');
+    const guiRoot = document.getElementById('gui');
+
+    if (guiRoot.childElementCount === 0) {
+        toggleGUIButton.remove();
+    } else {
+        var showGUI = window.getComputedStyle(guiRoot, null).display !== 'none';
+
+        function updateGUI(show) {
+            guiRoot.classList.remove('gui-init');
+            if (show) {
+                guiRoot.classList.remove('d-none');
+                toggleGUIButton.classList.remove('btn-light');
+                toggleGUIButton.classList.add('btn-primary');
+            } else {
+                guiRoot.classList.add('d-none');
+                toggleGUIButton.classList.remove('btn-primary');
+                toggleGUIButton.classList.add('btn-light');
+            }
+        }
+
+        if (toggleGUIButton) {
+            toggleGUIButton.onclick = function onclick() {
+                showGUI = !showGUI;
+                updateGUI(showGUI);
+            };
+        }
+
+        updateGUI(showGUI);
+    }
+
+    var fullScreen = false;
+
+    const fullScreenButton = document.getElementById('btnFullscreen');
+
+    function updateFullScreenIcon() {
+        const target = document.getElementById('icon-fullscreen');
+        if (document.fullscreen) {
+            target.className = 'bi bi-fullscreen-exit';
+        } else {
+            target.className = 'bi bi-arrows-fullscreen';
+        }
+    }
+
+    document.addEventListener('fullscreenchange', () => {
+        updateFullScreenIcon();
+    });
+
+    function toggleFullScreen() {
+        if (!fullScreen) {
+            document
+                .getElementById('view')
+                .parentElement.requestFullscreen()
+                .then(() => {
+                    fullScreen = true;
+                });
+        } else {
+            document.exitFullscreen().then(() => {
+                fullScreen = false;
+            });
+        }
+    }
+
+    if (fullScreenButton) fullScreenButton.onclick = toggleFullScreen;
+
+    function copyContentByID(id) {
+        const source = document.getElementById(id);
+        const text = source.textContent;
+        const btn = source.querySelector('.btn');
+        navigator.clipboard
+            .writeText(text.trim())
+            .then(() => {
+                btn.classList.add('pulse-once');
+                setTimeout(() => btn.classList.remove('pulse-once'), 1000);
+            })
+            .catch(e => {
+                console.log('failed', e);
+            });
+    }
+</script>
+
+            </div>
+
+            <!-- Long description (optional) -->
+            
+            <div class="my-3">
+                <p>A <code>Layer</code> can reproject the images produced by the <code>ImageSource</code> to conform to the CRS of the instance.</p>
+            </div>
+            
+
+            <!-- Source code -->
+            
+            <span class="badge text-bg-primary mt-3 mb-1">index.js</span>
+            <div
+                class="border rounded p-3 position-relative mb-3"
+                id="source"
+                style="background-color: #ffffff"
+            >
+                <span class="position-absolute top-0 end-0 p-2">
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        onclick="copyContentByID('source')"
+                    >
+                        <i class="bi bi-copy"></i>
+                    </button>
+                </span>
+                <pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> { GeoJSON } </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "ol/format.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> XYZ </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "ol/source/XYZ.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> { Stroke, Style } </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "ol/style.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> { MapControls } </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "three/examples/jsm/controls/MapControls.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> CoordinateSystem </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/core/geographic/CoordinateSystem.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> Extent </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/core/geographic/Extent.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> Instance </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/core/Instance.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> ColorLayer </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/core/layer/ColorLayer.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> Map </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/entities/Map.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> Inspector </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/gui/Inspector.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> GeoTIFFSource </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/sources/GeoTIFFSource.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> TiledImageSource </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/sources/TiledImageSource.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> VectorSource </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "@giro3d/giro3d/sources/VectorSource.js"</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">function</span><span style="color:#6F42C1"> bindButton</span><span style="color:#24292E">(</span><span style="color:#E36209">id</span><span style="color:#24292E">, </span><span style="color:#E36209">onClick</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> element</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> document.</span><span style="color:#6F42C1">getElementById</span><span style="color:#24292E">(id);</span></span>
+<span class="line"><span style="color:#D73A49">  if</span><span style="color:#24292E"> (</span><span style="color:#D73A49">!</span><span style="color:#24292E">(element </span><span style="color:#D73A49">instanceof</span><span style="color:#6F42C1"> HTMLButtonElement</span><span style="color:#24292E">)) {</span></span>
+<span class="line"><span style="color:#D73A49">    throw</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Error</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#032F62">      "invalid binding element: expected HTMLButtonElement, got: "</span><span style="color:#D73A49"> +</span></span>
+<span class="line"><span style="color:#24292E">        element.</span><span style="color:#005CC5">constructor</span><span style="color:#24292E">.name,</span></span>
+<span class="line"><span style="color:#24292E">    );</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  element.</span><span style="color:#6F42C1">onclick</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> () </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#6F42C1">    onClick</span><span style="color:#24292E">(element);</span></span>
+<span class="line"><span style="color:#24292E">  };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  return</span><span style="color:#24292E"> element;</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">let</span><span style="color:#24292E"> instance;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">let</span><span style="color:#24292E"> inspector;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">let</span><span style="color:#24292E"> controls;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">let</span><span style="color:#24292E"> map;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">function</span><span style="color:#6F42C1"> addMapboxLayer</span><span style="color:#24292E">(</span><span style="color:#E36209">extent</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> apiKey</span><span style="color:#D73A49"> =</span></span>
+<span class="line"><span style="color:#032F62">    "pk.eyJ1IjoiZ2lybzNkIiwiYSI6ImNtZ3Q0NDNlNTAwY2oybHI3Ym1kcW03YmoifQ.Zl7_KZiAhqWSPjlkKDKYnQ"</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  // Adds a satellite basemap</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> tiledLayer</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> ColorLayer</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">    name: </span><span style="color:#032F62">"basemap"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">    extent,</span></span>
+<span class="line"><span style="color:#24292E">    showTileBorders: </span><span style="color:#005CC5">true</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">    source: </span><span style="color:#D73A49">new</span><span style="color:#6F42C1"> TiledImageSource</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">      source: </span><span style="color:#D73A49">new</span><span style="color:#6F42C1"> XYZ</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">        url: </span><span style="color:#032F62">`https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.webp?access_token=${</span><span style="color:#24292E">apiKey</span><span style="color:#032F62">}`</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">        projection: </span><span style="color:#032F62">"EPSG:3857"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">      }),</span></span>
+<span class="line"><span style="color:#24292E">    }),</span></span>
+<span class="line"><span style="color:#24292E">  });</span></span>
+<span class="line"><span style="color:#24292E">  map.</span><span style="color:#6F42C1">addLayer</span><span style="color:#24292E">(tiledLayer).</span><span style="color:#6F42C1">catch</span><span style="color:#24292E">((</span><span style="color:#E36209">e</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> console.</span><span style="color:#6F42C1">error</span><span style="color:#24292E">(e));</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">function</span><span style="color:#6F42C1"> addCogLayer</span><span style="color:#24292E">() {</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> cogLayer</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> ColorLayer</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">    name: </span><span style="color:#032F62">"cog"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">    showTileBorders: </span><span style="color:#005CC5">true</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">    source: </span><span style="color:#D73A49">new</span><span style="color:#6F42C1"> GeoTIFFSource</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">      url: </span><span style="color:#032F62">"https://3d.oslandia.com/giro3d/rasters/TCI.tif"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">      crs: CoordinateSystem.epsg3857,</span></span>
+<span class="line"><span style="color:#24292E">    }),</span></span>
+<span class="line"><span style="color:#24292E">  });</span></span>
+<span class="line"><span style="color:#24292E">  map.</span><span style="color:#6F42C1">addLayer</span><span style="color:#24292E">(cogLayer).</span><span style="color:#6F42C1">catch</span><span style="color:#24292E">((</span><span style="color:#E36209">e</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> console.</span><span style="color:#6F42C1">error</span><span style="color:#24292E">(e));</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">function</span><span style="color:#6F42C1"> addVectorLayer</span><span style="color:#24292E">() {</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> outlineStyle</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Style</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">    stroke: </span><span style="color:#D73A49">new</span><span style="color:#6F42C1"> Stroke</span><span style="color:#24292E">({ color: </span><span style="color:#032F62">"red"</span><span style="color:#24292E">, width: </span><span style="color:#005CC5">2</span><span style="color:#24292E"> }),</span></span>
+<span class="line"><span style="color:#24292E">  });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  // Display the countries boundaries.</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> boundaries</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> ColorLayer</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">    name: </span><span style="color:#032F62">"boundaries"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">    source: </span><span style="color:#D73A49">new</span><span style="color:#6F42C1"> VectorSource</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">      data: {</span></span>
+<span class="line"><span style="color:#24292E">        url: </span><span style="color:#032F62">"https://3d.oslandia.com/giro3d/vectors/countries.geojson"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">        format: </span><span style="color:#D73A49">new</span><span style="color:#6F42C1"> GeoJSON</span><span style="color:#24292E">(),</span></span>
+<span class="line"><span style="color:#24292E">      },</span></span>
+<span class="line"><span style="color:#24292E">      style: outlineStyle,</span></span>
+<span class="line"><span style="color:#24292E">      dataProjection: CoordinateSystem.epsg4326,</span></span>
+<span class="line"><span style="color:#24292E">    }),</span></span>
+<span class="line"><span style="color:#24292E">  });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  map.</span><span style="color:#6F42C1">addLayer</span><span style="color:#24292E">(boundaries).</span><span style="color:#6F42C1">catch</span><span style="color:#24292E">((</span><span style="color:#E36209">e</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> console.</span><span style="color:#6F42C1">error</span><span style="color:#24292E">(e));</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">function</span><span style="color:#6F42C1"> createScene</span><span style="color:#24292E">(</span><span style="color:#E36209">crs</span><span style="color:#24292E">, </span><span style="color:#E36209">extent</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#D73A49">  if</span><span style="color:#24292E"> (instance) {</span></span>
+<span class="line"><span style="color:#24292E">    map.</span><span style="color:#6F42C1">getLayers</span><span style="color:#24292E">().</span><span style="color:#6F42C1">forEach</span><span style="color:#24292E">((</span><span style="color:#E36209">l</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> l.</span><span style="color:#6F42C1">dispose</span><span style="color:#24292E">());</span></span>
+<span class="line"><span style="color:#24292E">    controls.</span><span style="color:#6F42C1">dispose</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">    inspector.</span><span style="color:#6F42C1">detach</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">    instance.</span><span style="color:#6F42C1">dispose</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  instance </span><span style="color:#D73A49">=</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Instance</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">    target: </span><span style="color:#032F62">"view"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">    crs,</span></span>
+<span class="line"><span style="color:#24292E">    backgroundColor: </span><span style="color:#032F62">"grey"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  map </span><span style="color:#D73A49">=</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Map</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">    extent,</span></span>
+<span class="line"><span style="color:#24292E">    terrain: {</span></span>
+<span class="line"><span style="color:#24292E">      segments: </span><span style="color:#005CC5">2</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">    },</span></span>
+<span class="line"><span style="color:#24292E">    backgroundColor: </span><span style="color:#032F62">"black"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">    backgroundOpacity: </span><span style="color:#005CC5">0.3</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  instance.</span><span style="color:#6F42C1">add</span><span style="color:#24292E">(map);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1">  addMapboxLayer</span><span style="color:#24292E">(extent);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1">  addCogLayer</span><span style="color:#24292E">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1">  addVectorLayer</span><span style="color:#24292E">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> center</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> extent.</span><span style="color:#6F42C1">centerAsVector3</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">  instance.view.camera.position.</span><span style="color:#6F42C1">set</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#24292E">    center.x,</span></span>
+<span class="line"><span style="color:#24292E">    center.y </span><span style="color:#D73A49">-</span><span style="color:#005CC5"> 1</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">    extent.</span><span style="color:#6F42C1">dimensions</span><span style="color:#24292E">().y </span><span style="color:#D73A49">*</span><span style="color:#005CC5"> 2</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  );</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  controls </span><span style="color:#D73A49">=</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> MapControls</span><span style="color:#24292E">(instance.view.camera, instance.domElement);</span></span>
+<span class="line"><span style="color:#24292E">  controls.target </span><span style="color:#D73A49">=</span><span style="color:#24292E"> center;</span></span>
+<span class="line"><span style="color:#24292E">  controls.</span><span style="color:#6F42C1">saveState</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">  controls.enableDamping </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> true</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">  controls.dampingFactor </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> 0.2</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">  controls.maxPolarAngle </span><span style="color:#D73A49">=</span><span style="color:#24292E"> Math.</span><span style="color:#005CC5">PI</span><span style="color:#D73A49"> /</span><span style="color:#005CC5"> 2.3</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">  instance.view.</span><span style="color:#6F42C1">setControls</span><span style="color:#24292E">(controls);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  inspector </span><span style="color:#D73A49">=</span><span style="color:#24292E"> Inspector.</span><span style="color:#6F42C1">attach</span><span style="color:#24292E">(</span><span style="color:#032F62">"inspector"</span><span style="color:#24292E">, instance);</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">async</span><span style="color:#D73A49"> function</span><span style="color:#6F42C1"> fetchCrs</span><span style="color:#24292E">(</span><span style="color:#E36209">code</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> res</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> await</span><span style="color:#6F42C1"> fetch</span><span style="color:#24292E">(</span><span style="color:#032F62">`https://epsg.io/${</span><span style="color:#24292E">code</span><span style="color:#032F62">}.wkt2`</span><span style="color:#24292E">, { mode: </span><span style="color:#032F62">"cors"</span><span style="color:#24292E"> });</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> wkt2</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> await</span><span style="color:#24292E"> res.</span><span style="color:#6F42C1">text</span><span style="color:#24292E">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> name</span><span style="color:#D73A49"> =</span><span style="color:#032F62"> /PROJCRS</span><span style="color:#22863A;font-weight:bold">\[</span><span style="color:#032F62">"(</span><span style="color:#005CC5">.</span><span style="color:#D73A49">*?</span><span style="color:#032F62">)"/</span><span style="color:#D73A49">gm</span><span style="color:#24292E">.</span><span style="color:#6F42C1">exec</span><span style="color:#24292E">(wkt2)[</span><span style="color:#005CC5">1</span><span style="color:#24292E">];</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> area</span><span style="color:#D73A49"> =</span><span style="color:#032F62"> /AREA</span><span style="color:#22863A;font-weight:bold">\[</span><span style="color:#032F62">"(</span><span style="color:#005CC5">.</span><span style="color:#D73A49">*?</span><span style="color:#032F62">)"/</span><span style="color:#D73A49">gm</span><span style="color:#24292E">.</span><span style="color:#6F42C1">exec</span><span style="color:#24292E">(wkt2)[</span><span style="color:#005CC5">1</span><span style="color:#24292E">];</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> bbox</span><span style="color:#D73A49"> =</span><span style="color:#032F62"> /BBOX</span><span style="color:#22863A;font-weight:bold">\[</span><span style="color:#032F62">(</span><span style="color:#005CC5">.</span><span style="color:#D73A49">*?</span><span style="color:#032F62">)</span><span style="color:#22863A;font-weight:bold">\]</span><span style="color:#032F62">/</span><span style="color:#D73A49">gm</span><span style="color:#24292E">.</span><span style="color:#6F42C1">exec</span><span style="color:#24292E">(wkt2)[</span><span style="color:#005CC5">1</span><span style="color:#24292E">];</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#24292E"> [</span><span style="color:#005CC5">minLat</span><span style="color:#24292E">, </span><span style="color:#005CC5">minLon</span><span style="color:#24292E">, </span><span style="color:#005CC5">maxLat</span><span style="color:#24292E">, </span><span style="color:#005CC5">maxLon</span><span style="color:#24292E">] </span><span style="color:#D73A49">=</span><span style="color:#24292E"> bbox.</span><span style="color:#6F42C1">split</span><span style="color:#24292E">(</span><span style="color:#032F62">","</span><span style="color:#24292E">).</span><span style="color:#6F42C1">map</span><span style="color:#24292E">((</span><span style="color:#E36209">s</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> s.</span><span style="color:#6F42C1">trim</span><span style="color:#24292E">());</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> proj</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> await</span><span style="color:#24292E"> (</span></span>
+<span class="line"><span style="color:#D73A49">    await</span><span style="color:#6F42C1"> fetch</span><span style="color:#24292E">(</span><span style="color:#032F62">`https://epsg.io/${</span><span style="color:#24292E">code</span><span style="color:#032F62">}.proj4`</span><span style="color:#24292E">, { mode: </span><span style="color:#032F62">"cors"</span><span style="color:#24292E"> })</span></span>
+<span class="line"><span style="color:#24292E">  ).</span><span style="color:#6F42C1">text</span><span style="color:#24292E">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> id</span><span style="color:#D73A49"> =</span><span style="color:#032F62"> `EPSG:${</span><span style="color:#24292E">code</span><span style="color:#032F62">}`</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> crs</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> CoordinateSystem.</span><span style="color:#6F42C1">register</span><span style="color:#24292E">(id, proj, {</span></span>
+<span class="line"><span style="color:#24292E">    throwIfFailedToRegisterWithProj: </span><span style="color:#005CC5">true</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> extent</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Extent</span><span style="color:#24292E">(CoordinateSystem.epsg4326, {</span></span>
+<span class="line"><span style="color:#24292E">    west: Number.</span><span style="color:#6F42C1">parseFloat</span><span style="color:#24292E">(minLon),</span></span>
+<span class="line"><span style="color:#24292E">    east: Number.</span><span style="color:#6F42C1">parseFloat</span><span style="color:#24292E">(maxLon),</span></span>
+<span class="line"><span style="color:#24292E">    north: Number.</span><span style="color:#6F42C1">parseFloat</span><span style="color:#24292E">(maxLat),</span></span>
+<span class="line"><span style="color:#24292E">    south: Number.</span><span style="color:#6F42C1">parseFloat</span><span style="color:#24292E">(minLat),</span></span>
+<span class="line"><span style="color:#24292E">  });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  document.</span><span style="color:#6F42C1">getElementById</span><span style="color:#24292E">(</span><span style="color:#032F62">"srid"</span><span style="color:#24292E">).innerText </span><span style="color:#D73A49">=</span><span style="color:#24292E"> id;</span></span>
+<span class="line"><span style="color:#24292E">  document.</span><span style="color:#6F42C1">getElementById</span><span style="color:#24292E">(</span><span style="color:#032F62">"name"</span><span style="color:#24292E">).innerText </span><span style="color:#D73A49">=</span><span style="color:#24292E"> name;</span></span>
+<span class="line"><span style="color:#24292E">  document.</span><span style="color:#6F42C1">getElementById</span><span style="color:#24292E">(</span><span style="color:#032F62">"description"</span><span style="color:#24292E">).innerText </span><span style="color:#D73A49">=</span><span style="color:#24292E"> area;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  document.</span><span style="color:#6F42C1">getElementById</span><span style="color:#24292E">(</span><span style="color:#032F62">"link"</span><span style="color:#24292E">).href </span><span style="color:#D73A49">=</span><span style="color:#032F62"> `https://epsg.io/${</span><span style="color:#24292E">code</span><span style="color:#032F62">}`</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  return</span><span style="color:#24292E"> { def: wkt2, crs, extent: extent.</span><span style="color:#6F42C1">as</span><span style="color:#24292E">(crs) };</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">async</span><span style="color:#D73A49"> function</span><span style="color:#6F42C1"> initialize</span><span style="color:#24292E">(</span><span style="color:#E36209">epsgCode</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> error</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> document.</span><span style="color:#6F42C1">getElementById</span><span style="color:#24292E">(</span><span style="color:#032F62">"message"</span><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  try</span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#D73A49">    const</span><span style="color:#24292E"> { </span><span style="color:#005CC5">extent</span><span style="color:#24292E">, </span><span style="color:#005CC5">crs</span><span style="color:#24292E"> } </span><span style="color:#D73A49">=</span><span style="color:#D73A49"> await</span><span style="color:#6F42C1"> fetchCrs</span><span style="color:#24292E">(epsgCode);</span></span>
+<span class="line"><span style="color:#24292E">    error.style.display </span><span style="color:#D73A49">=</span><span style="color:#032F62"> "none"</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1">    createScene</span><span style="color:#24292E">(crs, extent);</span></span>
+<span class="line"><span style="color:#24292E">  } </span><span style="color:#D73A49">catch</span><span style="color:#24292E"> (e) {</span></span>
+<span class="line"><span style="color:#24292E">    error.style.display </span><span style="color:#D73A49">=</span><span style="color:#032F62"> "block"</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">    if</span><span style="color:#24292E"> (e </span><span style="color:#D73A49">instanceof</span><span style="color:#6F42C1"> Error</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#24292E">      error.innerText </span><span style="color:#D73A49">=</span><span style="color:#24292E"> e.message;</span></span>
+<span class="line"><span style="color:#24292E">    } </span><span style="color:#D73A49">else</span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#24292E">      error.innerText </span><span style="color:#D73A49">=</span><span style="color:#032F62"> `An error occured while fetching CRS definition on epsg.io`</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">    }</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1">bindButton</span><span style="color:#24292E">(</span><span style="color:#032F62">"create"</span><span style="color:#24292E">, () </span><span style="color:#D73A49">=></span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> epsgCodeElt</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> document.</span><span style="color:#6F42C1">getElementById</span><span style="color:#24292E">(</span><span style="color:#032F62">"code"</span><span style="color:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> epsgCode</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> Number.</span><span style="color:#6F42C1">parseInt</span><span style="color:#24292E">(epsgCodeElt.value);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">  if</span><span style="color:#24292E"> (epsgCode) {</span></span>
+<span class="line"><span style="color:#6F42C1">    initialize</span><span style="color:#24292E">(epsgCode);</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1">initialize</span><span style="color:#24292E">(</span><span style="color:#005CC5">2154</span><span style="color:#24292E">);</span></span>
+<span class="line"></span></code></pre>
+            </div>
+            
+
+            <!-- HTML code -->
+            
+            <span class="badge text-bg-primary mt-3 mb-1">index.html</span>
+            <div
+                class="border rounded p-3 position-relative mb-3"
+                id="source-html"
+                style="background-color: #ffffff"
+            >
+                <span class="position-absolute top-0 end-0 p-2">
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        onclick="copyContentByID('source-html')"
+                    >
+                        <i class="bi bi-copy"></i>
+                    </button>
+                </span>
+                <pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#24292E">&#x3C;!</span><span style="color:#22863A">doctype</span><span style="color:#6F42C1"> html</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">&#x3C;</span><span style="color:#22863A">html</span><span style="color:#6F42C1"> lang</span><span style="color:#24292E">=</span><span style="color:#032F62">"en"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">  &#x3C;</span><span style="color:#22863A">head</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">title</span><span style="color:#24292E">>Layer reprojection&#x3C;/</span><span style="color:#22863A">title</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">meta</span><span style="color:#6F42C1"> charset</span><span style="color:#24292E">=</span><span style="color:#032F62">"UTF-8"</span><span style="color:#24292E"> /></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">meta</span><span style="color:#6F42C1"> name</span><span style="color:#24292E">=</span><span style="color:#032F62">"name"</span><span style="color:#6F42C1"> content</span><span style="color:#24292E">=</span><span style="color:#032F62">"layer-reprojection"</span><span style="color:#24292E"> /></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">meta</span></span>
+<span class="line"><span style="color:#6F42C1">      name</span><span style="color:#24292E">=</span><span style="color:#032F62">"description"</span></span>
+<span class="line"><span style="color:#6F42C1">      content</span><span style="color:#24292E">=</span><span style="color:#032F62">"Reproject layers with heterogenous coordinate systems."</span></span>
+<span class="line"><span style="color:#24292E">    /></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">meta</span><span style="color:#6F42C1"> name</span><span style="color:#24292E">=</span><span style="color:#032F62">"viewport"</span><span style="color:#6F42C1"> content</span><span style="color:#24292E">=</span><span style="color:#032F62">"width=device-width, initial-scale=1.0"</span><span style="color:#24292E"> /></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">link</span><span style="color:#6F42C1"> rel</span><span style="color:#24292E">=</span><span style="color:#032F62">"icon"</span><span style="color:#6F42C1"> href</span><span style="color:#24292E">=</span><span style="color:#032F62">"https://giro3d.org/images/favicon.svg"</span><span style="color:#24292E"> /></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">link</span></span>
+<span class="line"><span style="color:#6F42C1">      href</span><span style="color:#24292E">=</span><span style="color:#032F62">"https://giro3d.org/assets/bootstrap-custom.css"</span></span>
+<span class="line"><span style="color:#6F42C1">      rel</span><span style="color:#24292E">=</span><span style="color:#032F62">"stylesheet"</span></span>
+<span class="line"><span style="color:#24292E">    /></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">script</span><span style="color:#6F42C1"> src</span><span style="color:#24292E">=</span><span style="color:#032F62">"https://giro3d.org/assets/bootstrap.bundle.min.js"</span><span style="color:#24292E">>&#x3C;/</span><span style="color:#22863A">script</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">link</span></span>
+<span class="line"><span style="color:#6F42C1">      rel</span><span style="color:#24292E">=</span><span style="color:#032F62">"stylesheet"</span></span>
+<span class="line"><span style="color:#6F42C1">      type</span><span style="color:#24292E">=</span><span style="color:#032F62">"text/css"</span></span>
+<span class="line"><span style="color:#6F42C1">      href</span><span style="color:#24292E">=</span><span style="color:#032F62">"https://giro3d.org/latest/examples/css/example.css"</span></span>
+<span class="line"><span style="color:#24292E">    /></span></span>
+<span class="line"><span style="color:#24292E">  &#x3C;/</span><span style="color:#22863A">head</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">  &#x3C;</span><span style="color:#22863A">body</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> id</span><span style="color:#24292E">=</span><span style="color:#032F62">"view"</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"m-0 p-0 w-100 h-100"</span><span style="color:#24292E">>&#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">div</span></span>
+<span class="line"><span style="color:#6F42C1">      id</span><span style="color:#24292E">=</span><span style="color:#032F62">"inspector"</span></span>
+<span class="line"><span style="color:#6F42C1">      class</span><span style="color:#24292E">=</span><span style="color:#032F62">"position-absolute top-0 start-0 mh-100 overflow-auto"</span></span>
+<span class="line"><span style="color:#24292E">    >&#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"side-pane-with-status-bar"</span><span style="color:#6F42C1"> style</span><span style="color:#24292E">=</span><span style="color:#032F62">"width: 22rem"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">      &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"mh-100 overflow-y-auto"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">        &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"card"</span><span style="color:#6F42C1"> id</span><span style="color:#24292E">=</span><span style="color:#032F62">"currentCrsSection"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#6A737D">          &#x3C;!-- CRS code --></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"card-header"</span><span style="color:#24292E">>Parameters&#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">          &#x3C;!-- tooltip --></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;</span><span style="color:#22863A">span</span></span>
+<span class="line"><span style="color:#6F42C1">            class</span><span style="color:#24292E">=</span><span style="color:#032F62">"badge bg-secondary position-absolute top-0 end-0 m-2"</span></span>
+<span class="line"><span style="color:#6F42C1">            data-bs-toggle</span><span style="color:#24292E">=</span><span style="color:#032F62">"popover"</span></span>
+<span class="line"><span style="color:#6F42C1">            data-bs-content</span><span style="color:#24292E">=</span><span style="color:#032F62">"help"</span></span>
+<span class="line"><span style="color:#24292E">            >?&#x3C;/</span><span style="color:#22863A">span</span></span>
+<span class="line"><span style="color:#24292E">          ></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;</span><span style="color:#22863A">p</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"card-text d-none"</span><span style="color:#6F42C1"> id</span><span style="color:#24292E">=</span><span style="color:#032F62">"help"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            Type a projected CRS in the field below, then "Update" to create a</span></span>
+<span class="line"><span style="color:#24292E">            scene with various layers. You can search for projection codes on</span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">a</span><span style="color:#6F42C1"> target</span><span style="color:#24292E">=</span><span style="color:#032F62">"_blank"</span><span style="color:#6F42C1"> href</span><span style="color:#24292E">=</span><span style="color:#032F62">"https://epsg.io/?q=epsg"</span><span style="color:#24292E">>epsg.io&#x3C;/</span><span style="color:#22863A">a</span><span style="color:#24292E">>.</span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">b</span><span style="color:#24292E">>Note:&#x3C;/</span><span style="color:#22863A">b</span><span style="color:#24292E">> not all projections are supported.</span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;/</span><span style="color:#22863A">p</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">          &#x3C;!-- CRS name and area --></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"card-body"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#6A737D">            &#x3C;!-- CRS selector --></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">div</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"input-group"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">              &#x3C;</span><span style="color:#22863A">span</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"input-group-text"</span><span style="color:#6F42C1"> id</span><span style="color:#24292E">=</span><span style="color:#032F62">"code-label"</span><span style="color:#24292E">>EPSG&#x3C;/</span><span style="color:#22863A">span</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">              &#x3C;</span><span style="color:#22863A">input</span></span>
+<span class="line"><span style="color:#6F42C1">                type</span><span style="color:#24292E">=</span><span style="color:#032F62">"number"</span></span>
+<span class="line"><span style="color:#6F42C1">                class</span><span style="color:#24292E">=</span><span style="color:#032F62">"form-control"</span></span>
+<span class="line"><span style="color:#6F42C1">                id</span><span style="color:#24292E">=</span><span style="color:#032F62">"code"</span></span>
+<span class="line"><span style="color:#6F42C1">                placeholder</span><span style="color:#24292E">=</span><span style="color:#032F62">"EPSG code (e.g 3857)"</span></span>
+<span class="line"><span style="color:#6F42C1">                value</span><span style="color:#24292E">=</span><span style="color:#032F62">"2154"</span></span>
+<span class="line"><span style="color:#6F42C1">                aria-label</span><span style="color:#24292E">=</span><span style="color:#032F62">"EpsgCode"</span></span>
+<span class="line"><span style="color:#6F42C1">                autocomplete</span><span style="color:#24292E">=</span><span style="color:#032F62">"off"</span></span>
+<span class="line"><span style="color:#6F42C1">                aria-describedby</span><span style="color:#24292E">=</span><span style="color:#032F62">"code-label"</span></span>
+<span class="line"><span style="color:#24292E">              /></span></span>
+<span class="line"><span style="color:#24292E">              &#x3C;</span><span style="color:#22863A">button</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"input-group-text btn btn-primary"</span><span style="color:#6F42C1"> id</span><span style="color:#24292E">=</span><span style="color:#032F62">"create"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">                Update</span></span>
+<span class="line"><span style="color:#24292E">              &#x3C;/</span><span style="color:#22863A">button</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">hr</span><span style="color:#24292E"> /></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">h5</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"card-title"</span><span style="color:#6F42C1"> id</span><span style="color:#24292E">=</span><span style="color:#032F62">"name"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">              RGF93 v1 / Lambert-93 -- France</span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;/</span><span style="color:#22863A">h5</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">h6</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"card-subtitle text-body-secondary mb-2"</span><span style="color:#6F42C1"> id</span><span style="color:#24292E">=</span><span style="color:#032F62">"srid"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">              EPSG:2154</span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;/</span><span style="color:#22863A">h6</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">p</span><span style="color:#6F42C1"> class</span><span style="color:#24292E">=</span><span style="color:#032F62">"card-text"</span><span style="color:#6F42C1"> id</span><span style="color:#24292E">=</span><span style="color:#032F62">"description"</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">              France - onshore and offshore, mainland and Corsica (France</span></span>
+<span class="line"><span style="color:#24292E">              métropolitaine including Corsica).</span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;/</span><span style="color:#22863A">p</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">            &#x3C;</span><span style="color:#22863A">a</span><span style="color:#6F42C1"> id</span><span style="color:#24292E">=</span><span style="color:#032F62">"link"</span><span style="color:#6F42C1"> target</span><span style="color:#24292E">=</span><span style="color:#032F62">"_blank"</span><span style="color:#24292E">>See on epsg.io&#x3C;/</span><span style="color:#22863A">a</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">          &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">        &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">        &#x3C;!-- Error message --></span></span>
+<span class="line"><span style="color:#24292E">        &#x3C;</span><span style="color:#22863A">div</span></span>
+<span class="line"><span style="color:#6F42C1">          class</span><span style="color:#24292E">=</span><span style="color:#032F62">"alert alert-danger mt-3"</span></span>
+<span class="line"><span style="color:#6F42C1">          id</span><span style="color:#24292E">=</span><span style="color:#032F62">"message"</span></span>
+<span class="line"><span style="color:#6F42C1">          style</span><span style="color:#24292E">=</span><span style="color:#032F62">"display: none"</span></span>
+<span class="line"><span style="color:#6F42C1">          role</span><span style="color:#24292E">=</span><span style="color:#032F62">"alert"</span></span>
+<span class="line"><span style="color:#24292E">        ></span></span>
+<span class="line"><span style="color:#24292E">          A simple primary alert—check it out!</span></span>
+<span class="line"><span style="color:#24292E">        &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">      &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;/</span><span style="color:#22863A">div</span><span style="color:#24292E">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">script</span><span style="color:#6F42C1"> type</span><span style="color:#24292E">=</span><span style="color:#032F62">"module"</span><span style="color:#6F42C1"> src</span><span style="color:#24292E">=</span><span style="color:#032F62">"index.js"</span><span style="color:#24292E">>&#x3C;/</span><span style="color:#22863A">script</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;</span><span style="color:#22863A">script</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#6A737D">      /* activate popovers */</span></span>
+<span class="line"><span style="color:#D73A49">      const</span><span style="color:#005CC5"> popoverTriggerList</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> [].slice.</span><span style="color:#6F42C1">call</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#24292E">        document.</span><span style="color:#6F42C1">querySelectorAll</span><span style="color:#24292E">(</span><span style="color:#032F62">'[data-bs-toggle="popover"]'</span><span style="color:#24292E">),</span></span>
+<span class="line"><span style="color:#24292E">      );</span></span>
+<span class="line"><span style="color:#24292E">      popoverTriggerList.</span><span style="color:#6F42C1">map</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#6A737D">        // bootstrap is used as script in the template, disable warning about undef</span></span>
+<span class="line"><span style="color:#6A737D">        // eslint-disable-next-line no-undef</span></span>
+<span class="line"><span style="color:#24292E">        (</span><span style="color:#E36209">popoverTriggerEl</span><span style="color:#24292E">) </span><span style="color:#D73A49">=></span></span>
+<span class="line"><span style="color:#D73A49">          new</span><span style="color:#24292E"> bootstrap.</span><span style="color:#6F42C1">Popover</span><span style="color:#24292E">(popoverTriggerEl, {</span></span>
+<span class="line"><span style="color:#24292E">            trigger: </span><span style="color:#032F62">"hover"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">            placement: </span><span style="color:#032F62">"left"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">            content: document.</span><span style="color:#6F42C1">getElementById</span><span style="color:#24292E">(</span></span>
+<span class="line"><span style="color:#24292E">              popoverTriggerEl.</span><span style="color:#6F42C1">getAttribute</span><span style="color:#24292E">(</span><span style="color:#032F62">"data-bs-content"</span><span style="color:#24292E">),</span></span>
+<span class="line"><span style="color:#24292E">            ).innerHTML,</span></span>
+<span class="line"><span style="color:#24292E">            html: </span><span style="color:#005CC5">true</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">          }),</span></span>
+<span class="line"><span style="color:#24292E">      );</span></span>
+<span class="line"><span style="color:#24292E">    &#x3C;/</span><span style="color:#22863A">script</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">  &#x3C;/</span><span style="color:#22863A">body</span><span style="color:#24292E">></span></span>
+<span class="line"><span style="color:#24292E">&#x3C;/</span><span style="color:#22863A">html</span><span style="color:#24292E">></span></span>
+<span class="line"></span></code></pre>
+            </div>
+            
+
+            <!-- package.json code -->
+            
+            <span class="badge text-bg-primary mt-3 mb-1">package.json</span>
+            <div
+                class="border rounded p-3 position-relative mb-3"
+                id="source-package-json"
+                style="background-color: #ffffff"
+            >
+                <span class="position-absolute top-0 end-0 p-2">
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        onclick="copyContentByID('source-package-json')"
+                    >
+                        <i class="bi bi-copy"></i>
+                    </button>
+                </span>
+                <pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#24292E">{</span></span>
+<span class="line"><span style="color:#005CC5">    "name"</span><span style="color:#24292E">: </span><span style="color:#032F62">"layer-reprojection"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">    "dependencies"</span><span style="color:#24292E">: {</span></span>
+<span class="line"><span style="color:#005CC5">        "@giro3d/giro3d"</span><span style="color:#24292E">: </span><span style="color:#032F62">"1.0.0"</span></span>
+<span class="line"><span style="color:#24292E">    },</span></span>
+<span class="line"><span style="color:#005CC5">    "devDependencies"</span><span style="color:#24292E">: {</span></span>
+<span class="line"><span style="color:#005CC5">        "vite"</span><span style="color:#24292E">: </span><span style="color:#032F62">"^3.2.3"</span></span>
+<span class="line"><span style="color:#24292E">    },</span></span>
+<span class="line"><span style="color:#005CC5">    "scripts"</span><span style="color:#24292E">: {</span></span>
+<span class="line"><span style="color:#005CC5">        "start"</span><span style="color:#24292E">: </span><span style="color:#032F62">"vite"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">        "build"</span><span style="color:#24292E">: </span><span style="color:#032F62">"vite build"</span></span>
+<span class="line"><span style="color:#24292E">    }</span></span>
+<span class="line"><span style="color:#24292E">}</span></span></code></pre>
+            </div>
+            
+
+            <!-- vite.config.js code -->
+            <span class="badge text-bg-primary mt-3 mb-1">vite.config.js</span>
+            <div
+                class="border rounded p-3 position-relative mb-3"
+                id="source-vite-config"
+                style="background-color: #ffffff"
+            >
+                <span class="position-absolute top-0 end-0 p-2">
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        onclick="copyContentByID('source-vite-config')"
+                    >
+                        <i class="bi bi-copy"></i>
+                    </button>
+                </span>
+                <pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> { defineConfig } </span><span style="color:#D73A49">from</span><span style="color:#032F62"> "vite"</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">export</span><span style="color:#D73A49"> default</span><span style="color:#6F42C1"> defineConfig</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">  build: {</span></span>
+<span class="line"><span style="color:#24292E">    target: </span><span style="color:#032F62">'esnext'</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  },</span></span>
+<span class="line"><span style="color:#24292E">  optimizeDeps: {</span></span>
+<span class="line"><span style="color:#24292E">    esbuildOptions: {</span></span>
+<span class="line"><span style="color:#24292E">      target: </span><span style="color:#032F62">'esnext'</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">    },</span></span>
+<span class="line"><span style="color:#24292E">  },</span></span>
+<span class="line"><span style="color:#24292E">})</span></span></code></pre>
+            </div>
+        </div>
+    </body>
+</html>

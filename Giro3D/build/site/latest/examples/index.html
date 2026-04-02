@@ -1,0 +1,2940 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Examples - Giro3D</title>
+<meta charset="UTF-8" />
+<meta name="name" content="Examples - Giro3D" />
+<meta name="description" content="A versatile framework to visualize geospatial data in the browser." />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<link rel="icon" href="/images/favicon.svg" />
+<link href="/assets/bootstrap-custom.css" rel="stylesheet" />
+<script src="/assets/bootstrap.bundle.min.js"></script>
+
+<!-- OpenGraph -->
+<meta
+    property="og:description"
+    content="A versatile framework to visualize geospatial data in the browser."
+/>
+<meta
+    property="og:image"
+    content="https://giro3d.org/images/giro3d_logo_opengraph.jpg"
+/>
+<meta property="og:locale" content="en_US" />
+<meta property="og:title" content="Examples - Giro3D" />
+<meta property="og:site_name" content="Giro3D" />
+<meta property="og:type" content="object" />
+<meta property="og:url" content="https://giro3d.org/latest/examples/" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta
+    name="twitter:description"
+    content="A versatile framework to visualize geospatial data in the browser."
+/>
+<meta name="twitter:dnt" content="on" />
+<meta
+    name="twitter:image"
+    content="https://giro3d.org/images/giro3d_logo_opengraph.jpg"
+/>
+<meta name="twitter:title" content="Examples - Giro3D" />
+<meta name="twitter:widgets:align" content="center" />
+
+        <script src="index.js"></script>
+    </head>
+
+    <body class="bg-light">
+        
+
+<header class="header bg-light" data-bs-theme="">
+    <div class="container-fluid">
+        <a href="/" class="navbar-brand mx-0">
+            <img
+                src="/images/favicon.svg"
+                class="brand"
+                width="32"
+                height="32"
+            />
+        </a>
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav navbar-nav-left">
+                
+                <li class="nav-item">
+    <a
+        class="nav-link  "
+        href="/"
+    >
+        Home
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary "
+        href="/giro3d.html"
+    >
+        Giro3D framework
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-success "
+        href="/piero.html"
+    >
+        Piero application
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary "
+        href="/latest/tutorials/getting-started.html"
+    >
+        Getting started with Giro3D
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary active"
+        href="/latest/examples/index.html"
+    >
+        Giro3D examples
+    </a>
+</li>
+
+                <li class="nav-item">
+    <a
+        class="nav-link nav-link-primary "
+        href="/latest/apidoc/index.html"
+    >
+        API documentation
+    </a>
+</li>
+
+
+                <li class="nav-item">
+                    <span
+                        class="navbar-text badge text-bg-info"
+                        >Version
+                        v1.0.0</span
+                    >
+                </li>
+            </ul>
+
+            
+            <form class="form-inline" role="search">
+    <input
+        name="q"
+        type="text"
+        id="keywords"
+        class="form-control search-query"
+        placeholder="Search"
+        aria-label="Examples"
+        aria-describedby="count"
+        autocomplete="off"
+        autofocus=""
+    />
+</form>
+
+            
+
+            
+
+            <ul class="navbar-nav ms-2">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://gitlab.com/giro3d/giro3D" target="_blank"
+                        >GitLab <i class="bi bi-box-arrow-up-right"></i
+                    ></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+
+        <main>
+            <section class="container p-3">
+                <div class="row mt-3">
+                     <div
+    data-giro3d-searchtext="3D Tiles Building Display a 3D Tiles building converted from a IFC file with py3dtiles. ifc 3d tiles building"
+    id="example-card-1"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="3d-tiles-building.html" class="stretched-link">
+            <img
+                src="screenshots/3d-tiles-building.jpg"
+                class="card-img-top"
+                alt="3d-tiles-building example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-1">3D Tiles Building</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-1">
+                Display a 3D Tiles building converted from a IFC file with py3dtiles.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">ifc</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">3d tiles</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">building</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="3D Tiles Point Cloud Display a 3D Tiles point cloud. point cloud 3d tiles"
+    id="example-card-2"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="3d-tiles-point-cloud.html" class="stretched-link">
+            <img
+                src="screenshots/3d-tiles-point-cloud.jpg"
+                class="card-img-top"
+                alt="3d-tiles-point-cloud example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-2">3D Tiles Point Cloud</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-2">
+                Display a 3D Tiles point cloud.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">point cloud</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">3d tiles</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="3D Tiles Simple Viewer Display any 3D Tiles from a url. 3d tiles building pointcloud"
+    id="example-card-3"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="3d-tiles-simple-viewer.html" class="stretched-link">
+            <img
+                src="screenshots/3d-tiles-simple-viewer.jpg"
+                class="card-img-top"
+                alt="3d-tiles-simple-viewer example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-3">3D Tiles Simple Viewer</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-3">
+                Display any 3D Tiles from a url.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">3d tiles</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">building</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">pointcloud</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="3D Transformations Transform objects using position, rotation and scale. transformation map"
+    id="example-card-4"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="3d-transformations.html" class="stretched-link">
+            <img
+                src="screenshots/3d-transformations.jpg"
+                class="card-img-top"
+                alt="3d-transformations example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-4">3D Transformations</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-4">
+                Transform objects using position, rotation and scale.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">transformation</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Atmosphere Create a realistic atmosphere and sky dome. atmosphere sky sun"
+    id="example-card-5"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="atmosphere.html" class="stretched-link">
+            <img
+                src="screenshots/atmosphere.jpg"
+                class="card-img-top"
+                alt="atmosphere example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-5">Atmosphere</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-5">
+                Create a realistic atmosphere and sky dome.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">atmosphere</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">sky</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">sun</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Atmosphere Create a realistic atmosphere and sky dome. atmosphere sky sun"
+    id="example-card-6"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="atmosphere2.html" class="stretched-link">
+            <img
+                src="screenshots/atmosphere2.jpg"
+                class="card-img-top"
+                alt="atmosphere2 example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-6">Atmosphere</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-6">
+                Create a realistic atmosphere and sky dome.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">atmosphere</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">sky</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">sun</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="AxisGrid Illustrates the use of the AxisGrid entity. map axisgrid tiles xyz"
+    id="example-card-7"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="axis-grid.html" class="stretched-link">
+            <img
+                src="screenshots/axis-grid.jpg"
+                class="card-img-top"
+                alt="axis-grid example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-7">AxisGrid</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-7">
+                Illustrates the use of the AxisGrid entity.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">axisgrid</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">tiles</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">xyz</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Custom controls Illustrates the use of the &lt;code&gt;camera-controls&lt;/code&gt; plugin. navigation controls 3d tiles wms"
+    id="example-card-8"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="camera-controls-integration.html" class="stretched-link">
+            <img
+                src="screenshots/camera-controls-integration.jpg"
+                class="card-img-top"
+                alt="camera-controls-integration example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-8">Custom controls</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-8">
+                Illustrates the use of the <code>camera-controls</code> plugin.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">navigation</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">controls</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">3d tiles</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">wms</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Clipping planes Clip various entities with clipping planes. map point cloud clipping"
+    id="example-card-9"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="clipping-planes.html" class="stretched-link">
+            <img
+                src="screenshots/clipping-planes.jpg"
+                class="card-img-top"
+                alt="clipping-planes example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-9">Clipping planes</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-9">
+                Clip various entities with clipping planes.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">point cloud</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">clipping</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Color Adjustments Set brightness, constrast, and saturation on color layers and maps. map colorimetry"
+    id="example-card-10"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="color-adjustments.html" class="stretched-link">
+            <img
+                src="screenshots/color-adjustments.jpg"
+                class="card-img-top"
+                alt="color-adjustments example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-10">Color Adjustments</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-10">
+                Set brightness, constrast, and saturation on color layers and maps.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">colorimetry</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Colorized 3D Tiles Point Cloud Illustrates colorization of point clouds with multiple modes. point cloud wms 3d tiles"
+    id="example-card-11"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="colorized-3d-tiles-point-cloud.html" class="stretched-link">
+            <img
+                src="screenshots/colorized-3d-tiles-point-cloud.jpg"
+                class="card-img-top"
+                alt="colorized-3d-tiles-point-cloud example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-11">Colorized 3D Tiles Point Cloud</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-11">
+                Illustrates colorization of point clouds with multiple modes.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">point</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">cloud</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">wms</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">3d tiles</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Color maps Use colormaps to emphasize elevation and terrain features. map colormap gradient"
+    id="example-card-12"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="colormaps.html" class="stretched-link">
+            <img
+                src="screenshots/colormaps.jpg"
+                class="card-img-top"
+                alt="colormaps example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-12">Color maps</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-12">
+                Use colormaps to emphasize elevation and terrain features.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">colormap</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">gradient</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="COPC Display a Cloud optimized point cloud point cloud las copc"
+    id="example-card-13"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="copc.html" class="stretched-link">
+            <img
+                src="screenshots/copc.jpg"
+                class="card-img-top"
+                alt="copc example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-13">COPC</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-13">
+                Display a Cloud optimized point cloud
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">point cloud</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">las</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">copc</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Cropped Elevation COG Check that an elevation COG works correctly at the edge of the map. geotiff elevation map"
+    id="example-card-14"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="cropped-geotiff-elevation.html" class="stretched-link">
+            <img
+                src="screenshots/cropped-geotiff-elevation.jpg"
+                class="card-img-top"
+                alt="cropped-geotiff-elevation example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-14">Cropped Elevation COG</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-14">
+                Check that an elevation COG works correctly at the edge of the map.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">geotiff</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">elevation</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Digitizing vector features Draw vectors and add them to a map layer wmts ign map drawing"
+    id="example-card-15"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="digitization.html" class="stretched-link">
+            <img
+                src="screenshots/digitization.jpg"
+                class="card-img-top"
+                alt="digitization example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-15">Digitizing vector features</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-15">
+                Draw vectors and add them to a map layer
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">wmts</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">ign</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">drawing</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Draw shapes Enables the user to draw points, lines and polygons. drawing picking map"
+    id="example-card-16"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="draw-tool.html" class="stretched-link">
+            <img
+                src="screenshots/draw-tool.jpg"
+                class="card-img-top"
+                alt="draw-tool example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-16">Draw shapes</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-16">
+                Enables the user to draw points, lines and polygons.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">drawing</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">picking</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Ellipsoid Visualize an ellipsoid. ellipsoid helper"
+    id="example-card-17"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="ellipsoid.html" class="stretched-link">
+            <img
+                src="screenshots/ellipsoid.jpg"
+                class="card-img-top"
+                alt="ellipsoid example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-17">Ellipsoid</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-17">
+                Visualize an ellipsoid.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">ellipsoid</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">helper</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Reprojection of features as mesh Illustrates the automatic reprojection of vectors to match the instance&#39;s CRS. vector features reprojection"
+    id="example-card-18"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="feature-collection-reprojection.html" class="stretched-link">
+            <img
+                src="screenshots/feature-collection-reprojection.jpg"
+                class="card-img-top"
+                alt="feature-collection-reprojection example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-18">Reprojection of features as mesh</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-18">
+                Illustrates the automatic reprojection of vectors to match the instance's CRS.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">vector</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">features</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">reprojection</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="First Person Controls Use first person controls to move in the scene navigation controls"
+    id="example-card-19"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="first-person-controls.html" class="stretched-link">
+            <img
+                src="screenshots/first-person-controls.jpg"
+                class="card-img-top"
+                alt="first-person-controls example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-19">First Person Controls</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-19">
+                Use first person controls to move in the scene
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">navigation</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">controls</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="GeoJSON 3D Represents 3D shapes from a GeoJSON file. features 3D"
+    id="example-card-20"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="geojson-3d.html" class="stretched-link">
+            <img
+                src="screenshots/geojson-3d.jpg"
+                class="card-img-top"
+                alt="geojson-3d example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-20">GeoJSON 3D</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-20">
+                Represents 3D shapes from a GeoJSON file.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">features</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">3D</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="GeoTIFF Bathymetry Display a fully underwater elevation layer using a GeoTIFF raster. terrain map geotiff"
+    id="example-card-21"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="geotiff-bathymetry.html" class="stretched-link">
+            <img
+                src="screenshots/geotiff-bathymetry.jpg"
+                class="card-img-top"
+                alt="geotiff-bathymetry example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-21">GeoTIFF Bathymetry</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-21">
+                Display a fully underwater elevation layer using a GeoTIFF raster.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">terrain</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">geotiff</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="GeoTIFF channel mapping Select which bands to view on GeoTIFFs with multiple bands. map geotiff"
+    id="example-card-22"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="geotiff-channel-mapping.html" class="stretched-link">
+            <img
+                src="screenshots/geotiff-channel-mapping.jpg"
+                class="card-img-top"
+                alt="geotiff-channel-mapping example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-22">GeoTIFF channel mapping</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-22">
+                Select which bands to view on GeoTIFFs with multiple bands.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">geotiff</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Cloud Optimized GeoTIFF (COG) Display a color COG in various color spaces. map geotiff cog"
+    id="example-card-23"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="geotiff-color.html" class="stretched-link">
+            <img
+                src="screenshots/geotiff-color.jpg"
+                class="card-img-top"
+                alt="geotiff-color example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-23">Cloud Optimized GeoTIFF (COG)</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-23">
+                Display a color COG in various color spaces.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">geotiff</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">cog</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Elevation GeoTIFF Display an elevation GeoTIFF with a color map. terrain map geotiff cog"
+    id="example-card-24"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="geotiff-elevation.html" class="stretched-link">
+            <img
+                src="screenshots/geotiff-elevation.jpg"
+                class="card-img-top"
+                alt="geotiff-elevation example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-24">Elevation GeoTIFF</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-24">
+                Display an elevation GeoTIFF with a color map.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">terrain</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">geotiff</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">cog</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="2.5D Map Display a map with elevation. map elevation tutorial"
+    id="example-card-25"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="getting-started.html" class="stretched-link">
+            <img
+                src="screenshots/getting-started.jpg"
+                class="card-img-top"
+                alt="getting-started example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-25">2.5D Map</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-25">
+                Display a map with elevation.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">elevation</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">tutorial</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Globe Display a globe-shaped Map. ecef globe map layers"
+    id="example-card-26"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="globe.html" class="stretched-link">
+            <img
+                src="screenshots/globe.jpg"
+                class="card-img-top"
+                alt="globe example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-26">Globe</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-26">
+                Display a globe-shaped Map.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">ecef</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">globe</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">layers</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Globe Display a globe-shaped Map. ecef globe map layers"
+    id="example-card-27"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="globe2.html" class="stretched-link">
+            <img
+                src="screenshots/globe2.jpg"
+                class="card-img-top"
+                alt="globe2 example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-27">Globe</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-27">
+                Display a globe-shaped Map.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">ecef</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">globe</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">layers</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Google Photorealistic 3D Tiles Display Google Maps 3D Tiles using Giro3D and &lt;a href=&#34;https://github.com/NASA-AMMOS/3DTilesRendererJS&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;3d-tiles-renderer&lt;/code&gt;&lt;/a&gt;. google 3d tiles"
+    id="example-card-28"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="google-photorealistic-3d-tiles.html" class="stretched-link">
+            <img
+                src="screenshots/google-photorealistic-3d-tiles.jpg"
+                class="card-img-top"
+                alt="google-photorealistic-3d-tiles example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-28">Google Photorealistic 3D Tiles</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-28">
+                Display Google Maps 3D Tiles using Giro3D and <a href="https://github.com/NASA-AMMOS/3DTilesRendererJS" target="_blank"><code>3d-tiles-renderer</code></a>.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">google</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">3d tiles</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Graticule Display a graticule on a Map. map graticule"
+    id="example-card-29"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="graticule.html" class="stretched-link">
+            <img
+                src="screenshots/graticule.jpg"
+                class="card-img-top"
+                alt="graticule example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-29">Graticule</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-29">
+                Display a graticule on a Map.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">graticule</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Hillshading &amp; terrain Illustrate the use of hillshading on maps with terrain. map terrain hillshading"
+    id="example-card-30"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="hillshade.html" class="stretched-link">
+            <img
+                src="screenshots/hillshade.jpg"
+                class="card-img-top"
+                alt="hillshade example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-30">Hillshading & terrain</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-30">
+                Illustrate the use of hillshading on maps with terrain.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">terrain</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">hillshading</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="HTML labels Display HTML labels in the 3D scene. labels map"
+    id="example-card-31"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="html-labels.html" class="stretched-link">
+            <img
+                src="screenshots/html-labels.jpg"
+                class="card-img-top"
+                alt="html-labels example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-31">HTML labels</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-31">
+                Display HTML labels in the 3D scene.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">labels</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="IGN data Use data sources provided by the french geographic provider (IGN). wfs wmts ign map"
+    id="example-card-32"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="ign-data.html" class="stretched-link">
+            <img
+                src="screenshots/ign-data.jpg"
+                class="card-img-top"
+                alt="ign-data example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-32">IGN data</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-32">
+                Use data sources provided by the french geographic provider (IGN).
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">wfs</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">wmts</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">ign</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Inspector Display the inspector with a custom panel. inspector"
+    id="example-card-33"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="inspector.html" class="stretched-link">
+            <img
+                src="screenshots/inspector.jpg"
+                class="card-img-top"
+                alt="inspector example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-33">Inspector</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-33">
+                Display the inspector with a custom panel.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">inspector</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Dispose instance Help to test if Giro3D correctly deallocates memory. performance"
+    id="example-card-34"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="instance-dispose.html" class="stretched-link">
+            <img
+                src="screenshots/instance-dispose.jpg"
+                class="card-img-top"
+                alt="instance-dispose example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-34">Dispose instance</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-34">
+                Help to test if Giro3D correctly deallocates memory.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">performance</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Interactive vector layer Display interactive vector data on a Map. map layer vector geojson"
+    id="example-card-35"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="interactive-vector-layer.html" class="stretched-link">
+            <img
+                src="screenshots/interactive-vector-layer.jpg"
+                class="card-img-top"
+                alt="interactive-vector-layer example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-35">Interactive vector layer</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-35">
+                Display interactive vector data on a Map.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">layer</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">vector</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">geojson</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="LAS/LAZ files. Display a LAS/LAZ file. point cloud las laz"
+    id="example-card-36"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="las.html" class="stretched-link">
+            <img
+                src="screenshots/las.jpg"
+                class="card-img-top"
+                alt="las example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-36">LAS/LAZ files.</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-36">
+                Display a LAS/LAZ file.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">point cloud</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">las</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">laz</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Blending modes Assign various blending modes to a color layer. map osm layer blending"
+    id="example-card-37"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="layer-blending-mode.html" class="stretched-link">
+            <img
+                src="screenshots/layer-blending-mode.jpg"
+                class="card-img-top"
+                alt="layer-blending-mode example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-37">Blending modes</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-37">
+                Assign various blending modes to a color layer.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">osm</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">layer</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">blending</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Sample layer color Retrieve the pixel value of a layer at given coordinates. map wms wmts"
+    id="example-card-38"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="layer-get-pixel.html" class="stretched-link">
+            <img
+                src="screenshots/layer-get-pixel.jpg"
+                class="card-img-top"
+                alt="layer-get-pixel example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-38">Sample layer color</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-38">
+                Retrieve the pixel value of a layer at given coordinates.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">wms</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">wmts</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Change layer order Move layers up and down in the map. map layers"
+    id="example-card-39"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="layer-ordering.html" class="stretched-link">
+            <img
+                src="screenshots/layer-ordering.jpg"
+                class="card-img-top"
+                alt="layer-ordering example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-39">Change layer order</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-39">
+                Move layers up and down in the map.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">layers</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Layer reprojection Reproject layers with heterogenous coordinate systems. map layers reprojection"
+    id="example-card-40"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="layer-reprojection.html" class="stretched-link">
+            <img
+                src="screenshots/layer-reprojection.jpg"
+                class="card-img-top"
+                alt="layer-reprojection example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-40">Layer reprojection</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-40">
+                Reproject layers with heterogenous coordinate systems.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">layers</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">reprojection</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Color layer stress test Stress test a map with many color layers. performance layer map"
+    id="example-card-41"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="layer-stress-test.html" class="stretched-link">
+            <img
+                src="screenshots/layer-stress-test.jpg"
+                class="card-img-top"
+                alt="layer-stress-test example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-41">Color layer stress test</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-41">
+                Stress test a map with many color layers.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">performance</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">layer</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Layer texture filtering. Illustrates various texture filtering modes on layers. layer texture"
+    id="example-card-42"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="layer-texture-filter.html" class="stretched-link">
+            <img
+                src="screenshots/layer-texture-filter.jpg"
+                class="card-img-top"
+                alt="layer-texture-filter example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-42">Layer texture filtering.</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-42">
+                Illustrates various texture filtering modes on layers.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">layer</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">texture</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Dynamic layer updates The layer is updated when the style changes. vector geojson map layer"
+    id="example-card-43"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="layer-update.html" class="stretched-link">
+            <img
+                src="screenshots/layer-update.jpg"
+                class="card-img-top"
+                alt="layer-update example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-43">Dynamic layer updates</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-43">
+                The layer is updated when the style changes.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">vector</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">geojson</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">layer</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Multiple instances in different layouts Display Giro3D scenes in with different layouts (flex, sticky, fixed, etc.). layout"
+    id="example-card-44"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="layouts.html" class="stretched-link">
+            <img
+                src="screenshots/layouts.jpg"
+                class="card-img-top"
+                alt="layouts example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-44">Multiple instances in different layouts</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-44">
+                Display Giro3D scenes in with different layouts (flex, sticky, fixed, etc.).
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">layout</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Pointcloud from IGN Lidar HD Display a point cloud from the Lidar HD project. Colorized with a WMS layer. point cloud 3d tiles ign"
+    id="example-card-45"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="lidar-hd.html" class="stretched-link">
+            <img
+                src="screenshots/lidar-hd.jpg"
+                class="card-img-top"
+                alt="lidar-hd example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-45">Pointcloud from IGN Lidar HD</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-45">
+                Display a point cloud from the Lidar HD project. Colorized with a WMS layer.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">point cloud</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">3d tiles</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">ign</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Add / Remove layers Add and remove layers in a Map. map wmts"
+    id="example-card-46"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="map-add-remove-layers.html" class="stretched-link">
+            <img
+                src="screenshots/map-add-remove-layers.jpg"
+                class="card-img-top"
+                alt="map-add-remove-layers example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-46">Add / Remove layers</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-46">
+                Add and remove layers in a Map.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">wmts</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Arbitrary map extents Create maps with arbitrary extents. map tiles xyz"
+    id="example-card-47"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="map-arbitrary-extent.html" class="stretched-link">
+            <img
+                src="screenshots/map-arbitrary-extent.jpg"
+                class="card-img-top"
+                alt="map-arbitrary-extent example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-47">Arbitrary map extents</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-47">
+                Create maps with arbitrary extents.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">tiles</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">xyz</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Contour lines Use contour lines to display elevation levels. map elevation"
+    id="example-card-48"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="map-contour-lines.html" class="stretched-link">
+            <img
+                src="screenshots/map-contour-lines.jpg"
+                class="card-img-top"
+                alt="map-contour-lines example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-48">Contour lines</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-48">
+                Use contour lines to display elevation levels.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">elevation</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Elevation profile Create an elevation profile using a Map and a path. map terrain profile"
+    id="example-card-49"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="map-elevation-profile.html" class="stretched-link">
+            <img
+                src="screenshots/map-elevation-profile.jpg"
+                class="card-img-top"
+                alt="map-elevation-profile example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-49">Elevation profile</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-49">
+                Create an elevation profile using a Map and a path.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">terrain</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">profile</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Elevation ranges Limit the display of a color layer or a map within an elevation range. map layer clipping elevation range"
+    id="example-card-50"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="map-elevation-ranges.html" class="stretched-link">
+            <img
+                src="screenshots/map-elevation-ranges.jpg"
+                class="card-img-top"
+                alt="map-elevation-ranges example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-50">Elevation ranges</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-50">
+                Limit the display of a color layer or a map within an elevation range.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">layer</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">clipping</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">elevation range</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Types of opacity Illustrates various types of opacity (map, map background, and layer) map layer opacity"
+    id="example-card-51"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="map-opacity.html" class="stretched-link">
+            <img
+                src="screenshots/map-opacity.jpg"
+                class="card-img-top"
+                alt="map-opacity example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-51">Types of opacity</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-51">
+                Illustrates various types of opacity (map, map background, and layer)
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">layer</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">opacity</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Physical lights and shadow maps Illustrates the use of three.js physically accurate lights and shadows on &lt;code&gt;Map&lt;/code&gt;s. map terrain physical lighting shadow"
+    id="example-card-52"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="map-shadows.html" class="stretched-link">
+            <img
+                src="screenshots/map-shadows.jpg"
+                class="card-img-top"
+                alt="map-shadows example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-52">Physical lights and shadow maps</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-52">
+                Illustrates the use of three.js physically accurate lights and shadows on <code>Map</code>s.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">terrain</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">physical lighting</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">shadow</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Share layer between maps Display multiple maps that share the same layer. map layer"
+    id="example-card-53"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="map-shared-layers.html" class="stretched-link">
+            <img
+                src="screenshots/map-shared-layers.jpg"
+                class="card-img-top"
+                alt="map-shared-layers example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-53">Share layer between maps</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-53">
+                Display multiple maps that share the same layer.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">layer</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Map vertical skirts Illustrates the optional vertical skirts on maps. map skirt"
+    id="example-card-54"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="map-skirts.html" class="stretched-link">
+            <img
+                src="screenshots/map-skirts.jpg"
+                class="card-img-top"
+                alt="map-skirts example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-54">Map vertical skirts</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-54">
+                Illustrates the optional vertical skirts on maps.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">skirt</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Stacking transparent maps Illustrates how transparency in maps work. map layer opacity"
+    id="example-card-55"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="map-transparency-stack.html" class="stretched-link">
+            <img
+                src="screenshots/map-transparency-stack.jpg"
+                class="card-img-top"
+                alt="map-transparency-stack example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-55">Stacking transparent maps</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-55">
+                Illustrates how transparency in maps work.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">layer</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">opacity</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Vertical exaggeration Apply a vertical exaggeration on a scene. map axisgrid terrain picking"
+    id="example-card-56"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="map-vertical-exaggeration.html" class="stretched-link">
+            <img
+                src="screenshots/map-vertical-exaggeration.jpg"
+                class="card-img-top"
+                alt="map-vertical-exaggeration example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-56">Vertical exaggeration</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-56">
+                Apply a vertical exaggeration on a scene.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">axisgrid</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">terrain</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">picking</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Mapbox tilesets Display color and elevation Mapbox tilesets. map layer mapbox"
+    id="example-card-57"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="mapbox-tilesets.html" class="stretched-link">
+            <img
+                src="screenshots/mapbox-tilesets.jpg"
+                class="card-img-top"
+                alt="mapbox-tilesets example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-57">Mapbox tilesets</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-57">
+                Display color and elevation Mapbox tilesets.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">layer</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">mapbox</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Mask layers Illustrates the use of mask layers. map layer mapbox geojson"
+    id="example-card-58"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="mask-layer.html" class="stretched-link">
+            <img
+                src="screenshots/mask-layer.jpg"
+                class="card-img-top"
+                alt="mask-layer example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-58">Mask layers</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-58">
+                Illustrates the use of mask layers.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">layer</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">mapbox</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">geojson</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Massive point cloud Display a massive point cloud by aggregating dozens of datasets. point cloud las copc ign"
+    id="example-card-59"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="massive-point-cloud.html" class="stretched-link">
+            <img
+                src="screenshots/massive-point-cloud.jpg"
+                class="card-img-top"
+                alt="massive-point-cloud example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-59">Massive point cloud</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-59">
+                Display a massive point cloud by aggregating dozens of datasets.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">point cloud</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">las</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">copc</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">ign</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Minimap Illustrates the use of a secondary Giro3D instance to display a minimap. map minimap layout"
+    id="example-card-60"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="minimap.html" class="stretched-link">
+            <img
+                src="screenshots/minimap.jpg"
+                class="card-img-top"
+                alt="minimap example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-60">Minimap</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-60">
+                Illustrates the use of a secondary Giro3D instance to display a minimap.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">minimap</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">layout</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Multi-resolution elevation data Combine multiple elevation sources into a single layer. terrain map layer"
+    id="example-card-61"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="multi-resolution-elevation.html" class="stretched-link">
+            <img
+                src="screenshots/multi-resolution-elevation.jpg"
+                class="card-img-top"
+                alt="multi-resolution-elevation example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-61">Multi-resolution elevation data</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-61">
+                Combine multiple elevation sources into a single layer.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">terrain</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">layer</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Stacked WMTS layers Stack multiple WMTS layers into a single Giro3D layer. map wmts"
+    id="example-card-62"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="multiple-wmts-layers.html" class="stretched-link">
+            <img
+                src="screenshots/multiple-wmts-layers.jpg"
+                class="card-img-top"
+                alt="multiple-wmts-layers example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-62">Stacked WMTS layers</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-62">
+                Stack multiple WMTS layers into a single Giro3D layer.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">wmts</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="No-data elimination Display an elevation COG and discard no-data values. map nodata"
+    id="example-card-63"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="no-data-elimination.html" class="stretched-link">
+            <img
+                src="screenshots/no-data-elimination.jpg"
+                class="card-img-top"
+                alt="no-data-elimination example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-63">No-data elimination</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-63">
+                Display an elevation COG and discard no-data values.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">nodata</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="No-data elimination after reprojection Illustrates no-data elimination at the edges of a dataset after reprojection. map nodata geotiff reprojection"
+    id="example-card-64"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="no-data-reprojection.html" class="stretched-link">
+            <img
+                src="screenshots/no-data-reprojection.jpg"
+                class="card-img-top"
+                alt="no-data-reprojection example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-64">No-data elimination after reprojection</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-64">
+                Illustrates no-data elimination at the edges of a dataset after reprojection.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">nodata</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">geotiff</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">reprojection</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Oriented Images Display oriented images in 3D space. drone camera point cloud"
+    id="example-card-65"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="oriented-image-collection.html" class="stretched-link">
+            <img
+                src="screenshots/oriented-image-collection.jpg"
+                class="card-img-top"
+                alt="oriented-image-collection example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-65">Oriented Images</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-65">
+                Display oriented images in 3D space.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">drone</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">camera</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">point cloud</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="OpenStreetMap layer Display an OpenStreetMap layer on a Map. map osm layer"
+    id="example-card-66"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="osm.html" class="stretched-link">
+            <img
+                src="screenshots/osm.jpg"
+                class="card-img-top"
+                alt="osm example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-66">OpenStreetMap layer</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-66">
+                Display an OpenStreetMap layer on a Map.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">osm</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">layer</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Partial layers Illustrates the use of layers partially overlapping their parent Map. map layer"
+    id="example-card-67"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="partial-layer.html" class="stretched-link">
+            <img
+                src="screenshots/partial-layer.jpg"
+                class="card-img-top"
+                alt="partial-layer example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-67">Partial layers</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-67">
+                Illustrates the use of layers partially overlapping their parent Map.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">layer</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Picking Pick objects with various methods (GPU picking, raycasting...) map point cloud picking"
+    id="example-card-68"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="picking.html" class="stretched-link">
+            <img
+                src="screenshots/picking.jpg"
+                class="card-img-top"
+                alt="picking example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-68">Picking</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-68">
+                Pick objects with various methods (GPU picking, raycasting...)
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">point</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">cloud</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">picking</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Point cloud classification Display a classified point cloud. point cloud classification 3d tiles"
+    id="example-card-69"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="point-cloud-classification.html" class="stretched-link">
+            <img
+                src="screenshots/point-cloud-classification.jpg"
+                class="card-img-top"
+                alt="point-cloud-classification example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-69">Point cloud classification</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-69">
+                Display a classified point cloud.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">point cloud</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">classification</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">3d tiles</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="PointCloud Hybrid Coloring Display a point cloud colored by a combination of several attributes point cloud las copc"
+    id="example-card-70"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="point-cloud-hybrid-coloring.html" class="stretched-link">
+            <img
+                src="screenshots/point-cloud-hybrid-coloring.jpg"
+                class="card-img-top"
+                alt="point-cloud-hybrid-coloring example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-70">PointCloud Hybrid Coloring</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-70">
+                Display a point cloud colored by a combination of several attributes
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">point cloud</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">las</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">copc</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Point cloud intensity Visualize point cloud intensity with a colormap. point cloud 3d tiles intensity"
+    id="example-card-71"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="point-cloud-intensity.html" class="stretched-link">
+            <img
+                src="screenshots/point-cloud-intensity.jpg"
+                class="card-img-top"
+                alt="point-cloud-intensity example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-71">Point cloud intensity</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-71">
+                Visualize point cloud intensity with a colormap.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">point cloud</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">3d tiles</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">intensity</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Pointcloud Intersecting Volumes Demonstrates the Intersecting Volumes feature for point clouds point cloud las copc"
+    id="example-card-72"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="point-cloud-intersecting-volumes.html" class="stretched-link">
+            <img
+                src="screenshots/point-cloud-intersecting-volumes.jpg"
+                class="card-img-top"
+                alt="point-cloud-intersecting-volumes example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-72">Pointcloud Intersecting Volumes</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-72">
+                Demonstrates the Intersecting Volumes feature for point clouds
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">point cloud</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">las</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">copc</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Potree Point Cloud Display a Potree point cloud. potree point cloud"
+    id="example-card-73"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="potree-point-cloud.html" class="stretched-link">
+            <img
+                src="screenshots/potree-point-cloud.jpg"
+                class="card-img-top"
+                alt="potree-point-cloud example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-73">Potree Point Cloud</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-73">
+                Display a Potree point cloud.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">potree</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">point cloud</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Query map elevations Sample elevation at various points in the map. map elevation mapbox"
+    id="example-card-74"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="query-map-elevation.html" class="stretched-link">
+            <img
+                src="screenshots/query-map-elevation.jpg"
+                class="card-img-top"
+                alt="query-map-elevation example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-74">Query map elevations</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-74">
+                Sample elevation at various points in the map.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">elevation</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">mapbox</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Simple Globe Display a simple globe with a single color layer. ecef globe map layers"
+    id="example-card-75"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="simple-globe.html" class="stretched-link">
+            <img
+                src="screenshots/simple-globe.jpg"
+                class="card-img-top"
+                alt="simple-globe example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-75">Simple Globe</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-75">
+                Display a simple globe with a single color layer.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">ecef</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">globe</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">layers</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Sparse layers Illustrates how textures are allocated when layers have a lot of empty areas. map layer performance"
+    id="example-card-76"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="sparse-layer.html" class="stretched-link">
+            <img
+                src="screenshots/sparse-layer.jpg"
+                class="card-img-top"
+                alt="sparse-layer example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-76">Sparse layers</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-76">
+                Illustrates how textures are allocated when layers have a lot of empty areas.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">layer</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">performance</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="360° panoramic image Displays a panoramic bubble. panoramic bubble 360 map"
+    id="example-card-77"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="spherical-panorama.html" class="stretched-link">
+            <img
+                src="screenshots/spherical-panorama.jpg"
+                class="card-img-top"
+                alt="spherical-panorama example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-77">360° panoramic image</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-77">
+                Displays a panoramic bubble.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">panoramic</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">bubble</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">360</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="SRTM Tiles Create a mosaic of SRTM tiles. terrain srtm map layer"
+    id="example-card-78"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="srtm-tiles.html" class="stretched-link">
+            <img
+                src="screenshots/srtm-tiles.jpg"
+                class="card-img-top"
+                alt="srtm-tiles example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-78">SRTM Tiles</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-78">
+                Create a mosaic of SRTM tiles.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">terrain</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">srtm</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">layer</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Static image Display a single image on a Map with a &lt;code&gt;StaticImageSource&lt;/code&gt;. map layer source"
+    id="example-card-79"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="static-image-source.html" class="stretched-link">
+            <img
+                src="screenshots/static-image-source.jpg"
+                class="card-img-top"
+                alt="static-image-source example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-79">Static image</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-79">
+                Display a single image on a Map with a <code>StaticImageSource</code>.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">layer</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">source</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Temporal WMS layer Load a WMS-T layer. map wms temporal time"
+    id="example-card-80"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="temporal-wms.html" class="stretched-link">
+            <img
+                src="screenshots/temporal-wms.jpg"
+                class="card-img-top"
+                alt="temporal-wms example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-80">Temporal WMS layer</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-80">
+                Load a WMS-T layer.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">wms</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">temporal</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">time</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Three.js loaders Load models directly from a Three.js loader (skinned mesh in this instance). three gltf loader"
+    id="example-card-81"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="three-js-integration.html" class="stretched-link">
+            <img
+                src="screenshots/three-js-integration.jpg"
+                class="card-img-top"
+                alt="three-js-integration example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-81">Three.js loaders</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-81">
+                Load models directly from a Three.js loader (skinned mesh in this instance).
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">three</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">gltf</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">loader</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="32-bit TIFF elevation tiles Display a map with TMS TIFF tiles in Float32 format. map xyz tiles geotiff"
+    id="example-card-82"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="tiff-tiles.html" class="stretched-link">
+            <img
+                src="screenshots/tiff-tiles.jpg"
+                class="card-img-top"
+                alt="tiff-tiles example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-82">32-bit TIFF elevation tiles</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-82">
+                Display a map with TMS TIFF tiles in Float32 format.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">xyz</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">tiles</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">geotiff</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="TopoJSON Display a TopoJSON file on a Map. map layer vector topojson"
+    id="example-card-83"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="topojson.html" class="stretched-link">
+            <img
+                src="screenshots/topojson.jpg"
+                class="card-img-top"
+                alt="topojson example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-83">TopoJSON</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-83">
+                Display a TopoJSON file on a Map.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">layer</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">vector</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">topojson</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Tracking progress Query progress of processing tasks with the &lt;code&gt;.progress&lt;/code&gt; and &lt;code&gt;.loading&lt;/code&gt; APIs. progress loading map"
+    id="example-card-84"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="tracking-progress.html" class="stretched-link">
+            <img
+                src="screenshots/tracking-progress.jpg"
+                class="card-img-top"
+                alt="tracking-progress example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-84">Tracking progress</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-84">
+                Query progress of processing tasks with the <code>.progress</code> and <code>.loading</code> APIs.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">progress</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">loading</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Transparent canvas background A canvas with a transparent background. opacity"
+    id="example-card-85"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="transparent-background.html" class="stretched-link">
+            <img
+                src="screenshots/transparent-background.jpg"
+                class="card-img-top"
+                alt="transparent-background example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-85">Transparent canvas background</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-85">
+                A canvas with a transparent background.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">opacity</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Undraped vectors Display GeoJSON files as meshes and symbols. mesh style vectors"
+    id="example-card-86"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="vector-mesh.html" class="stretched-link">
+            <img
+                src="screenshots/vector-mesh.jpg"
+                class="card-img-top"
+                alt="vector-mesh example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-86">Undraped vectors</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-86">
+                Display GeoJSON files as meshes and symbols.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">mesh</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">style</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">vectors</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Native Vector Data Drape vector data on a map. map vector gpx geojson kml gml"
+    id="example-card-87"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="vector-source.html" class="stretched-link">
+            <img
+                src="screenshots/vector-source.jpg"
+                class="card-img-top"
+                alt="vector-source example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-87">Native Vector Data</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-87">
+                Drape vector data on a map.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">vector</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">gpx</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">geojson</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">kml</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">gml</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Vector Tiles With OpenLayers Display Vector Tiles on a Map using OpenLayers. map vector tiles mapbox"
+    id="example-card-88"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="vector-tile-layer.html" class="stretched-link">
+            <img
+                src="screenshots/vector-tile-layer.jpg"
+                class="card-img-top"
+                alt="vector-tile-layer example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-88">Vector Tiles With OpenLayers</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-88">
+                Display Vector Tiles on a Map using OpenLayers.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">vector tiles</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">mapbox</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Video source Display a video on a Map with a &lt;code&gt;VideoSource&lt;/code&gt;. map layer source video"
+    id="example-card-89"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="video-source.html" class="stretched-link">
+            <img
+                src="screenshots/video-source.jpg"
+                class="card-img-top"
+                alt="video-source example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-89">Video source</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-89">
+                Display a video on a Map with a <code>VideoSource</code>.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">layer</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">source</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">video</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="WFS as 3D meshes Display features from a WFS source as 3D meshes vector wfs mesh"
+    id="example-card-90"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="wfs-mesh.html" class="stretched-link">
+            <img
+                src="screenshots/wfs-mesh.jpg"
+                class="card-img-top"
+                alt="wfs-mesh example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-90">WFS as 3D meshes</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-90">
+                Display features from a WFS source as 3D meshes
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">vector</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">wfs</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">mesh</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="Draped WFS Display a WFS layer on a Map. map vector wfs draped"
+    id="example-card-91"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="wfs.html" class="stretched-link">
+            <img
+                src="screenshots/wfs.jpg"
+                class="card-img-top"
+                alt="wfs example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-91">Draped WFS</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-91">
+                Display a WFS layer on a Map.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">vector</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">wfs</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">draped</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+  <div
+    data-giro3d-searchtext="WMTS layer Display a WMTS layer on a Map. map layer wmts"
+    id="example-card-92"
+    class="col-md-4 col-sm-6"
+>
+    <div class="card text-bg-light mb-3 shadow-sm">
+        <a href="wmts.html" class="stretched-link">
+            <img
+                src="screenshots/wmts.jpg"
+                class="card-img-top"
+                alt="wmts example thumbnail"
+            />
+        </a>
+        <div class="card-body" style="height: 9rem">
+            <h6 class="card-title" id="example-title-92">WMTS layer</h6>
+            <p class="card-text text-muted fs-6" id="example-desc-92">
+                Display a WMTS layer on a Map.
+            </p>
+            <div class="position-absolute bottom-0 mb-3">
+                
+                <span class="badge rounded-pill text-bg-secondary">map</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">layer</span
+                >
+                <span class="badge rounded-pill text-bg-secondary">wmts</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
+ 
+                </div>
+            </section>
+        </main>
+    </body>
+</html>
